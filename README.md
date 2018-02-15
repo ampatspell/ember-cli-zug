@@ -1,51 +1,33 @@
-# ohne-zeit
+# thing
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+Experiment: don't have an identity. base this all on queries and models which encapsulate multiple queries, reference relationships in parent model.
 
-## Prerequisites
+``` javascript
+let store = getOwner(this).lookup('service:store');
 
-You will need the following things properly installed on your computer.
+let person = store.model('person', { collection: 'people' });
+await person.save();
 
-* [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with npm)
-* [Ember CLI](https://ember-cli.com/)
-* [Google Chrome](https://google.com/chrome/)
+let query = store.query(db => db.collection('people').limit(1));
+await query.fetch();
 
-## Installation
+query.get('models');
 
-* `git clone <repository-url>` this repository
-* `cd ohne-zeit`
-* `npm install`
+query.destroy();
 
-## Running / Development
+//
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-* Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
+let nested = store.fork('something');
+let query = nested.query(db => db.collection('people').limit(1));
+await query.fetch();
+let person = query.get('model');
+person.set('name', 'ampatspell');
+await person.save();
 
-### Code Generators
+nested.destroy(); // destroys query
+```
 
-Make use of the many generators for code, try `ember help generate` for more details
-
-### Running Tests
-
-* `ember test`
-* `ember test --server`
-
-### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](https://emberjs.com/)
-* [ember-cli](https://ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+* store is context
+* store.fork() creates nested context
+* context can be extended models/contexts/<name>
+* context destroys queries and models

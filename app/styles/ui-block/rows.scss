@@ -1,0 +1,16 @@
+.ui-block-rows {
+  > .header {
+    border-top: 1px solid #eee;
+    padding: 10px;
+    color: #777;
+    font-weight: 600;
+  }
+  > .row {
+    padding: 10px;
+    border-top: 1px solid #eee;
+    cursor: pointer;
+    &:last-child {
+      border-bottom: 1px solid #eee;
+    }
+  }
+}

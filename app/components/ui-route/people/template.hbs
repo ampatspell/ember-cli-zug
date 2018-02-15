@@ -1,0 +1,27 @@
+{{#ui-block/master-detail as |md|}}
+
+  {{#md.master}}
+
+    {{#ui-block/rows as |rows|}}
+
+      {{#rows.header}}
+        context: {{people.context.absoluteIdentifier}}
+      {{/rows.header}}
+
+      {{#each people.content as |doc|}}
+        {{#rows.row click=(action 'select' doc)}}
+          {{doc.data.name}} {{doc.data.version}}
+        {{/rows.row}}
+      {{/each}}
+
+    {{/ui-block/rows}}
+
+  {{/md.master}}
+
+  {{#md.detail}}
+
+    {{yield}}
+
+  {{/md.detail}}
+
+{{/ui-block/master-detail}}
