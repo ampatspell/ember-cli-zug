@@ -14,14 +14,6 @@ module.exports = function(environment) {
       }
     },
     APP: {
-    },
-    firebase: {
-      apiKey: "AIzaSyDyjC_rsH7_BYJwjKgIrHhoSvRBfNnjGrQ",
-      authDomain: "ohne-zeit.firebaseapp.com",
-      databaseURL: "https://ohne-zeit.firebaseio.com",
-      projectId: "ohne-zeit",
-      storageBucket: "",
-      messagingSenderId: "491555737764"
     }
   };
 
