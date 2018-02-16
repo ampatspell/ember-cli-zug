@@ -1,14 +1,13 @@
 import registerStoreService from 'models/register-store-service';
 
 export default {
-  name: 'dev',
+  name: 'thing:store',
   initialize(app) {
     app.inject('component', 'store',  'service:store');
     app.inject('component', 'router', 'service:router');
     app.inject('route',     'store',  'service:store');
 
     let store = registerStoreService(app);
-    window.data = store._internal.data;
 
     if(typeof window !== 'undefined') {
       window.store = store;
