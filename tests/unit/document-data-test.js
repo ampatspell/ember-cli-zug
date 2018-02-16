@@ -286,6 +286,17 @@ test('parent serialized', function(assert) {
   assert.deepEqual(object.get('serialized'), {});
 });
 
+test('update object', function(assert) {
+  let object = this.manager.createObject();
+  assert.deepEqual(object.get('serialized'), {});
+
+  this.manager.updateObject(object, { names:  [ 'a' ] });
+  assert.deepEqual(object.get('serialized'), { names: [ 'a' ] });
+
+  this.manager.updateObject(object, { names:  [ { ok: [ true ] } ] });
+  assert.deepEqual(object.get('serialized'), { names: [ { ok: [ true ] } ] });
+});
+
 test('remove object by index from array is detached', function(assert) {
   let object = this.manager.createObject({ names: [ { name: 'a' }]});
   let name = object.get('names.firstObject');
