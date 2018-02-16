@@ -14,18 +14,22 @@ body {
   @include default-font;
 }
 
-* {
-  box-sizing: border-box;
-}
+.ui-application {
 
-button {
-  @include default-font;
-  -webkit-appearance: none;
-  border: 1px solid #ddd;
-  padding: 6px 12px;
-  border-radius: 3px;
-  outline: none;
-  &:hover {
-    background: fade-out(#ddd, 0.8);
+  * {
+    box-sizing: border-box;
   }
+
+  button {
+    @include default-font;
+    -webkit-appearance: none;
+    border: 1px solid #ddd;
+    padding: 6px 12px;
+    border-radius: 3px;
+    outline: none;
+    &:hover {
+      background: fade-out(#ddd, 0.8);
+    }
+  }
+
 }
