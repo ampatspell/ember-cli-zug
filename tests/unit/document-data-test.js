@@ -286,3 +286,15 @@ test('remove object from array is detached', function(assert) {
   object.get('names').removeObject(name);
   assert.ok(name._internal.parent === null);
 });
+
+test('overwrite array', function(assert) {
+  let object = this.manager.createObject({ names: [ { name: 'a' }]});
+  object.set('names', [ { name: 'b' } ]);
+  assert.deepEqual(object.get('serialized'), {
+    "names": [
+      {
+        "name": "b"
+      }
+    ]
+  });
+});
