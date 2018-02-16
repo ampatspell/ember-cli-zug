@@ -171,3 +171,15 @@ test('set instance without toJSON', function(assert) {
   let object = this.manager.createObject({ person });
   assert.deepEqual(object.toJSON(), {});
 });
+
+test('didUpdateChildInternalData', function(assert) {
+  assert.expect(1);
+  let parent = {
+    didUpdateChildInternalData(internal) {
+      assert.equal(internal.content.name, 'zeeba');
+    }
+  };
+  let object = this.manager.createObject({ person: { name: 'duck', type: 'cute' } });
+  object._internal.attach(parent);
+  object.get('person').set('name', 'zeeba');
+});
