@@ -1,7 +1,6 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import DataObject from 'models/-private/model/data/object';
-import InternalPrimitive from 'models/-private/model/data/internal-primitive';
 
 module('document-data', {
   beforeEach() {
@@ -21,7 +20,7 @@ test('create from empty object', function(assert) {
 
 test('create from object', function(assert) {
   let object = this.manager.create({ message: 'hey there' });
-  assert.ok(object._internal.content.message instanceof InternalPrimitive);
+  assert.equal(object._internal.content.message, 'hey there');
   assert.equal(object.get('message'), 'hey there');
 });
 
@@ -35,9 +34,7 @@ test('create from nested objects', function(assert) {
 
 test('update object primitive value', function(assert) {
   let object = this.manager.create({ message: 'hey there' });
-  let internal = object._internal.content.message;
   object.set('message', 'nice to meet you');
   assert.equal(object.get('message'), 'nice to meet you');
-  assert.equal(object._internal.content.message.content, 'nice to meet you');
-  assert.ok(internal === object._internal.content.message);
+  assert.equal(object._internal.content.message, 'nice to meet you');
 });
