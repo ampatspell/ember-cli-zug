@@ -8,6 +8,15 @@ export default {
     app.inject('route',     'store',  'service:store');
 
     let store = registerStoreService(app);
-    window.store = store;
+
+    if(typeof window !== 'undefined') {
+      window.store = store;
+      app.reopen({
+        willDestroy() {
+          this._super(...arguments);
+          delete window.store;
+        }
+      });
+    }
   }
 };
