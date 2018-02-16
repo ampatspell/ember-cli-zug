@@ -174,10 +174,11 @@ test('set instance without toJSON', function(assert) {
 });
 
 test('didUpdateChildInternalData', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
   let parent = {
-    didUpdateChildInternalData(internal) {
-      assert.equal(internal.content.name, 'zeeba');
+    didUpdateChildInternalData(internal, notify) {
+      assert.ok(internal.content.person);
+      assert.ok(notify);
     }
   };
   let object = this.manager.createObject({ person: { name: 'duck', type: 'cute' } });
@@ -268,4 +269,20 @@ test('parent serialized', function(assert) {
 
   object.set('name');
   assert.deepEqual(object.get('serialized'), {});
+});
+
+test('remove object by index from array is detached', function(assert) {
+  let object = this.manager.createObject({ names: [ { name: 'a' }]});
+  let name = object.get('names.firstObject');
+  assert.ok(name._internal.parent === object._internal.content.names);
+  object.get('names').removeAt(0);
+  assert.ok(name._internal.parent === null);
+});
+
+test('remove object from array is detached', function(assert) {
+  let object = this.manager.createObject({ names: [ { name: 'a' }]});
+  let name = object.get('names.firstObject');
+  assert.ok(name._internal.parent === object._internal.content.names);
+  object.get('names').removeObject(name);
+  assert.ok(name._internal.parent === null);
 });
