@@ -2,6 +2,7 @@ import EmberObject from '@ember/object';
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import DataObject from 'models/-private/model/data/object';
+import DataArray from 'models/-private/model/data/array';
 
 const Thing = EmberObject.extend({
   toJSON() {
@@ -182,4 +183,51 @@ test('didUpdateChildInternalData', function(assert) {
   let object = this.manager.createObject({ person: { name: 'duck', type: 'cute' } });
   object._internal.attach(parent);
   object.get('person').set('name', 'zeeba');
+});
+
+test('init with array creates DataArray', function(assert) {
+  let object = this.manager.createObject({ names: [] });
+  let names = object.get('names');
+  assert.ok(DataArray.detectInstance(names));
+  assert.deepEqual(object.toJSON(), {
+    names: []
+  });
+});
+
+test('init with array of primitives - serialize', function(assert) {
+  let object = this.manager.createObject({ names: [ 'a', 'b', 'c' ] });
+  assert.deepEqual(object.toJSON(), {
+    "names": [
+      "a",
+      "b",
+      "c"
+    ]
+  });
+});
+
+test('init with array of objects - serialize', function(assert) {
+  let object = this.manager.createObject({ names: [ { name: 'a' }, { name: 'b' }, { name: 'c' } ] });
+  assert.deepEqual(object.toJSON(), {
+    "names": [
+      { "name": "a" },
+      { "name": "b" },
+      { "name": "c" }
+    ]
+  });
+});
+
+test('add and get primitive in array', function(assert) {
+  let object = this.manager.createObject({ names: [] });
+  object.get('names').pushObject('a');
+  assert.deepEqual(object.toJSON(), { "names": [ "a" ] });
+  let value = object.get('names.firstObject');
+  assert.equal(value, 'a');
+});
+
+test('add and get object from array', function(assert) {
+  let object = this.manager.createObject({ names: [] });
+  object.get('names').pushObject({ name: 'a' });
+  assert.deepEqual(object.toJSON(), { "names": [ { "name": "a" } ] });
+  let value = object.get('names.firstObject');
+  assert.equal(value.get('name'), 'a');
 });
