@@ -56,8 +56,8 @@ test('update object', function(assert) {
   let person = object.get('person');
 
   object.set('person', { name: 'zeeba' });
-  assert.ok(object.get('person') === person);
-  assert.ok(object.get('person')._internal === person._internal);
+  assert.ok(object.get('person') !== person);
+  assert.ok(object.get('person')._internal !== person._internal);
   assert.ok(object.get('person')._internal.parent === object._internal);
 
   assert.ok(DataObject.detectInstance(object.get('person')));
