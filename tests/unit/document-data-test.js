@@ -82,7 +82,7 @@ test('create object with nested object', function(assert) {
   let object = this.manager.createObject({ person: { name: 'duck', type: 'cute' } });
   let person = object.get('person');
 
-  assert.ok(object._internal.parent === undefined);
+  assert.ok(object._internal.parent === null);
   assert.ok(person._internal.parent === object._internal);
 
   assert.deepEqual(object.toJSON(), {
@@ -297,4 +297,44 @@ test('overwrite array', function(assert) {
       }
     ]
   });
+});
+
+test('overwrite array with model array', function(assert) {
+  let names = this.manager.createArray([ { name: 'b' } ]);
+  let object = this.manager.createObject({ names: [ { name: 'a' } ]});
+
+  let prev = object.get('names');
+
+  assert.ok(prev._internal.parent === object._internal);
+  assert.ok(names._internal.parent === null);
+
+  object.set('names', names);
+
+  assert.deepEqual(object.get('serialized'), {
+    "names": [
+      {
+        "name": "b"
+      }
+    ]
+  });
+
+  assert.ok(prev._internal.parent === null);
+  assert.ok(names._internal.parent === object._internal);
+});
+
+test('array stops observing when detached', function(assert) {
+  let object = this.manager.createObject({ names: [ { name: 'a' } ]});
+  let names = object.get('names');
+  assert.ok(names._internal.observing);
+  object.set('names');
+  assert.ok(!names._internal.observing);
+  object.set('names', names);
+  assert.ok(names._internal.observing);
+});
+
+test('array is not initially observing', function(assert) {
+  let names = this.manager.createArray([ { name: 'a' } ]);
+  assert.ok(!names._internal.observing);
+  this.manager.createObject({ names });
+  assert.ok(names._internal.observing);
 });
