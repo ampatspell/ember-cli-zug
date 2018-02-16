@@ -1,6 +1,11 @@
 <div>Edit Person</div>
-<div>context: {{person.context.absoluteIdentifier}}</div>
 
-{{ui-block/json person.data}}
+<div class="identity">
+  <div>context: {{person.context.absoluteIdentifier}}</div>
+  <div>person: {{person}}</div>
+  <div>data: {{person.data}}</div>
+</div>
+
+{{ui-block/json person.data.serialized}}
 
 <button {{action 'save'}}>Save</button>

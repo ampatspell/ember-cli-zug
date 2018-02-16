@@ -1,5 +1,9 @@
-<div>{{person}}</div>
-<div>{{person.data}}</div>
-<div>{{ui-block/json person.data}}</div>
+<div class="identity">
+  <div>{{person}}</div>
+  <div>{{person.data}}</div>
+</div>
+
+<div>{{ui-block/json person.data.serialized}}</div>
+
 <button {{action 'save'}}>Save</button>
 <button {{action 'edit'}}>Edit</button>
