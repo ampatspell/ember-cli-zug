@@ -252,6 +252,21 @@ test('parent serialized', function(assert) {
   object.get('names').removeAt(0);
   assert.deepEqual(object.get('serialized'), { names: [] });
 
+  object.set('names', [ { ok: true }]);
+  assert.deepEqual(object.get('serialized'), { names: [ { ok: true } ] });
+
+  object.set('names', [ 'hey' ]);
+  assert.deepEqual(object.get('serialized'), { names: [ 'hey' ] });
+
+  object.set('names', [ [ { ok: [ 'a' ] } ] ]);
+  assert.deepEqual(object.get('serialized'), { names: [ [ { ok: [ 'a' ] }] ] });
+
+  object.set('names');
+  assert.deepEqual(object.get('serialized'), {});
+
+  object.set('names', [ [ { ok: [ 'a' ] } ] ]);
+  assert.deepEqual(object.get('serialized'), { names: [ [ { ok: [ 'a' ] }] ] });
+
   object.set('names');
   assert.deepEqual(object.get('serialized'), {});
 
