@@ -286,15 +286,40 @@ test('parent serialized', function(assert) {
   assert.deepEqual(object.get('serialized'), {});
 });
 
-test('update object', function(assert) {
+test('update property: array to array', function(assert) {
   let object = this.manager.createObject();
   assert.deepEqual(object.get('serialized'), {});
 
-  this.manager.updateObject(object, { names:  [ 'a' ] });
+  this.manager.updateObject(object, { names: [ 'a' ] });
   assert.deepEqual(object.get('serialized'), { names: [ 'a' ] });
 
-  this.manager.updateObject(object, { names:  [ { ok: [ true ] } ] });
-  assert.deepEqual(object.get('serialized'), { names: [ { ok: [ true ] } ] });
+  let one = object.get('names');
+
+  this.manager.updateObject(object, { names: [ { ok: true } ] });
+  assert.deepEqual(object.get('serialized'), { names: [ { ok: true } ] });
+
+  let two = object.get('names');
+
+  assert.ok(one === two);
+});
+
+test('update property: array to object', function(assert) {
+  let object = this.manager.createObject();
+  assert.deepEqual(object.get('serialized'), {});
+
+  this.manager.updateObject(object, { names: [ 'a' ] });
+  assert.deepEqual(object.get('serialized'), { names: [ 'a' ] });
+
+  let one = object.get('names');
+
+  this.manager.updateObject(object, { names: { ok: true } });
+  assert.deepEqual(object.get('serialized'), { names: { ok: true } });
+
+  let two = object.get('names');
+
+  assert.ok(one !== two);
+  assert.ok(!one._internal.parent);
+  assert.ok(!one._internal.observing);
 });
 
 test('remove object by index from array is detached', function(assert) {
