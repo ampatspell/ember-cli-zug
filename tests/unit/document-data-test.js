@@ -231,3 +231,41 @@ test('add and get object from array', function(assert) {
   let value = object.get('names.firstObject');
   assert.equal(value.get('name'), 'a');
 });
+
+test('parent serialized', function(assert) {
+  let object = this.manager.createObject();
+  assert.deepEqual(object.get('serialized'), {});
+
+  object.set('names', []);
+  assert.deepEqual(object.get('serialized'), { names: [] });
+
+  object.get('names').pushObject({});
+  assert.deepEqual(object.get('serialized'), { names: [ {} ] });
+
+  object.get('names.firstObject').set('name', 'a');
+  assert.deepEqual(object.get('serialized'), { names: [ { name: 'a' } ] });
+
+  object.get('names.firstObject').set('name', 'b');
+  assert.deepEqual(object.get('serialized'), { names: [ { name: 'b' } ] });
+
+  object.get('names').removeAt(0);
+  assert.deepEqual(object.get('serialized'), { names: [] });
+
+  object.set('names');
+  assert.deepEqual(object.get('serialized'), {});
+
+  object.set('name', { value: 'a' });
+  assert.deepEqual(object.get('serialized'), { name: { value: 'a' } });
+
+  object.get('name').set('value', 'b');
+  assert.deepEqual(object.get('serialized'), { name: { value: 'b' } });
+
+  object.get('name').set('value');
+  assert.deepEqual(object.get('serialized'), { name: {} });
+
+  object.get('name').set('value', 'a');
+  assert.deepEqual(object.get('serialized'), { name: { value: 'a' } });
+
+  object.set('name');
+  assert.deepEqual(object.get('serialized'), {});
+});
