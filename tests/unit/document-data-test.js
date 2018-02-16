@@ -293,14 +293,8 @@ test('update property: array to array', function(assert) {
   this.manager.updateObject(object, { names: [ 'a' ] });
   assert.deepEqual(object.get('serialized'), { names: [ 'a' ] });
 
-  let one = object.get('names');
-
   this.manager.updateObject(object, { names: [ { ok: true } ] });
   assert.deepEqual(object.get('serialized'), { names: [ { ok: true } ] });
-
-  let two = object.get('names');
-
-  assert.ok(one === two);
 });
 
 test('update property: array to object', function(assert) {
