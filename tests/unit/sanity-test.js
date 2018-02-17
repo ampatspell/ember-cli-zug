@@ -184,3 +184,55 @@ test('save with timestamp', async function(assert) {
     }
   ]);
 });
+
+test.only('server timestamp estimate', async function(assert) {
+  await this.recreate();
+
+  let firestore = this.firestore;
+  let coll = firestore.collection('ducks');
+  let ref = coll.doc('yellow');
+
+  let info = [];
+
+  let cancel = ref.onSnapshot({ includeMetadataChanges: true }, snapshot => run(() => {
+    let { fromCache, hasPendingWrites } = snapshot.metadata;
+    let data = snapshot.data({ serverTimestamps: 'estimate' });
+    if(!fromCache && hasPendingWrites) {
+      return;
+    }
+    info.push({ fromCache, hasPendingWrites, data });
+  }));
+
+  await ref.set({ name: 'Yellow Duck', now: firebase.firestore.FieldValue.serverTimestamp() });
+
+  await waitForCollectionSize(coll, 1);
+
+  assert.ok(true);
+  cancel();
+
+  let estimate = info[0].data.now;
+  let actual = info[1].data.now;
+
+  assert.ok(estimate);
+  assert.ok(actual);
+  assert.ok(estimate !== actual);
+
+  assert.deepEqual(info, [
+    {
+      "data": {
+        "name": "Yellow Duck",
+        "now": estimate
+      },
+      "fromCache": true,
+      "hasPendingWrites": true
+    },
+    {
+      "data": {
+        "name": "Yellow Duck",
+        "now": actual
+      },
+      "fromCache": false,
+      "hasPendingWrites": false
+    }
+  ]);
+});
