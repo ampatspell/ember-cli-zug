@@ -4,7 +4,7 @@ import { run } from '@ember/runloop';
 import startApp from '../helpers/start-app';
 import destroyApp from '../helpers/destroy-app';
 
-// const getter = (object, name, fn) => Object.defineProperty(object, name, { get: () => fn() });
+const getter = (object, name, fn) => Object.defineProperty(object, name, { get: () => fn() });
 
 const cached = (object, name, fn) => Object.defineProperty(object, name, {
   get: () => {
@@ -36,6 +36,7 @@ export default function(name, options={}) {
       this.lookup = name => this.instance.lookup(name);
 
       cached(this, 'store', () => this.lookup('models:stores').store('store', opts));
+      getter(this, 'firestore', () => this.store.firestore);
 
       let beforeEach = options.beforeEach && options.beforeEach.apply(this, arguments);
       return resolve(beforeEach);
