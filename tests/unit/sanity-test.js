@@ -1,6 +1,8 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import { recreateCollection, waitForCollectionSize } from '../helpers/runloop';
+import { run } from '@ember/runloop';
+import firebase from 'firebase';
 
 module('sanity', {
   beforeEach() {
@@ -65,10 +67,13 @@ test('create document ref with generated id', async function(assert) {
   assert.equal(ref.path, `ducks/${ref.id}`);
 
   let info = [];
-  let cancel = ref.onSnapshot({ includeMetadataChanges: true }, snapshot => {
+  let cancel = ref.onSnapshot({ includeMetadataChanges: true }, snapshot => run(() => {
     let { fromCache, hasPendingWrites } = snapshot.metadata;
+    if(!fromCache && hasPendingWrites) {
+      return;
+    }
     info.push({ fromCache, hasPendingWrites });
-  });
+  }));
 
   await ref.set({ name: 'Yellow Duck' });
 
@@ -96,11 +101,14 @@ test('delete document', async function(assert) {
   let doc = coll.doc();
 
   let info = [];
-  let cancel = doc.onSnapshot({ includeMetadataChanges: true }, snapshot => {
+  let cancel = doc.onSnapshot({ includeMetadataChanges: true }, snapshot => run(() => {
     let { fromCache, hasPendingWrites } = snapshot.metadata;
+    if(!fromCache && hasPendingWrites) {
+      return;
+    }
     let { exists } = snapshot;
     info.push({ fromCache, hasPendingWrites, exists });
-  });
+  }));
 
   await doc.set({ name: 'Yellow Duck' });
 
@@ -112,26 +120,67 @@ test('delete document', async function(assert) {
 
   assert.deepEqual(info, [
     {
-      "exists": true, // true for will write (?)
+      "exists": true,
       "fromCache": true,
       "hasPendingWrites": true
     },
     {
-      "exists": true, // true for writing
-      "fromCache": false,
-      "hasPendingWrites": true
-    },
-    {
-      "exists": true, // true for saved
+      "exists": true,
       "fromCache": false,
       "hasPendingWrites": false
     },
     {
-      "exists": false, // false for deleted
+      "exists": false,
       "fromCache": false,
       "hasPendingWrites": false
     }
   ]);
 
   cancel();
+});
+
+test('save with timestamp', async function(assert) {
+  await this.recreate();
+
+  let firestore = this.firestore;
+  let coll = firestore.collection('ducks');
+  let ref = coll.doc('yellow');
+
+  let info = [];
+  let cancel = ref.onSnapshot({ includeMetadataChanges: true }, snapshot => run(() => {
+    let { fromCache, hasPendingWrites } = snapshot.metadata;
+    let data = snapshot.data();
+    if(!fromCache && hasPendingWrites) {
+      return;
+    }
+    info.push({ fromCache, hasPendingWrites, data });
+  }));
+
+  await ref.set({ name: 'Yellow Duck', now: firebase.firestore.FieldValue.serverTimestamp() });
+
+  await waitForCollectionSize(coll, 1);
+
+  assert.ok(true);
+  cancel();
+
+  assert.ok(info[1].data.now);
+
+  assert.deepEqual(info, [
+    {
+      "data": {
+        "name": "Yellow Duck",
+        "now": null
+      },
+      "fromCache": true,
+      "hasPendingWrites": true
+    },
+    {
+      "data": {
+        "name": "Yellow Duck",
+        "now": info[1].data.now
+      },
+      "fromCache": false,
+      "hasPendingWrites": false
+    }
+  ]);
 });

@@ -6,7 +6,7 @@ module('document', {
   beforeEach() {
     this.coll = this.firestore.collection('ducks');
     this.recreate = () => recreateCollection(this.coll);
-    this.create = props => this.store._internal.documents.createDocument(props);
+    this.create = () => this.store._internal.documents.createNewDocument();
   }
 });
 
