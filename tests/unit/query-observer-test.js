@@ -2,7 +2,7 @@ import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import { all } from 'rsvp';
 import QueryObserver from 'models/-private/model/query-observer';
-import { waitFor, recreateCollection, waitForLength } from '../helpers/runloop';
+import { recreateCollection, waitForLength } from '../helpers/runloop';
 import { assign } from '@ember/polyfills';
 
 module('query-observer', {
