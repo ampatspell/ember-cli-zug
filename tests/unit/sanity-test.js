@@ -87,3 +87,51 @@ test('create document ref with generated id', async function(assert) {
 
   cancel();
 });
+
+test('delete document', async function(assert) {
+  await this.recreate();
+
+  let firestore = this.firestore;
+  let coll = firestore.collection('ducks');
+  let doc = coll.doc();
+
+  let info = [];
+  let cancel = doc.onSnapshot({ includeMetadataChanges: true }, snapshot => {
+    let { fromCache, hasPendingWrites } = snapshot.metadata;
+    let { exists } = snapshot;
+    info.push({ fromCache, hasPendingWrites, exists });
+  });
+
+  await doc.set({ name: 'Yellow Duck' });
+
+  await waitForCollectionSize(coll, 1);
+
+  await doc.delete();
+
+  await waitForCollectionSize(coll, 0);
+
+  assert.deepEqual(info, [
+    {
+      "exists": true, // true for will write (?)
+      "fromCache": true,
+      "hasPendingWrites": true
+    },
+    {
+      "exists": true, // true for writing
+      "fromCache": false,
+      "hasPendingWrites": true
+    },
+    {
+      "exists": true, // true for saved
+      "fromCache": false,
+      "hasPendingWrites": false
+    },
+    {
+      "exists": false, // false for deleted
+      "fromCache": false,
+      "hasPendingWrites": false
+    }
+  ]);
+
+  cancel();
+});
