@@ -3,6 +3,7 @@ import { test } from '../helpers/qunit';
 import { all } from 'rsvp';
 import QueryObserver from 'models/-private/model/query-observer';
 import { waitFor, recreateCollection, waitForLength } from '../helpers/runloop';
+import { assign } from '@ember/polyfills';
 
 module('query-observer', {
   async beforeEach() {
@@ -11,14 +12,29 @@ module('query-observer', {
       { name: 'green' },
       { name: 'red' }
     ]);
+    let delegate = [];
+    this.delegate = delegate;
+    this.create = query => new QueryObserver(query, {
+      createModel(doc) {
+        let data = doc.data();
+        delegate.push(`create: ${data.name}`);
+        return assign({ ref: doc.ref }, data);
+      },
+      updateModel(model, doc) {
+        let data = doc.data();
+        delegate.push(`update: ${model.name} => ${data.name}`);
+        return assign({ ref: doc.ref }, doc.data());
+      },
+      destroyModel(model) {
+        delegate.push(`destroy: ${model.name}`);
+      }
+    });
   }
 });
 
 test('hello', async function(assert) {
   let coll = this.firestore.collection('ducks');
-
-  let observer = new QueryObserver(coll.orderBy('name'));
-
+  let observer = this.create(coll.orderBy('name'));
   await observer.promise;
 
   assert.deepEqual(observer.content.mapBy('name'), [
@@ -60,4 +76,19 @@ test('hello', async function(assert) {
   ]);
 
   observer.destroy();
+
+  assert.deepEqual(this.delegate, [
+    "create: green",
+    "create: red",
+    "create: yellow",
+    "create: brown",
+    "create: magenta",
+    "destroy: green",
+    "update: brown => white",
+    "update: magenta => pink",
+    "destroy: pink",
+    "destroy: red",
+    "destroy: white",
+    "destroy: yellow"
+  ]);
 });
