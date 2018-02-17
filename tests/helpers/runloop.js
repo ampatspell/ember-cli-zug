@@ -24,6 +24,9 @@ export const recreateCollection = async (coll, docs) => {
   let snapshot = await coll.get();
   await all(snapshot.docs.map(doc => doc.ref.delete()));
   await waitForCollectionSize(coll, 0);
+  if(!docs) {
+    return;
+  }
   await all(docs.map(doc => coll.add(doc)));
   await waitForCollectionSize(coll, docs.length);
 };
