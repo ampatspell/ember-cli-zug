@@ -185,7 +185,7 @@ test('save with timestamp', async function(assert) {
   ]);
 });
 
-test.only('server timestamp estimate', async function(assert) {
+test('server timestamp estimate', async function(assert) {
   await this.recreate();
 
   let firestore = this.firestore;
