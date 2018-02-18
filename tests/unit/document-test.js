@@ -71,3 +71,16 @@ test('create document with id', function(assert) {
     path: undefined
   });
 });
+
+test('updates', function(assert) {
+  let doc = this.create({});
+  let mut = (values, expected) => {
+    doc.setProperties(values);
+    assert.deepEqual(doc.getProperties('id', 'collection', 'path'), expected);
+  }
+  mut({ id: 'yellow' }, { id: 'yellow', collection: undefined, path: undefined });
+  mut({ collection: 'ducks' }, { id: 'yellow', collection: 'ducks', path: 'ducks/yellow' });
+  mut({ path: 'things/foo' }, { id: 'foo', collection: 'things', path: 'things/foo' });
+  mut({ collection: 'things/ducks' }, { id: 'foo', collection: 'things/ducks', path: 'things/ducks/foo' });
+  mut({ path: undefined }, { id: undefined, collection: undefined, path: undefined });
+});
