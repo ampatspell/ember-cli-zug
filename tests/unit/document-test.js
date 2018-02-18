@@ -9,6 +9,7 @@ module('document', {
     this.recreate = () => recreateCollection(this.coll);
     this.create = props => this.store._internal.documents.createNewDocument(props);
     this.load = opts => this.store._internal.documents.loadDocument(opts);
+    this.existing = opts => this.store._internal.documents.createExistingDocument(opts);
   }
 });
 
@@ -110,5 +111,16 @@ test('load document', async function(assert) {
     "data": {
       name: 'Yellow'
     }
+  });
+});
+
+test('settle store', async function(assert) {
+  await this.coll.doc('yellow').set({ name: 'Yellow' });
+  let doc = this.existing({ collection: 'ducks', id: 'yellow' });
+
+  await this.store.settle();
+
+  assert.deepEqual(doc.get('serialized'), {
+
   });
 });
