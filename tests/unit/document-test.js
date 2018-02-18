@@ -108,6 +108,7 @@ test('load document', async function(assert) {
     "collection": "ducks",
     "id": "yellow",
     "path": "ducks/yellow",
+    "exists": true,
     "data": {
       name: 'Yellow'
     }
@@ -128,6 +129,7 @@ test('load document with settle', async function(assert) {
     "collection": "ducks",
     "id": "yellow",
     "path": "ducks/yellow",
+    "exists": true,
     "data": {
       name: 'Yellow'
     }
@@ -145,6 +147,7 @@ test('settle store', async function(assert) {
     "id": "yellow",
     "collection": "ducks",
     "path": "ducks/yellow",
+    "exists": true,
     "data": {
       "name": "Yellow"
     }

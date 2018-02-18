@@ -28,6 +28,7 @@ test('document serialized', function(assert) {
     "id": "yellow",
     "collection": "ducks",
     "path": "ducks/yellow",
+    "exists": undefined,
     "data": {
       "name": "Yellow"
     },
