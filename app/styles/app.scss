@@ -1,6 +1,21 @@
 @import "body";
 
 .ui-application {
+  > .header {
+    margin-bottom: 10px;
+    > .title {
+      font-weight: 600;
+    }
+    > .pages {
+      display: flex;
+      flex-direction: row;
+      > a {
+        margin-right: 5px;
+        text-decoration: none;
+        color: #000;
+      }
+    }
+  }
   > .content {
     @import "ui-block/master-detail";
     @import "ui-block/rows";
