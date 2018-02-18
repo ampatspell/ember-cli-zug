@@ -8,6 +8,8 @@ module('document', {
     this.coll = this.firestore.collection('ducks');
     this.recreate = () => recreateCollection(this.coll);
     this.create = props => this.store._internal.documents.createNewDocument(props);
+    this.load = opts => this.store._internal.documents.loadDocument(opts);
+    this.existing = opts => this.store._internal.documents.createExistingDocument(opts);
   }
 });
 
@@ -93,4 +95,58 @@ test('multiple parallel saves', async function(assert) {
 
   let snapshot = await this.coll.get();
   assert.equal(snapshot.size, 1);
+});
+
+test('load document', async function(assert) {
+  await this.recreate();
+  await this.coll.doc('yellow').set({ name: 'Yellow' });
+
+  let doc = await this.load({ collection: 'ducks', id: 'yellow' });
+  assert.ok(doc);
+
+  assert.deepEqual(doc.get('serialized'), {
+    "collection": "ducks",
+    "id": "yellow",
+    "path": "ducks/yellow",
+    "data": {
+      name: 'Yellow'
+    }
+  });
+});
+
+test('load document with settle', async function(assert) {
+  await this.recreate();
+  await this.coll.doc('yellow').set({ name: 'Yellow' });
+
+  this.load({ collection: 'ducks', id: 'yellow' });
+
+  await this.store.settle();
+
+  let doc = this.existing({ collection: 'ducks', id: 'yellow' });
+
+  assert.deepEqual(doc.get('serialized'), {
+    "collection": "ducks",
+    "id": "yellow",
+    "path": "ducks/yellow",
+    "data": {
+      name: 'Yellow'
+    }
+  });
+});
+
+test('settle store', async function(assert) {
+  await this.coll.doc('yellow').set({ name: 'Yellow' });
+  let doc = this.existing({ collection: 'ducks', id: 'yellow' });
+
+  doc.load();
+  await this.store.settle();
+
+  assert.deepEqual(doc.get('serialized'), {
+    "id": "yellow",
+    "collection": "ducks",
+    "path": "ducks/yellow",
+    "data": {
+      "name": "Yellow"
+    }
+  });
 });
