@@ -166,3 +166,30 @@ test('load missing document', async function(assert) {
     });
   }
 });
+
+test.only('document state for create', async function(assert) {
+  await this.recreate();
+  let doc = this.create({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+
+  assert.deepEqual(doc.getProperties('isNew', 'isExisting', 'isSaving'), {
+    isNew: true,
+    isExisting: false,
+    isSaving: false
+  });
+
+  let promise = doc.save();
+
+  assert.deepEqual(doc.getProperties('isNew', 'isExisting', 'isSaving'), {
+    isNew: true,
+    isExisting: false,
+    isSaving: true
+  });
+
+  await promise;
+
+  assert.deepEqual(doc.getProperties('isNew', 'isExisting', 'isSaving'), {
+    isNew: false,
+    isExisting: true,
+    isSaving: false
+  });
+});
