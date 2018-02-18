@@ -104,6 +104,11 @@ test('load document', async function(assert) {
   assert.ok(doc);
 
   assert.deepEqual(doc.get('serialized'), {
-
+    "collection": "ducks",
+    "id": "yellow",
+    "path": "ducks/yellow",
+    "data": {
+      name: 'Yellow'
+    }
   });
 });
