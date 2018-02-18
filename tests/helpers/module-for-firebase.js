@@ -3,6 +3,7 @@ import { resolve } from 'rsvp';
 import { run } from '@ember/runloop';
 import startApp from '../helpers/start-app';
 import destroyApp from '../helpers/destroy-app';
+import { get } from '@ember/object';
 
 const getter = (object, name, fn) => Object.defineProperty(object, name, { get: () => fn() });
 
@@ -18,7 +19,7 @@ const cached = (object, name, fn) => Object.defineProperty(object, name, {
   }
 });
 
-const opts = {
+const defaultConfig = {
   "apiKey": "AIzaSyDyjC_rsH7_BYJwjKgIrHhoSvRBfNnjGrQ",
   "databaseURL": "https://ohne-zeit.firebaseio.com",
   "storageBucket": "ohne-zeit.appspot.com",
@@ -26,6 +27,12 @@ const opts = {
   "messagingSenderId": "491555737764",
   "projectId": "ohne-zeit"
 };
+
+const firebaseOptions = instance => {
+  let env = instance.factoryFor('config:environment').class;
+  let config = get(env, 'test.firebase.config');
+  return config || defaultConfig;
+}
 
 export default function(name, options={}) {
   module(name, {
@@ -35,7 +42,7 @@ export default function(name, options={}) {
 
       this.lookup = name => this.instance.lookup(name);
 
-      cached(this, 'store', () => this.lookup('models:stores').store('store', opts));
+      cached(this, 'store', () => this.lookup('models:stores').store('store', firebaseOptions(this.instance)));
       getter(this, 'firestore', () => this.store.firestore);
 
       let beforeEach = options.beforeEach && options.beforeEach.apply(this, arguments);

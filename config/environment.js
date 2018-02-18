@@ -14,7 +14,7 @@ module.exports = function(environment) {
       }
     },
     APP: {
-    }
+    },
   };
 
   if (environment === 'development') {
@@ -35,6 +35,21 @@ module.exports = function(environment) {
 
   // if (environment === 'production') {
   // }
+
+  if(process.env.CI) {
+    ENV.test = {
+      firebase: {
+        config: {
+          apiKey: "AIzaSyAOqRA96vnTlCnvGvb7PtwyARfvxSx7gDA",
+          authDomain: "ohne-zeit-test.firebaseapp.com",
+          databaseURL: "https://ohne-zeit-test.firebaseio.com",
+          projectId: "ohne-zeit-test",
+          storageBucket: "ohne-zeit-test.appspot.com",
+          messagingSenderId: "1043845604698"
+        }
+      }
+    }
+  }
 
   return ENV;
 };
