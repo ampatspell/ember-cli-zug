@@ -167,7 +167,7 @@ test('load missing document', async function(assert) {
   }
 });
 
-test('document state for create', async function(assert) {
+test.skip('document state for create', async function(assert) {
   await this.recreate();
   let doc = this.create({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
 
