@@ -22,3 +22,25 @@ test('save document in collection', async function(assert) {
     "name": "Yellow"
   });
 });
+
+test('save document replaces reference', async function(assert) {
+  await this.recreate();
+
+  let doc = this.create({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+  let local = doc._internal._reference;
+
+  await doc.save();
+
+  let persisted = doc._internal._reference;
+
+  assert.ok(local !== persisted);
+  assert.ok(local.isDestroyed);
+
+  let { id, path, collection } = persisted;
+
+  assert.deepEqual({ id, path, collection }, {
+    id: 'yellow',
+    collection: 'ducks',
+    path: 'ducks/yellow'
+  });
+});
