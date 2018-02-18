@@ -114,13 +114,39 @@ test('load document', async function(assert) {
   });
 });
 
+test('load document with settle', async function(assert) {
+  await this.recreate();
+  await this.coll.doc('yellow').set({ name: 'Yellow' });
+
+  this.load({ collection: 'ducks', id: 'yellow' });
+
+  await this.store.settle();
+
+  let doc = this.existing({ collection: 'ducks', id: 'yellow' });
+
+  assert.deepEqual(doc.get('serialized'), {
+    "collection": "ducks",
+    "id": "yellow",
+    "path": "ducks/yellow",
+    "data": {
+      name: 'Yellow'
+    }
+  });
+});
+
 test('settle store', async function(assert) {
   await this.coll.doc('yellow').set({ name: 'Yellow' });
   let doc = this.existing({ collection: 'ducks', id: 'yellow' });
 
+  doc.load();
   await this.store.settle();
 
   assert.deepEqual(doc.get('serialized'), {
-
+    "id": "yellow",
+    "collection": "ducks",
+    "path": "ducks/yellow",
+    "data": {
+      "name": "Yellow"
+    }
   });
 });
