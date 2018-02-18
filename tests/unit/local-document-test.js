@@ -22,6 +22,15 @@ test('create a document', function(assert) {
   });
 });
 
+test('update data', function(assert) {
+  let doc = this.create({ data: { name: 'Yellow' } });
+  doc.set('data.thing', { ok: true });
+  assert.deepEqual(doc.get('data.serialized'), {
+    name: 'Yellow',
+    thing: { ok: true }
+  });
+});
+
 test('create document without data', function(assert) {
   let doc = this.create({ collection: 'ducks', id: 'yellow' });
 

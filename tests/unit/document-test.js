@@ -10,6 +10,15 @@ module('document', {
   }
 });
 
-test('hello', function(assert) {
-  assert.ok(true);
+test('save document in collection', async function(assert) {
+  await this.recreate();
+
+  let doc = this.create({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+  await doc.save();
+
+  let ref = await this.coll.doc('yellow').get();
+
+  assert.deepEqual(ref.data(), {
+    "name": "Yellow"
+  });
 });
