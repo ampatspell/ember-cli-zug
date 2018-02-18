@@ -8,7 +8,7 @@ module('document', {
     this.coll = this.firestore.collection('ducks');
     this.recreate = () => recreateCollection(this.coll);
     this.create = props => this.store._internal.documents.createNewDocument(props);
-    this.load = opts => this.store._internal.documents.loadDocument(opts);
+    this.load = opts => this.store._internal.documents.loadExistingDocument(opts);
     this.existing = opts => this.store._internal.documents.createExistingDocument(opts);
   }
 });
