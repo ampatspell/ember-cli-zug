@@ -6,7 +6,9 @@ export default Component.extend({
 
   actions: {
     save() {
-      this.get('person').save();
+      let person = this.get('person');
+      person.incrementProperty('data.version');
+      person.save();
     },
     edit() {
       this.get('router').transitionTo('people.person.edit', this.get('person'));

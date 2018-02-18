@@ -32,4 +32,20 @@ body {
     }
   }
 
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  input[type='text'] {
+    @include default-font;
+    -webkit-appearance: none;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 6px;
+    border-radius: 3px;
+    outline: none;
+  }
+
 }

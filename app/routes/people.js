@@ -4,17 +4,11 @@ export default Route.extend({
 
   model() {
     let context = this.get('store').fork('people');
-    let query = context.query({ id: 'people-by-name', query: db => db.collection('people').orderBy('name', 'asc') });
-    return query.load().then(() => {
-      return {
-        context,
-        query
-      };
-    });
+    return context.query({ id: 'people-by-name', query: db => db.collection('people').orderBy('name', 'asc') }).load();
   },
 
   deactivate() {
-    this.currentModel.context.destroy();
+    this.get('currentModel.context').destroy();
   }
 
 });

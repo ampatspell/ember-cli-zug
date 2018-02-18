@@ -1,9 +1,36 @@
-<div class="identity">
-  <div>{{person}}</div>
-  <div>{{person.data}}</div>
-</div>
+{{#ui-block/rows as |rows|}}
 
-<div>{{ui-block/json person.data.serialized}}</div>
+  {{#rows.header}}
+    Person
+  {{/rows.header}}
 
-<button {{action 'save'}}>Save</button>
-<button {{action 'edit'}}>Edit</button>
+  {{#rows.row}}
+    <div class="identity">
+      <div>context: {{person.context.absoluteIdentifier}}</div>
+      <div>person: {{person}}</div>
+      <div>data: {{person.data}}</div>
+    </div>
+  {{/rows.row}}
+
+  {{#rows.row}}
+    {{ui-block/json person.data.serialized}}
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <label>Name</label>
+    {{input value=person.data.name}}
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <button {{action 'save'}}>Save</button>
+    <button {{action 'edit'}}>Edit</button>
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <div class="identity">
+      Note: this edit happens in the same context where all people are loaded in sidebar, so all local changes will be reflected there.
+      Also, there is no rollback available (apart from tearing this context down and recreating it)
+    </div>
+  {{/rows.row}}
+
+{{/ui-block/rows}}
