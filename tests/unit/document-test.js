@@ -8,6 +8,7 @@ module('document', {
     this.coll = this.firestore.collection('ducks');
     this.recreate = () => recreateCollection(this.coll);
     this.create = props => this.store._internal.documents.createNewDocument(props);
+    this.load = opts => this.store._internal.documents.loadDocument(opts);
   }
 });
 
@@ -93,4 +94,16 @@ test('multiple parallel saves', async function(assert) {
 
   let snapshot = await this.coll.get();
   assert.equal(snapshot.size, 1);
+});
+
+test('load document', async function(assert) {
+  await this.recreate();
+  await this.coll.doc('yellow').set({ name: 'Yellow' });
+
+  let doc = await this.load({ collection: 'ducks', id: 'yellow' });
+  assert.ok(doc);
+
+  assert.deepEqual(doc.get('serialized'), {
+
+  });
 });
