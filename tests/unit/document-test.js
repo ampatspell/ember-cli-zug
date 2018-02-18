@@ -44,3 +44,37 @@ test('save document replaces reference', async function(assert) {
     path: 'ducks/yellow'
   });
 });
+
+test('save document notifies id, path change', async function(assert) {
+  let doc = this.create({ collection: 'ducks', data: { name: 'Yellow' } });
+
+  assert.ok(!doc.get('id'));
+  assert.ok(!doc.get('path'));
+
+  await doc.save();
+
+  let id = doc.get('id');
+  assert.equal(id.length, 20);
+  assert.equal(doc.get('path'), `ducks/${id}`);
+});
+
+test('update document', async function(assert) {
+  let ref;
+
+  let doc = this.create({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+  await doc.save();
+
+  ref = await this.coll.doc('yellow').get();
+  assert.deepEqual(ref.data(), {
+    "name": "Yellow"
+  });
+
+  doc.set('data.email', 'yellow.duck@gmail.com');
+  await doc.save();
+
+  ref = await this.coll.doc('yellow').get();
+  assert.deepEqual(ref.data(), {
+    "email": "yellow.duck@gmail.com",
+    "name": "Yellow"
+  });
+});
