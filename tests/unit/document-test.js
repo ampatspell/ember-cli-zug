@@ -150,3 +150,16 @@ test('settle store', async function(assert) {
     }
   });
 });
+
+test('load missing document', async function(assert) {
+  await this.recreate();
+  try {
+    await this.load({ collection: 'ducks', id: 'yellow' });
+    assert.ok(false, 'should throw');
+  } catch(err) {
+    assert.deepEqual(err.toJSON(), {
+      error: 'document',
+      reason: 'missing'
+    });
+  }
+});
