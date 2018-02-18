@@ -1,6 +1,6 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import { recreateCollection, waitForCollectionSize } from '../helpers/runloop';
+import { recreateCollection } from '../helpers/runloop';
 
 module('document', {
   beforeEach() {
