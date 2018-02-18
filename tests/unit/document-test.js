@@ -1,6 +1,7 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import { recreateCollection } from '../helpers/runloop';
+import { all } from 'rsvp';
 
 module('document', {
   beforeEach() {
@@ -77,4 +78,19 @@ test('update document', async function(assert) {
     "email": "yellow.duck@gmail.com",
     "name": "Yellow"
   });
+});
+
+test('multiple parallel saves', async function(assert) {
+  await this.recreate();
+
+  let doc = this.create({ collection: 'ducks', data: { name: 'Yellow' } });
+
+  await all([
+    doc.save(),
+    doc.save(),
+    doc.save()
+  ]);
+
+  let snapshot = await this.coll.get();
+  assert.equal(snapshot.size, 1);
 });
