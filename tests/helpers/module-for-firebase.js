@@ -41,6 +41,7 @@ export default function(name, options={}) {
       this.instance = this.application.buildInstance();
 
       this.lookup = name => this.instance.lookup(name);
+      this.register = (name, factory) => this.instance.register(name, factory);
 
       cached(this, 'store', () => this.lookup('models:stores').store('store', firebaseOptions(this.instance)));
       getter(this, 'firestore', () => this.store.firestore);
