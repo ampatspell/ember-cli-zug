@@ -6,3 +6,4 @@
 * move document to saved in identity on create
 * proper query loader implementation
 * remove document from identity on doc destroy
+* local reference save should reject if doc already exists with same path
