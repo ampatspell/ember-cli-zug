@@ -1,4 +1,4 @@
-import Model from 'models/model';
+import PersistedModel from 'models/model/persisted';
 
-export default Model.extend({
+export default PersistedModel.extend({
 });
