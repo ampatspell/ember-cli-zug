@@ -2,11 +2,15 @@ import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import PersistedModel from 'models/model/persisted';
 import InternalPersistedModel from 'models/-private/model/internal-persisted-model';
+import { recreateCollection } from '../helpers/runloop';
 
 const Duck = PersistedModel.extend();
 
 module('persisted-model', {
   beforeEach() {
+    this.recreate = () => recreateCollection(this.firestore.collection('ducks'), [
+      { name: 'yellow' }
+    ]);
     this.register('model:duck', Duck);
     this.identity = this.store._internal.identity.models;
     this.create = name => this.store._internal.models.createModel(name);
@@ -23,4 +27,10 @@ test('create model creates persisted model', function(assert) {
 test('model has doc', function(assert) {
   let model = this.create('duck');
   assert.ok(model.get('doc'));
+});
+
+test.skip('load model', async function(assert) {
+  await this.recreate();
+  let model = await this.store.first({ id: 'yellow', collection: 'ducks' });
+  assert.ok(model);
 });
