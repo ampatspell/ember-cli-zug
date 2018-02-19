@@ -5,3 +5,4 @@
 * delete document
 * move document to saved in identity on create
 * proper query loader implementation
+* remove document from identity on doc destroy
