@@ -162,6 +162,29 @@ test('existing with create', async function(assert) {
     "data": {}
   });
 
+  model.set('data.name', 'yellow');
+
+  assert.deepEqual(model.get('serialized'), {
+    "ref": {
+      "id": "yellow",
+      "collection": "ducks",
+      "path": "ducks/yellow"
+    },
+    "state": {
+      "isLoading": true,
+      "isNew": false,
+      "isLoaded": false,
+      "isDirty": true,
+      "isSaving": false,
+      "isExisting": undefined,
+      "isError": false,
+      "error": null
+    },
+    "data": {
+      "name": "yellow"
+    }
+  });
+
   assert.ok(doc);
   assert.ok(this.identity.all.includes(doc));
   assert.ok(this.identity.ref['ducks/yellow'] === doc);
@@ -266,14 +289,16 @@ test('update document', async function(assert) {
 
   model.set('data.email', 'yellow.duck@gmail.com');
 
-  // assert.deepEqual(model.get('serialized').state, {
-  //   "error": null,
-  //   "isDirty": true,
-  //   "isError": false,
-  //   "isExisting": true,
-  //   "isNew": false,
-  //   "isSaving": false
-  // });
+  assert.deepEqual(model.get('serialized').state, {
+    "error": null,
+    "isLoading": false,
+    "isLoaded": true,
+    "isDirty": true,
+    "isError": false,
+    "isExisting": true,
+    "isNew": false,
+    "isSaving": false
+  });
 
   await model.save();
 
