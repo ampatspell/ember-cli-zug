@@ -16,6 +16,11 @@ export default Component.extend({
   }),
 
   actions: {
+    select() {
+      let doc = this.get('document');
+      console.log(`window.doc = ${doc}`);
+      window.doc = doc;
+    },
     save() {
       let doc = this.get('document');
       doc.save();

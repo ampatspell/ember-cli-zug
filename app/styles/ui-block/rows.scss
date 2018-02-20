@@ -8,7 +8,9 @@
   > .row {
     padding: 10px;
     border-top: 1px solid #eee;
-    cursor: pointer;
+    &.has-action {
+      cursor: pointer;
+    }
     &:last-child {
       border-bottom: 1px solid #eee;
     }
