@@ -9,7 +9,7 @@ export default {
 
     let store = registerStoreService({
       app,
-      modelNameForDocument(document, store) {
+      modelNameForDocument(document /*, store */) {
         let { collection } = document.getProperties('collection');
         if(collection === 'people') {
           return 'person';
