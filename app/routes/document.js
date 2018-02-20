@@ -4,10 +4,9 @@ export default Route.extend({
 
   model(props) {
     let { path } = props;
-    let documents = this.get('store').fork('document')._internal.documents;
-    // let doc = documents.createExistingDocument({ path });
-    // return doc.load().catch(err => doc);
-    return documents.loadExistingDocument({ path });
+    let documents = this.get('store').fork('document')._internal.documentsManager;
+    let doc = documents.existingInternalDocument({ path, create: true }).model(true);
+    return doc.load({ optional: true });
   },
 
   deactivate() {
