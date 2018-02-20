@@ -9,7 +9,8 @@ const Duck = TransientModel.extend();
 module('transient-model', {
   beforeEach() {
     this.register('model:duck', Duck);
-    this.identity = this.store._internal.identity.models;
+    this.identity = this.store._internal.identity.models.storage;
+    this.create = opts => this.store._internal.modelsManager.createNewInternalModel(opts);
   }
 });
 
@@ -32,21 +33,25 @@ test.skip('create model with the same id throws', async function(assert) {
   }
 });
 
-test.skip('model is registered in identity and all are destroyed on context destroy', function(assert) {
-  let model = this.create('duck');
-  assert.ok(this.identity._storage.all.includes(model._internal));
+test('model is registered in identity and all are destroyed on context destroy', function(assert) {
+  let internal = this.create({ name: 'duck' });
+  assert.ok(this.identity.all.includes(internal));
+
+  let model = internal.model(true);
 
   run(() => this.store.destroy());
 
-  assert.ok(model.isDestroying);
-  assert.ok(model._internal.isDestroyed);
+  assert.ok(model.isDestroyed);
+  assert.ok(internal.isDestroyed);
 });
 
-test.skip('model is registered in identity and removed on destroy', function(assert) {
-  let model = this.create('duck');
-  assert.ok(this.identity._storage.all.includes(model._internal));
+test('model is registered in identity and removed on destroy', function(assert) {
+  let internal = this.create({ name: 'duck' });
+  let model = internal.model(true);
+
+  assert.ok(this.identity.all.includes(internal));
 
   run(() => model.destroy());
 
-  assert.ok(!this.identity._storage.all.includes(model._internal));
+  assert.ok(!this.identity.all.includes(internal));
 });
