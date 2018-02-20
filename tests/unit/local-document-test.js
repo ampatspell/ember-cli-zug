@@ -1,15 +1,18 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
+import { recreateCollection } from '../helpers/runloop';
 
 module('local-document', {
   beforeEach() {
     this.coll = this.firestore.collection('ducks');
-    this.create = props => this.store._internal.documents.createNewDocument(props);
+    this.recreate = () => recreateCollection(this.coll);
+    this.create = props => this.store._internal.documentsManager.createNewInternalDocument(props);
+    this.existing = opts => this.store._internal.documentsManager.existingInternalDocument(opts);
   }
 });
 
 test('create a basic document', async function(assert) {
-  let internal = this.store._internal.documentsManager.createNewInternalDocument({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+  let internal = this.create({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
   assert.ok(internal);
 
   let doc = internal.model(true);
@@ -33,6 +36,41 @@ test('create a basic document', async function(assert) {
       "isSaving": false
     }
   });
+});
+
+test('second save blows up on local conflict', async function(assert) {
+  await this.recreate();
+
+  let first = this.create({ collection: 'ducks', id: 'yellow', data: { name: 'Yellow' } });
+  await first.save();
+
+  let second = this.create({ collection: 'ducks', id: 'yellow', data: { name: 'Another' } });
+
+  try {
+    await second.save();
+  } catch(err) {
+    assert.deepEqual(err.toJSON(), {
+      "error": "document",
+      "reason": "conflict"
+    });
+  }
+});
+
+test('existing and save blows up on local conflict', async function(assert) {
+  await this.recreate();
+
+  this.existing({ collection: 'ducks', id: 'yellow', data: { name: 'Yellow' }, create: true });
+
+  let second = this.create({ collection: 'ducks', id: 'yellow', data: { name: 'Another' } });
+
+  try {
+    await second.save();
+  } catch(err) {
+    assert.deepEqual(err.toJSON(), {
+      "error": "document",
+      "reason": "conflict"
+    });
+  }
 });
 
 test.skip('create a document', function(assert) {

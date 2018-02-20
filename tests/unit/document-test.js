@@ -1,6 +1,6 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import { recreateCollection } from '../helpers/runloop';
+import { recreateCollection, waitForCollectionSize } from '../helpers/runloop';
 import { all } from 'rsvp';
 
 module('document', {
@@ -73,6 +73,44 @@ test('save local document', async function(assert) {
     },
     "data": {
       "name": "Yellow"
+    }
+  });
+});
+
+test('load with optional, wait for document to appear', async function(assert) {
+  await this.recreate();
+
+  let doc = this.existing({ id: 'yellow', collection: 'ducks', create: true });
+  await doc.load({ optional: true });
+
+  assert.deepEqual(doc.model(true).get('serialized').state, {
+    "error": null,
+    "isDirty": false,
+    "isError": false,
+    "isExisting": false,
+    "isNew": false,
+    "isSaving": false
+  });
+
+  await this.firestore.doc('ducks/yellow').set({ name: 'Yellow' });
+  await waitForCollectionSize(this.firestore.collection('ducks'), 1);
+
+  assert.deepEqual(doc.model(true).get('serialized'), {
+    "data": {
+      "name": "Yellow"
+    },
+    "ref": {
+      "collection": "ducks",
+      "id": "yellow",
+      "path": "ducks/yellow"
+    },
+    "state": {
+      "error": null,
+      "isDirty": false,
+      "isError": false,
+      "isExisting": true,
+      "isNew": false,
+      "isSaving": false
     }
   });
 });
