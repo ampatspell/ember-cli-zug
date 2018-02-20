@@ -1,6 +1,6 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import { recreateCollection, waitForCollectionSize } from '../helpers/runloop';
+import { recreateCollection, waitForCollectionSize, wait } from '../helpers/runloop';
 import { all } from 'rsvp';
 
 module('document', {
@@ -269,9 +269,24 @@ test('update document', async function(assert) {
     "isSaving": false
   });
 
-  await doc.save();
+  let promise = doc.save();
 
-  assert.deepEqual(model.get('serialized').state, {
+  await wait();
+
+  assert.deepEqual(model.get('serialized.state'), {
+    "error": null,
+    "isDirty": true,
+    "isError": false,
+    "isExisting": undefined,
+    "isLoaded": true,
+    "isLoading": false,
+    "isNew": true,
+    "isSaving": true
+  });
+
+  await promise;
+
+  assert.deepEqual(model.get('serialized.state'), {
     "error": null,
     "isLoading": false,
     "isLoaded": true,
@@ -300,7 +315,22 @@ test('update document', async function(assert) {
     "isSaving": false
   });
 
-  await model.save();
+  promise = model.save();
+
+  await wait();
+
+  assert.deepEqual(model.get('serialized.state'), {
+    "error": null,
+    "isDirty": true,
+    "isError": false,
+    "isExisting": true,
+    "isLoaded": true,
+    "isLoading": false,
+    "isNew": false,
+    "isSaving": true
+  });
+
+  await promise;
 
   ref = await this.coll.doc('yellow').get();
   assert.deepEqual(ref.data(), {
@@ -477,4 +507,122 @@ test('document isLoading is true for created existing doc', async function(asser
 
   model.load();
   await this.stores.settle();
+});
+
+test('delete saved document', async function(assert) {
+  await this.recreate();
+  let doc = this.local({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+  let model = doc.model(true);
+
+  await doc.save();
+
+  assert.deepEqual(model.get('serialized'), {
+    "data": {
+      "name": "Yellow"
+    },
+    "ref": {
+      "collection": "ducks",
+      "id": "yellow",
+      "path": "ducks/yellow"
+    },
+    "state": {
+      "error": null,
+      "isDirty": false,
+      "isError": false,
+      "isExisting": true,
+      "isLoaded": true,
+      "isLoading": false,
+      "isNew": false,
+      "isSaving": false
+    }
+  });
+
+  let promise = doc.delete();
+
+  await wait();
+
+  assert.deepEqual(model.get('serialized'), {
+    "data": {
+      "name": "Yellow"
+    },
+    "ref": {
+      "collection": "ducks",
+      "id": "yellow",
+      "path": "ducks/yellow"
+    },
+    "state": {
+      "error": null,
+      "isDirty": false,
+      "isError": false,
+      "isExisting": true,
+      "isLoaded": true,
+      "isLoading": false,
+      "isNew": false,
+      "isSaving": true
+    }
+  });
+
+  await promise;
+
+  assert.deepEqual(model.get('serialized'), {
+    "data": {
+      "name": "Yellow"
+    },
+    "ref": {
+      "collection": "ducks",
+      "id": "yellow",
+      "path": "ducks/yellow"
+    },
+    "state": {
+      "error": null,
+      "isDirty": false,
+      "isError": false,
+      "isExisting": false,
+      "isLoaded": true,
+      "isLoading": false,
+      "isNew": false,
+      "isSaving": false
+    }
+  });
+});
+
+test('delete local document', async function(assert) {
+  let doc = this.local({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+  try {
+    await doc.delete();
+    assert.ok(false, 'should reject');
+  } catch(err) {
+    assert.deepEqual(err.toJSON(), {
+      "error": "local",
+      "reason": "document is not yet saved"
+    });
+  }
+});
+
+test('delete not yet loaded doc', async function(assert) {
+  await this.recreate();
+  await this.coll.doc('yellow').set({ name: 'Yellow' });
+
+  let doc = this.existing({ collection: 'ducks', id: 'yellow', create: true });
+
+  await doc.delete();
+
+  assert.deepEqual(doc.model(true).get('serialized'), {
+    "data": {},
+    "ref": {
+      "collection": "ducks",
+      "id": "yellow",
+      "path": "ducks/yellow"
+    },
+    "state": {
+      "error": null,
+      "isDirty": false,
+      "isError": false,
+      "isExisting": false,
+      "isLoaded": true,
+      "isLoading": true,
+      "isNew": false,
+      "isSaving": false
+    }
+  });
 });

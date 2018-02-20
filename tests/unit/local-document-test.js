@@ -52,8 +52,8 @@ test('second save blows up on local conflict', async function(assert) {
     await second.save();
   } catch(err) {
     assert.deepEqual(err.toJSON(), {
-      "error": "document",
-      "reason": "conflict"
+      "error": "conflict",
+      "reason": "document with the same path already exists"
     });
   }
 });
@@ -69,8 +69,8 @@ test('existing and save blows up on local conflict', async function(assert) {
     await second.save();
   } catch(err) {
     assert.deepEqual(err.toJSON(), {
-      "error": "document",
-      "reason": "conflict"
+      "error": "conflict",
+      "reason": "document with the same path already exists"
     });
   }
 });
