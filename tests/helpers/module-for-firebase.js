@@ -43,8 +43,8 @@ export default function(name, options={}) {
       this.lookup = name => this.instance.lookup(name);
       this.register = (name, factory) => this.instance.register(name, factory);
 
-      cached(this, 'store', () => this.lookup('models:stores').store('store', firebaseOptions(this.instance)));
-      getter(this, 'firestore', () => this.store.firestore);
+      cached(this, 'store', () => this.lookup('models:stores').createContext('store', firebaseOptions(this.instance)));
+      getter(this, 'firestore', () => this.store._internal.firestore);
 
       let beforeEach = options.beforeEach && options.beforeEach.apply(this, arguments);
       return resolve(beforeEach);

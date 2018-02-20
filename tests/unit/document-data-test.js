@@ -12,7 +12,7 @@ const Thing = EmberObject.extend({
 
 module('document-data', {
   beforeEach() {
-    this.manager = this.store._internal.data;
+    this.manager = this.store._internal.dataManager;
   }
 });
 
@@ -21,13 +21,13 @@ test('manager exists', function(assert) {
 });
 
 test('create empty object', function(assert) {
-  let object = this.manager.createObject();
+  let object = this.manager.createInternalObject().model(true);
   assert.ok(object);
   assert.ok(DataObject.detectInstance(object));
 });
 
 test('set primitive', function(assert) {
-  let object = this.manager.createObject();
+  let object = this.manager.createInternalObject().model(true);
   object.set('name', 'duck');
   assert.equal(object.get('name'), 'duck');
   assert.equal(object._internal.content.name, 'duck');
@@ -35,7 +35,7 @@ test('set primitive', function(assert) {
 });
 
 test('unset primitive', function(assert) {
-  let object = this.manager.createObject();
+  let object = this.manager.createInternalObject().model(true);
   object.set('name', 'duck');
   object.set('name', undefined);
   assert.equal(object.get('name'), undefined);
@@ -43,7 +43,7 @@ test('unset primitive', function(assert) {
 });
 
 test('set object', function(assert) {
-  let object = this.manager.createObject();
+  let object = this.manager.createInternalObject().model(true);
   object.set('person', { name: 'duck' });
   assert.ok(DataObject.detectInstance(object.get('person')));
   assert.equal(object.get('person.name'), 'duck');
@@ -51,7 +51,7 @@ test('set object', function(assert) {
 });
 
 test('update object', function(assert) {
-  let object = this.manager.createObject();
+  let object = this.manager.createInternalObject().model(true);
   object.set('person', { name: 'duck', type: 'cute' });
   let person = object.get('person');
 
@@ -66,7 +66,7 @@ test('update object', function(assert) {
 });
 
 test('serialize nested object', function(assert) {
-  let object = this.manager.createObject();
+  let object = this.manager.createInternalObject().model(true);
   object.set('id', '123');
   object.set('person', { name: 'duck', type: 'cute' });
   assert.deepEqual(object.toJSON(), {
@@ -79,7 +79,7 @@ test('serialize nested object', function(assert) {
 })
 
 test('create object with nested object', function(assert) {
-  let object = this.manager.createObject({ person: { name: 'duck', type: 'cute' } });
+  let object = this.manager.createInternalObject(null, { person: { name: 'duck', type: 'cute' } }).model(true);
   let person = object.get('person');
 
   assert.ok(object._internal.parent === null);
@@ -94,8 +94,8 @@ test('create object with nested object', function(assert) {
 });
 
 test('set internal object', function(assert) {
-  let person = this.manager.createObject({ name: 'duck', type: 'cute' } );
-  let object = this.manager.createObject({ person });
+  let person = this.manager.createInternalObject(null, { name: 'duck', type: 'cute' } ).model(true);
+  let object = this.manager.createInternalObject(null, { person }).model(true);
 
   assert.ok(person._internal.parent === object._internal);
 
@@ -108,8 +108,8 @@ test('set internal object', function(assert) {
 });
 
 test('replace internal object', function(assert) {
-  let person = this.manager.createObject({ name: 'duck', type: 'cute' });
-  let object = this.manager.createObject({ person });
+  let person = this.manager.createInternalObject(null, { name: 'duck', type: 'cute' }).model(true);
+  let object = this.manager.createInternalObject(null, { person }).model(true);
 
   assert.ok(person._internal.parent === object._internal);
 
@@ -120,7 +120,7 @@ test('replace internal object', function(assert) {
     }
   });
 
-  let second = this.manager.createObject({ name: 'zeeba' } );
+  let second = this.manager.createInternalObject(null, { name: 'zeeba' } ).model(true);
 
   object.set('person', second);
 
@@ -135,9 +135,9 @@ test('replace internal object', function(assert) {
 });
 
 test('set already attached object clones it', function(assert) {
-  let object = this.manager.createObject({ person: { name: 'duck', type: 'cute' } });
+  let object = this.manager.createInternalObject(null, { person: { name: 'duck', type: 'cute' } }).model(true);
   let source = object.get('person');
-  let second = this.manager.createObject();
+  let second = this.manager.createInternalObject().model(true);
   second.set('person', source);
   let target = second.get('person');
 
@@ -157,7 +157,7 @@ test('set already attached object clones it', function(assert) {
 
 test('set instance with toJSON', function(assert) {
   let person = Thing.create({ name: 'zeeba' });
-  let object = this.manager.createObject({ person });
+  let object = this.manager.createInternalObject(null, { person }).model(true);
   assert.deepEqual(object.toJSON(), {
     "person": {
       "name": "zeeba"
@@ -169,7 +169,7 @@ test('set instance with toJSON', function(assert) {
 
 test('set instance without toJSON', function(assert) {
   let person = EmberObject.create({ name: 'zeeba' });
-  let object = this.manager.createObject({ person });
+  let object = this.manager.createInternalObject(null, { person }).model(true);
   assert.deepEqual(object.toJSON(), {});
 });
 
@@ -181,13 +181,13 @@ test('didUpdateChildInternalData', function(assert) {
       assert.ok(notify);
     }
   };
-  let object = this.manager.createObject({ person: { name: 'duck', type: 'cute' } });
+  let object = this.manager.createInternalObject(null, { person: { name: 'duck', type: 'cute' } }).model(true);
   object._internal.attach(parent);
   object.get('person').set('name', 'zeeba');
 });
 
 test('init with array creates DataArray', function(assert) {
-  let object = this.manager.createObject({ names: [] });
+  let object = this.manager.createInternalObject(null, { names: [] }).model(true);
   let names = object.get('names');
   assert.ok(DataArray.detectInstance(names));
   assert.deepEqual(object.toJSON(), {
@@ -196,7 +196,7 @@ test('init with array creates DataArray', function(assert) {
 });
 
 test('init with array of primitives - serialize', function(assert) {
-  let object = this.manager.createObject({ names: [ 'a', 'b', 'c' ] });
+  let object = this.manager.createInternalObject(null, { names: [ 'a', 'b', 'c' ] }).model(true);
   assert.deepEqual(object.toJSON(), {
     "names": [
       "a",
@@ -207,7 +207,7 @@ test('init with array of primitives - serialize', function(assert) {
 });
 
 test('init with array of objects - serialize', function(assert) {
-  let object = this.manager.createObject({ names: [ { name: 'a' }, { name: 'b' }, { name: 'c' } ] });
+  let object = this.manager.createInternalObject(null, { names: [ { name: 'a' }, { name: 'b' }, { name: 'c' } ] }).model(true);
   assert.deepEqual(object.toJSON(), {
     "names": [
       { "name": "a" },
@@ -218,7 +218,7 @@ test('init with array of objects - serialize', function(assert) {
 });
 
 test('add and get primitive in array', function(assert) {
-  let object = this.manager.createObject({ names: [] });
+  let object = this.manager.createInternalObject(null, { names: [] }).model(true);
   object.get('names').pushObject('a');
   assert.deepEqual(object.toJSON(), { "names": [ "a" ] });
   let value = object.get('names.firstObject');
@@ -226,7 +226,7 @@ test('add and get primitive in array', function(assert) {
 });
 
 test('add and get object from array', function(assert) {
-  let object = this.manager.createObject({ names: [] });
+  let object = this.manager.createInternalObject(null, { names: [] }).model(true);
   object.get('names').pushObject({ name: 'a' });
   assert.deepEqual(object.toJSON(), { "names": [ { "name": "a" } ] });
   let value = object.get('names.firstObject');
@@ -234,7 +234,7 @@ test('add and get object from array', function(assert) {
 });
 
 test('parent serialized', function(assert) {
-  let object = this.manager.createObject();
+  let object = this.manager.createInternalObject().model(true);
   assert.deepEqual(object.get('serialized'), {});
 
   object.set('names', []);
@@ -287,26 +287,26 @@ test('parent serialized', function(assert) {
 });
 
 test('update property: array to array', function(assert) {
-  let object = this.manager.createObject();
+  let object = this.manager.createInternalObject().model(true);
   assert.deepEqual(object.get('serialized'), {});
 
-  this.manager.updateObject(object, { names: [ 'a' ] });
+  this.manager.updateInternalObject(object._internal, { names: [ 'a' ] });
   assert.deepEqual(object.get('serialized'), { names: [ 'a' ] });
 
-  this.manager.updateObject(object, { names: [ { ok: true } ] });
+  this.manager.updateInternalObject(object._internal, { names: [ { ok: true } ] });
   assert.deepEqual(object.get('serialized'), { names: [ { ok: true } ] });
 });
 
 test('update property: array to object', function(assert) {
-  let object = this.manager.createObject();
+  let object = this.manager.createInternalObject().model(true);
   assert.deepEqual(object.get('serialized'), {});
 
-  this.manager.updateObject(object, { names: [ 'a' ] });
+  this.manager.updateInternalObject(object._internal, { names: [ 'a' ] });
   assert.deepEqual(object.get('serialized'), { names: [ 'a' ] });
 
   let one = object.get('names');
 
-  this.manager.updateObject(object, { names: { ok: true } });
+  this.manager.updateInternalObject(object._internal, { names: { ok: true } });
   assert.deepEqual(object.get('serialized'), { names: { ok: true } });
 
   let two = object.get('names');
@@ -317,7 +317,7 @@ test('update property: array to object', function(assert) {
 });
 
 test('remove object by index from array is detached', function(assert) {
-  let object = this.manager.createObject({ names: [ { name: 'a' }]});
+  let object = this.manager.createInternalObject(null, { names: [ { name: 'a' }]}).model(true);
   let name = object.get('names.firstObject');
   assert.ok(name._internal.parent === object._internal.content.names);
   object.get('names').removeAt(0);
@@ -325,7 +325,7 @@ test('remove object by index from array is detached', function(assert) {
 });
 
 test('remove object from array is detached', function(assert) {
-  let object = this.manager.createObject({ names: [ { name: 'a' }]});
+  let object = this.manager.createInternalObject(null, { names: [ { name: 'a' }]}).model(true);
   let name = object.get('names.firstObject');
   assert.ok(name._internal.parent === object._internal.content.names);
   object.get('names').removeObject(name);
@@ -333,7 +333,7 @@ test('remove object from array is detached', function(assert) {
 });
 
 test('overwrite array', function(assert) {
-  let object = this.manager.createObject({ names: [ { name: 'a' }]});
+  let object = this.manager.createInternalObject(null, { names: [ { name: 'a' }]}).model(true);
   object.set('names', [ { name: 'b' } ]);
   assert.deepEqual(object.get('serialized'), {
     "names": [
@@ -345,8 +345,8 @@ test('overwrite array', function(assert) {
 });
 
 test('overwrite array with model array', function(assert) {
-  let names = this.manager.createArray([ { name: 'b' } ]);
-  let object = this.manager.createObject({ names: [ { name: 'a' } ]});
+  let names = this.manager.createInternalArray(null, [ { name: 'b' } ]).model(true);
+  let object = this.manager.createInternalObject(null, { names: [ { name: 'a' } ]}).model(true);
 
   let prev = object.get('names');
 
@@ -368,7 +368,7 @@ test('overwrite array with model array', function(assert) {
 });
 
 test('array stops observing when detached', function(assert) {
-  let object = this.manager.createObject({ names: [ { name: 'a' } ]});
+  let object = this.manager.createInternalObject(null, { names: [ { name: 'a' } ]}).model(true);
   let names = object.get('names');
   assert.ok(names._internal.observing);
   object.set('names');
@@ -378,8 +378,8 @@ test('array stops observing when detached', function(assert) {
 });
 
 test('array is not initially observing', function(assert) {
-  let names = this.manager.createArray([ { name: 'a' } ]);
+  let names = this.manager.createInternalArray(null, [ { name: 'a' } ]).model(true);
   assert.ok(!names._internal.observing);
-  this.manager.createObject({ names });
+  this.manager.createInternalObject(null, { names }).model(true);
   assert.ok(names._internal.observing);
 });
