@@ -626,3 +626,24 @@ test('delete not yet loaded doc', async function(assert) {
     }
   });
 });
+
+test('resolve non-dirty doc save', async function(assert) {
+  await this.recreate();
+
+  let doc = this.local({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+  await doc.save();
+
+  assert.ok(!doc.state.isDirty);
+
+  doc.model(true).set('data.name', 'modified');
+
+  assert.ok(doc.state.isDirty);
+
+  doc.state.isDirty = false;
+  await doc.save();
+
+  let snapshot = await this.coll.doc('yellow').get();
+  assert.deepEqual(snapshot.data(), {
+    "name": "Yellow"
+  });
+});
