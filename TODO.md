@@ -1,6 +1,6 @@
 # TODO
 
-* document dirty
+* document isDirty, isLoaded
 * data update instead of replace
 * delete document
 * proper query loader implementation

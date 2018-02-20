@@ -158,10 +158,10 @@ test('existing model is removed from identity on destroy', function(assert) {
   assert.ok(this.identity.ref['ducks/yellow'] === undefined);
 });
 
-test.skip('save document in collection', async function(assert) {
+test('save document in collection', async function(assert) {
   await this.recreate();
 
-  let doc = this.create({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+  let doc = this.local({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
   await doc.save();
 
   let ref = await this.coll.doc('yellow').get();
@@ -291,49 +291,58 @@ test.skip('load document', async function(assert) {
   });
 });
 
-test.skip('load document with settle', async function(assert) {
+test('load document with settle', async function(assert) {
   await this.recreate();
   await this.coll.doc('yellow').set({ name: 'Yellow' });
 
-  this.load({ collection: 'ducks', id: 'yellow' });
+  let doc = this.existing({ collection: 'ducks', id: 'yellow', create: true });
+  let model = doc.model(true);
 
-  await this.store.settle();
-
-  let doc = this.existing({ collection: 'ducks', id: 'yellow' });
-
-  assert.deepEqual(doc.get('serialized'), {
-    "collection": "ducks",
-    "id": "yellow",
-    "path": "ducks/yellow",
-    "exists": true,
-    "data": {
-      name: 'Yellow'
+  assert.deepEqual(model.get('serialized'), {
+    "data": {},
+    "ref": {
+      "collection": "ducks",
+      "id": "yellow",
+      "path": "ducks/yellow"
+    },
+    "state": {
+      "error": null,
+      "isDirty": true,
+      "isError": false,
+      "isExisting": undefined,
+      "isNew": false,
+      "isSaving": false
     }
   });
-});
 
-test.skip('settle store', async function(assert) {
-  await this.coll.doc('yellow').set({ name: 'Yellow' });
-  let doc = this.existing({ collection: 'ducks', id: 'yellow' });
+  model.load();
 
-  doc.load();
   await this.store.settle();
 
-  assert.deepEqual(doc.get('serialized'), {
-    "id": "yellow",
-    "collection": "ducks",
-    "path": "ducks/yellow",
-    "exists": true,
+  assert.deepEqual(model.get('serialized'), {
     "data": {
       "name": "Yellow"
+    },
+    "ref": {
+      "collection": "ducks",
+      "id": "yellow",
+      "path": "ducks/yellow"
+    },
+    "state": {
+      "error": null,
+      "isDirty": false,
+      "isError": false,
+      "isExisting": true,
+      "isNew": false,
+      "isSaving": false
     }
   });
 });
 
-test.skip('load missing document', async function(assert) {
+test('load missing document', async function(assert) {
   await this.recreate();
   try {
-    await this.load({ collection: 'ducks', id: 'yellow' });
+    await this.existing({ collection: 'ducks', id: 'yellow', create: true }).load();
     assert.ok(false, 'should throw');
   } catch(err) {
     assert.deepEqual(err.toJSON(), {
