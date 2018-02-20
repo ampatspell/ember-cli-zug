@@ -152,7 +152,7 @@ test('create document with id', function(assert) {
   });
 });
 
-test.skip('updates', function(assert) {
+test('updates', function(assert) {
   let doc = this.create({});
   let model = doc.model(true);
   let mut = (values, expected) => {
