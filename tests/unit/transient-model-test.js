@@ -14,7 +14,7 @@ module('transient-model', {
   }
 });
 
-test('create model', function(assert) {
+test.skip('create model', function(assert) {
   let model = this.create('duck');
   assert.ok(model);
   assert.ok(model._internal);
@@ -22,7 +22,7 @@ test('create model', function(assert) {
   assert.ok(Duck.detectInstance(model));
 });
 
-test('model is registered in identity and all are destroyed on context destroy', function(assert) {
+test.skip('model is registered in identity and all are destroyed on context destroy', function(assert) {
   let model = this.create('duck');
   assert.ok(this.identity._storage.all.includes(model._internal));
 
@@ -32,7 +32,7 @@ test('model is registered in identity and all are destroyed on context destroy',
   assert.ok(model._internal.isDestroyed);
 });
 
-test('model is registered in identity and removed on destroy', function(assert) {
+test.skip('model is registered in identity and removed on destroy', function(assert) {
   let model = this.create('duck');
   assert.ok(this.identity._storage.all.includes(model._internal));
 

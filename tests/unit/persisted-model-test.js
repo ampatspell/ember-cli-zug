@@ -18,14 +18,14 @@ module('persisted-model', {
   }
 });
 
-test('create model creates persisted model', function(assert) {
+test.skip('create model creates persisted model', function(assert) {
   let model = this.create('duck');
   assert.ok(model);
   assert.ok(model._internal instanceof InternalPersistedModel);
   assert.ok(Duck.detectInstance(model));
 });
 
-test('model has doc', function(assert) {
+test.skip('model has doc', function(assert) {
   let model = this.create('duck');
   assert.ok(model.get('doc'));
 });
