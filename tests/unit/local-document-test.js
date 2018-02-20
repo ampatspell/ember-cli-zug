@@ -9,7 +9,7 @@ module('local-document', {
 });
 
 test('create a basic document', async function(assert) {
-  let internal = this.store._internal.documentsManager.createNewInternalDocument({ id: 'yellow', collection: 'ducks' }, { name: 'Yellow' });
+  let internal = this.store._internal.documentsManager.createNewInternalDocument({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
   assert.ok(internal);
 
   let doc = internal.model(true);

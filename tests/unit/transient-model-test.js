@@ -10,16 +10,26 @@ module('transient-model', {
   beforeEach() {
     this.register('model:duck', Duck);
     this.identity = this.store._internal.identity.models;
-    this.create = name => this.store._internal.models.createModel(name);
   }
 });
 
-test.skip('create model', function(assert) {
-  let model = this.create('duck');
+test('create model', function(assert) {
+  let model = this.store.model({ name: 'duck', data: { ok: true } });
   assert.ok(model);
   assert.ok(model._internal);
   assert.ok(model._internal instanceof InternalTransientModel);
   assert.ok(Duck.detectInstance(model));
+  assert.ok(model.get('ok'));
+});
+
+test.skip('create model with the same id throws', async function(assert) {
+  this.store.model({ name: 'duck', id: 'thing', data: { ok: true } });
+  try {
+    this.store.model({ name: 'duck', id: 'thing', data: { ok: true } });
+    assert.ok(false, 'should throw');
+  } catch(err) {
+    assert.deepEqual(err.toJSON(), {});
+  }
 });
 
 test.skip('model is registered in identity and all are destroyed on context destroy', function(assert) {

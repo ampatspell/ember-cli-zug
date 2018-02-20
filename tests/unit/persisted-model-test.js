@@ -13,13 +13,30 @@ module('persisted-model', {
       { __name__: 'yellow', name: 'yellow' }
     ]);
     this.register('model:duck', Duck);
-    this.identity = this.store._internal.identity.models;
-    this.create = name => this.store._internal.models.createModel(name);
+    this.identity = this.store._internal.identity.models.storage;
+    // this.create = name => this.store._internal.models.createModel(name);
   }
 });
 
-test.skip('create model creates persisted model', function(assert) {
-  let model = this.create('duck');
+test('create local model', function(assert) {
+  let model = this.store.model({ name: 'duck', id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+  assert.ok(model);
+  assert.ok(model._internal instanceof InternalPersistedModel);
+  assert.ok(Duck.detectInstance(model));
+  assert.ok(model.get('doc'));
+  assert.deepEqual(model.get('doc.serialized'), {
+    "exists": undefined,
+    "id": "yellow",
+    "collection": "ducks",
+    "path": "ducks/yellow",
+    "data": {
+      "name": "Yellow"
+    }
+  });
+});
+
+test('create existing model', function(assert) {
+  let model = this.store.existing({ name: 'duck', id: 'yellow', collection: 'ducks', create: true });
   assert.ok(model);
   assert.ok(model._internal instanceof InternalPersistedModel);
   assert.ok(Duck.detectInstance(model));
