@@ -339,6 +339,37 @@ test('load document with settle', async function(assert) {
   });
 });
 
+test('load document with stores.settle', async function(assert) {
+  await this.recreate();
+  await this.coll.doc('yellow').set({ name: 'Yellow' });
+
+  let doc = this.existing({ collection: 'ducks', id: 'yellow', create: true });
+  let model = doc.model(true);
+
+  model.load();
+
+  await this.stores.settle();
+
+  assert.deepEqual(model.get('serialized'), {
+    "data": {
+      "name": "Yellow"
+    },
+    "ref": {
+      "collection": "ducks",
+      "id": "yellow",
+      "path": "ducks/yellow"
+    },
+    "state": {
+      "error": null,
+      "isDirty": false,
+      "isError": false,
+      "isExisting": true,
+      "isNew": false,
+      "isSaving": false
+    }
+  });
+});
+
 test('load missing document', async function(assert) {
   await this.recreate();
   try {
