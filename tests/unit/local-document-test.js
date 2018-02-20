@@ -16,12 +16,21 @@ test('create a basic document', async function(assert) {
   assert.ok(doc);
 
   assert.deepEqual(doc.get('serialized'), {
-    "id": "yellow",
-    "collection": "ducks",
-    "path": "ducks/yellow",
-    "exists": undefined,
     "data": {
       "name": "Yellow"
+    },
+    "ref": {
+      "collection": "ducks",
+      "id": "yellow",
+      "path": "ducks/yellow"
+    },
+    "state": {
+      "error": null,
+      "isDirty": true,
+      "isError": false,
+      "isExisting": undefined,
+      "isNew": true,
+      "isSaving": false
     }
   });
 });

@@ -25,12 +25,21 @@ test('create local model', function(assert) {
   assert.ok(Duck.detectInstance(model));
   assert.ok(model.get('doc'));
   assert.deepEqual(model.get('doc.serialized'), {
-    "exists": undefined,
-    "id": "yellow",
-    "collection": "ducks",
-    "path": "ducks/yellow",
     "data": {
       "name": "Yellow"
+    },
+    "ref": {
+      "collection": "ducks",
+      "id": "yellow",
+      "path": "ducks/yellow"
+    },
+    "state": {
+      "error": null,
+      "isDirty": true,
+      "isError": false,
+      "isExisting": undefined,
+      "isNew": true,
+      "isSaving": false
     }
   });
 });

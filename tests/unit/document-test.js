@@ -10,9 +10,6 @@ module('document', {
     this.identity = this.store._internal.identity.documents.storage;
     this.local = opts => this.store._internal.documentsManager.createNewInternalDocument(opts);
     this.existing = opts => this.store._internal.documentsManager.existingInternalDocument(opts);
-    // this.create = props => this.store._internal.documents.createNewDocument(props);
-    // this.load = opts => this.store._internal.documents.loadExistingDocument(opts);
-    // this.existing = opts => this.store._internal.documents.createExistingDocument(opts);
   }
 });
 
@@ -22,6 +19,28 @@ test('save local document', async function(assert) {
   assert.ok(!this.existing({ id: 'yellow', collection: 'ducks' }));
 
   let doc = this.local({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+  let model = doc.model(true);
+
+  assert.ok(model);
+
+  assert.deepEqual(model.get('serialized'), {
+    "ref": {
+      "id": "yellow",
+      "collection": "ducks",
+      "path": "ducks/yellow"
+    },
+    "state": {
+      "isNew": true,
+      "isDirty": true,
+      "isSaving": false,
+      "isExisting": undefined,
+      "isError": false,
+      "error": null
+    },
+    "data": {
+      "name": "Yellow"
+    }
+  });
 
   assert.ok(!this.existing({ id: 'yellow', collection: 'ducks' }));
 
@@ -34,12 +53,54 @@ test('save local document', async function(assert) {
   assert.ok(this.identity.ref['ducks/yellow'] === doc);
 
   assert.ok(this.existing({ id: 'yellow', collection: 'ducks' }) === doc);
+
+  let snapshot = await this.firestore.doc('ducks/yellow').get();
+  assert.deepEqual(snapshot.data(), { "name": "Yellow" });
+
+  assert.deepEqual(model.get('serialized'), {
+    "ref": {
+      "id": "yellow",
+      "collection": "ducks",
+      "path": "ducks/yellow"
+    },
+    "state": {
+      "isNew": false,
+      "isDirty": false,
+      "isSaving": false,
+      "isExisting": true,
+      "isError": false,
+      "error": null
+    },
+    "data": {
+      "name": "Yellow"
+    }
+  });
 });
 
 test('existing with create', async function(assert) {
   assert.ok(!this.existing({ id: 'yellow', collection: 'ducks' }));
 
   let doc = this.existing({ id: 'yellow', collection: 'ducks', create: true });
+
+  let model = doc.model(true);
+  assert.ok(model);
+
+  assert.deepEqual(model.get('serialized'), {
+    "ref": {
+      "id": "yellow",
+      "collection": "ducks",
+      "path": "ducks/yellow"
+    },
+    "state": {
+      "isNew": false,
+      "isDirty": true,
+      "isSaving": false,
+      "isExisting": undefined,
+      "isError": false,
+      "error": null
+    },
+    "data": {}
+  });
 
   assert.ok(doc);
   assert.ok(this.identity.all.includes(doc));
@@ -72,15 +133,15 @@ test.skip('save document in collection', async function(assert) {
   });
 });
 
-test.skip('save document replaces reference', async function(assert) {
+test('save document replaces reference', async function(assert) {
   await this.recreate();
 
-  let doc = this.create({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
-  let local = doc._internal._reference;
+  let doc = this.local({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+  let local = doc._reference;
 
   await doc.save();
 
-  let persisted = doc._internal._reference;
+  let persisted = doc._reference;
 
   assert.ok(local !== persisted);
   assert.ok(local.isDestroyed);
@@ -94,32 +155,63 @@ test.skip('save document replaces reference', async function(assert) {
   });
 });
 
-test.skip('save document notifies id, path change', async function(assert) {
-  let doc = this.create({ collection: 'ducks', data: { name: 'Yellow' } });
+test('save document notifies id, path change', async function(assert) {
+  let doc = this.local({ collection: 'ducks', data: { name: 'Yellow' } });
+  let model = doc.model(true);
 
-  assert.ok(!doc.get('id'));
-  assert.ok(!doc.get('path'));
+  assert.ok(!model.get('id'));
+  assert.ok(!model.get('path'));
 
   await doc.save();
 
-  let id = doc.get('id');
+  let id = model.get('id');
   assert.equal(id.length, 20);
-  assert.equal(doc.get('path'), `ducks/${id}`);
+  assert.equal(model.get('path'), `ducks/${id}`);
 });
 
-test.skip('update document', async function(assert) {
+test('update document', async function(assert) {
   let ref;
 
-  let doc = this.create({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+  let doc = this.local({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+  let model = doc.model(true);
+
+  assert.deepEqual(model.get('serialized').state, {
+    "error": null,
+    "isDirty": true,
+    "isError": false,
+    "isExisting": undefined,
+    "isNew": true,
+    "isSaving": false
+  });
+
   await doc.save();
+
+  assert.deepEqual(model.get('serialized').state, {
+    "error": null,
+    "isDirty": false,
+    "isError": false,
+    "isExisting": true,
+    "isNew": false,
+    "isSaving": false
+  });
 
   ref = await this.coll.doc('yellow').get();
   assert.deepEqual(ref.data(), {
     "name": "Yellow"
   });
 
-  doc.set('data.email', 'yellow.duck@gmail.com');
-  await doc.save();
+  model.set('data.email', 'yellow.duck@gmail.com');
+
+  // assert.deepEqual(model.get('serialized').state, {
+  //   "error": null,
+  //   "isDirty": true,
+  //   "isError": false,
+  //   "isExisting": true,
+  //   "isNew": false,
+  //   "isSaving": false
+  // });
+
+  await model.save();
 
   ref = await this.coll.doc('yellow').get();
   assert.deepEqual(ref.data(), {
@@ -128,10 +220,10 @@ test.skip('update document', async function(assert) {
   });
 });
 
-test.skip('multiple parallel saves', async function(assert) {
+test('multiple parallel saves', async function(assert) {
   await this.recreate();
 
-  let doc = this.create({ collection: 'ducks', data: { name: 'Yellow' } });
+  let doc = this.local({ collection: 'ducks', data: { name: 'Yellow' } });
 
   await all([
     doc.save(),
@@ -211,31 +303,4 @@ test.skip('load missing document', async function(assert) {
       reason: 'missing'
     });
   }
-});
-
-test.skip('document state for create', async function(assert) {
-  await this.recreate();
-  let doc = this.create({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
-
-  assert.deepEqual(doc.getProperties('isNew', 'isExisting', 'isSaving'), {
-    isNew: true,
-    isExisting: false,
-    isSaving: false
-  });
-
-  let promise = doc.save();
-
-  assert.deepEqual(doc.getProperties('isNew', 'isExisting', 'isSaving'), {
-    isNew: true,
-    isExisting: false,
-    isSaving: true
-  });
-
-  await promise;
-
-  assert.deepEqual(doc.getProperties('isNew', 'isExisting', 'isSaving'), {
-    isNew: false,
-    isExisting: true,
-    isSaving: false
-  });
 });
