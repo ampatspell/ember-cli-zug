@@ -8,8 +8,9 @@ const Duck = PersistedModel.extend();
 
 module('persisted-model', {
   beforeEach() {
-    this.recreate = () => recreateCollection(this.firestore.collection('ducks'), [
-      { name: 'yellow' }
+    this.coll = this.firestore.collection('ducks');
+    this.recreate = () => recreateCollection(this.coll, [
+      { __name__: 'yellow', name: 'yellow' }
     ]);
     this.register('model:duck', Duck);
     this.identity = this.store._internal.identity.models;
@@ -29,8 +30,28 @@ test('model has doc', function(assert) {
   assert.ok(model.get('doc'));
 });
 
-test.skip('load model', async function(assert) {
+test.skip('load model with path', async function(assert) {
   await this.recreate();
+  await this.coll.doc('yellow').set({ name: 'yellow' });
+
   let model = await this.store.first({ id: 'yellow', collection: 'ducks' });
+  assert.ok(model);
+});
+
+test.skip('load model with ref', async function(assert) {
+  await this.recreate();
+  let model = await this.store.first(db => db.collection('ducks').doc('yellow'));
+  assert.ok(model);
+});
+
+test.skip('load model with collection ref', async function(assert) {
+  await this.recreate();
+  let model = await this.store.first(db => db.collection('ducks'));
+  assert.ok(model);
+});
+
+test.skip('load model with query', async function(assert) {
+  await this.recreate();
+  let model = await this.store.first(db => db.collection('ducks').where('__name__', '==', 'yellow'));
   assert.ok(model);
 });
