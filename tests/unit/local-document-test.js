@@ -8,6 +8,24 @@ module('local-document', {
   }
 });
 
+test('create a basic document', async function(assert) {
+  let internal = this.store._internal.documentsManager.createNewInternalDocument({ id: 'yellow', collection: 'ducks' }, { name: 'Yellow' });
+  assert.ok(internal);
+
+  let doc = internal.model(true);
+  assert.ok(doc);
+
+  assert.deepEqual(doc.get('serialized'), {
+    "id": "yellow",
+    "collection": "ducks",
+    "path": "ducks/yellow",
+    "exists": undefined,
+    "data": {
+      "name": "Yellow"
+    }
+  });
+});
+
 test.skip('create a document', function(assert) {
   let doc = this.create({ collection: 'ducks', id: 'yellow', data: { name: 'Yellow' } });
 

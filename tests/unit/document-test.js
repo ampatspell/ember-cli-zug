@@ -13,26 +13,6 @@ module('document', {
   }
 });
 
-test('create basic document', async function(assert) {
-  await this.recreate();
-
-  let internal = this.store._internal.documentsManager.createNewInternalDocument({ id: 'yellow', collection: 'ducks' }, { name: 'Yellow' });
-  assert.ok(internal);
-
-  let doc = internal.model(true);
-  assert.ok(doc);
-
-  assert.deepEqual(doc.get('serialized'), {
-    "id": "yellow",
-    "collection": "ducks",
-    "path": "ducks/yellow",
-    "exists": undefined,
-    "data": {
-      "name": "Yellow"
-    }
-  });
-});
-
 test.skip('save document in collection', async function(assert) {
   await this.recreate();
 
