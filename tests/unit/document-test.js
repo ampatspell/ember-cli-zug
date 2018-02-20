@@ -7,10 +7,56 @@ module('document', {
   beforeEach() {
     this.coll = this.firestore.collection('ducks');
     this.recreate = () => recreateCollection(this.coll);
-    this.create = props => this.store._internal.documents.createNewDocument(props);
-    this.load = opts => this.store._internal.documents.loadExistingDocument(opts);
-    this.existing = opts => this.store._internal.documents.createExistingDocument(opts);
+    this.identity = this.store._internal.identity.documents.storage;
+    this.local = opts => this.store._internal.documentsManager.createNewInternalDocument(opts);
+    this.existing = opts => this.store._internal.documentsManager.existingInternalDocument(opts);
+    // this.create = props => this.store._internal.documents.createNewDocument(props);
+    // this.load = opts => this.store._internal.documents.loadExistingDocument(opts);
+    // this.existing = opts => this.store._internal.documents.createExistingDocument(opts);
   }
+});
+
+test('save local document', async function(assert) {
+  await this.recreate();
+
+  assert.ok(!this.existing({ id: 'yellow', collection: 'ducks' }));
+
+  let doc = this.local({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+
+  assert.ok(!this.existing({ id: 'yellow', collection: 'ducks' }));
+
+  assert.ok(doc);
+  assert.ok(this.identity.all.includes(doc));
+  assert.ok(this.identity.ref['ducks/yellow'] === undefined);
+
+  await doc.save();
+
+  assert.ok(this.identity.ref['ducks/yellow'] === doc);
+
+  assert.ok(this.existing({ id: 'yellow', collection: 'ducks' }) === doc);
+});
+
+test('existing with create', async function(assert) {
+  assert.ok(!this.existing({ id: 'yellow', collection: 'ducks' }));
+
+  let doc = this.existing({ id: 'yellow', collection: 'ducks', create: true });
+
+  assert.ok(doc);
+  assert.ok(this.identity.all.includes(doc));
+  assert.ok(this.identity.ref['ducks/yellow'] === doc);
+});
+
+test('existing model is removed from identity on destroy', function(assert) {
+  let doc = this.existing({ id: 'yellow', collection: 'ducks', create: true });
+
+  assert.ok(doc);
+  assert.ok(this.identity.all.includes(doc));
+  assert.ok(this.identity.ref['ducks/yellow'] === doc);
+
+  doc.destroy();
+
+  assert.ok(!this.identity.all.includes(doc));
+  assert.ok(this.identity.ref['ducks/yellow'] === undefined);
 });
 
 test.skip('save document in collection', async function(assert) {
