@@ -8,9 +8,9 @@
         context: {{people.context.absoluteIdentifier}}
       {{/rows.header}}
 
-      {{#each people.content as |doc|}}
-        {{#rows.row click=(action 'select' doc)}}
-          {{doc.data.name}} {{doc.data.version}}
+      {{#each people.content as |person|}}
+        {{#rows.row click=(action 'select' person)}}
+          {{person.name}} {{person.version}}
         {{/rows.row}}
       {{/each}}
 

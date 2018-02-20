@@ -1,15 +1,12 @@
 {{#ui-block/rows as |rows|}}
   {{#rows.header}}
-    Document "{{document.path}}" in {{document.context.absoluteIdentifier}}
+    Document {{document.path}} in {{document.context.absoluteIdentifier}}
   {{/rows.header}}
-  {{#rows.row}}
+  {{#rows.row click=(action 'select')}}
     {{document}}
   {{/rows.row}}
   {{#rows.row}}
     {{ui-block/json document.serialized}}
-  {{/rows.row}}
-  {{#rows.row}}
-    {{ui-block/json document.data.serialized}}
   {{/rows.row}}
   {{#each keys as |key|}}
     {{#rows.row}}

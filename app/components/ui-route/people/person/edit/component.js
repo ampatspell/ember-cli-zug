@@ -5,7 +5,7 @@ export default Component.extend({
   actions: {
     save() {
       let person = this.get('person');
-      person.incrementProperty('data.version');
+      person.incrementProperty('version');
       person.save();
     },
     cancel() {

@@ -12,10 +12,19 @@ export default Component.extend({
         keys.push({ name: key, type: 'input' });
       }
     }
+    if(keys.length === 0) {
+      keys.push({ name: 'name', type: 'input' });
+      keys.push({ name: 'email', type: 'input' });
+    }
     return keys;
   }),
 
   actions: {
+    select() {
+      let doc = this.get('document');
+      console.log(`window.doc = ${doc}`);
+      window.doc = doc;
+    },
     save() {
       let doc = this.get('document');
       doc.save();

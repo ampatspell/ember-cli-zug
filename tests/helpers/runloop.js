@@ -27,7 +27,15 @@ export const recreateCollection = async (coll, docs) => {
   if(!docs) {
     return;
   }
-  await all(docs.map(doc => coll.add(doc)));
+  await all(docs.map(doc => {
+    if(doc.__name__) {
+      let id = doc.__name__;
+      delete doc.__name__;
+      return coll.doc(id).set(doc);
+    } else {
+      return coll.add(doc);
+    }
+  }));
   await waitForCollectionSize(coll, docs.length);
 };
 

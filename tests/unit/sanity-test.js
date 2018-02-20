@@ -17,13 +17,13 @@ test('hello', function(assert) {
 });
 
 test('firebase is configured', function(assert) {
-  let store = this.store;
+  let store = this.store._internal;
   assert.ok(store.firebase);
   assert.ok(store.firestore);
 });
 
 test('firestore load', async function(assert) {
-  let firestore = this.store.firestore;
+  let firestore = this.firestore;
   let result = await firestore.collection('non-existant').get();
   assert.ok(result);
   assert.ok(result.docs);

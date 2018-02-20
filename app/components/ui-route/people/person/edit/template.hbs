@@ -1,32 +1,41 @@
 {{#ui-block/rows as |rows|}}
+
   {{#rows.header}}
     Edit person in nested context
   {{/rows.header}}
+
   {{#rows.row}}
     <div class="identity">
       <div>context: {{person.context.absoluteIdentifier}}</div>
-      <div>person: {{person}}</div>
-      <div>data: {{person.data}}</div>
+      <div>model: {{person}}</div>
+      <div>doc: {{person.doc}}</div>
+      <div>data: {{person.doc.data}}</div>
     </div>
   {{/rows.row}}
+
   {{#rows.row}}
-    {{ui-block/json person.data.serialized}}
+    {{ui-block/json person.doc.serialized}}
   {{/rows.row}}
+
   {{#rows.row}}
     <label>Name</label>
-    {{input value=person.data.name}}
+    {{input value=person.name}}
   {{/rows.row}}
+
   {{#rows.row}}
     <label>Email</label>
-    {{input value=person.data.email}}
+    {{input value=person.email}}
   {{/rows.row}}
+
   {{#rows.row}}
     <button {{action 'save'}}>Save</button>
     <button {{action 'cancel'}}>Cancel</button>
   {{/rows.row}}
+
   {{#rows.row}}
     <div class="identity">
       Note: this document edit is being run in forked context which is discarded on route transition so we get rollback for free.
     </div>
   {{/rows.row}}
+
 {{/ui-block/rows}}
