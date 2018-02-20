@@ -35,7 +35,7 @@ test('create local model', function(assert) {
   });
 });
 
-test('create existing model', function(assert) {
+test.skip('create existing model', function(assert) {
   let model = this.store.existing({ name: 'duck', id: 'yellow', collection: 'ducks', create: true });
   assert.ok(model);
   assert.ok(model._internal instanceof InternalPersistedModel);
