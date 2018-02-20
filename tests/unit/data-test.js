@@ -10,7 +10,7 @@ const Thing = EmberObject.extend({
   }
 });
 
-module('document-data', {
+module('data', {
   beforeEach() {
     this.manager = this.store._internal.dataManager;
   }
