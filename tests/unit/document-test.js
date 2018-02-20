@@ -131,7 +131,7 @@ test('existing with create', async function(assert) {
     },
     "state": {
       "isNew": false,
-      "isDirty": true,
+      "isDirty": false,
       "isSaving": false,
       "isExisting": undefined,
       "isError": false,
@@ -307,7 +307,7 @@ test('load document with settle', async function(assert) {
     },
     "state": {
       "error": null,
-      "isDirty": true,
+      "isDirty": false,
       "isError": false,
       "isExisting": undefined,
       "isNew": false,
@@ -381,4 +381,17 @@ test('load missing document', async function(assert) {
       reason: 'missing'
     });
   }
+});
+
+test('existing document is not dirty', async function(assert) {
+  let doc = this.existing({ collection: 'ducks', id: 'yellow', create: true });
+  let model = doc.model(true);
+  assert.deepEqual(model.get('serialized.state'), {
+    "error": null,
+    "isDirty": false,
+    "isError": false,
+    "isExisting": undefined,
+    "isNew": false,
+    "isSaving": false
+  });
 });
