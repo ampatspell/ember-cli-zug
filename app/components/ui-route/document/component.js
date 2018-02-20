@@ -12,6 +12,10 @@ export default Component.extend({
         keys.push({ name: key, type: 'input' });
       }
     }
+    if(keys.length === 0) {
+      keys.push({ name: 'name', type: 'input' });
+      keys.push({ name: 'email', type: 'input' });
+    }
     return keys;
   }),
 
