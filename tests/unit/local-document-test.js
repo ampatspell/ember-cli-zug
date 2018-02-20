@@ -28,6 +28,7 @@ test('create a basic document', async function(assert) {
       "path": "ducks/yellow"
     },
     "state": {
+      "isLoading": false,
       "isLoaded": true,
       "error": null,
       "isDirty": true,

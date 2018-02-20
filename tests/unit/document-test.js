@@ -31,6 +31,7 @@ test('save local document', async function(assert) {
     },
     "state": {
       "isNew": true,
+      "isLoading": false,
       "isLoaded": true,
       "isDirty": true,
       "isSaving": false,
@@ -66,6 +67,7 @@ test('save local document', async function(assert) {
     },
     "state": {
       "isNew": false,
+      "isLoading": false,
       "isLoaded": true,
       "isDirty": false,
       "isSaving": false,
@@ -90,6 +92,7 @@ test('load with optional, wait for document to appear', async function(assert) {
     "isError": false,
     "isExisting": undefined,
     "isNew": false,
+    "isLoading": true,
     "isLoaded": false,
     "isSaving": false
   });
@@ -102,6 +105,7 @@ test('load with optional, wait for document to appear', async function(assert) {
     "isError": false,
     "isExisting": false,
     "isNew": false,
+    "isLoading": false,
     "isLoaded": true,
     "isSaving": false
   });
@@ -124,6 +128,7 @@ test('load with optional, wait for document to appear', async function(assert) {
       "isError": false,
       "isExisting": true,
       "isNew": false,
+      "isLoading": false,
       "isLoaded": true,
       "isSaving": false
     }
@@ -145,6 +150,7 @@ test('existing with create', async function(assert) {
       "path": "ducks/yellow"
     },
     "state": {
+      "isLoading": true,
       "isNew": false,
       "isLoaded": false,
       "isDirty": false,
@@ -231,6 +237,7 @@ test('update document', async function(assert) {
 
   assert.deepEqual(model.get('serialized').state, {
     "error": null,
+    "isLoading": false,
     "isLoaded": true,
     "isDirty": true,
     "isError": false,
@@ -243,6 +250,7 @@ test('update document', async function(assert) {
 
   assert.deepEqual(model.get('serialized').state, {
     "error": null,
+    "isLoading": false,
     "isLoaded": true,
     "isDirty": false,
     "isError": false,
@@ -324,6 +332,7 @@ test('load document with settle', async function(assert) {
       "path": "ducks/yellow"
     },
     "state": {
+      "isLoading": true,
       "isLoaded": false,
       "error": null,
       "isDirty": false,
@@ -348,6 +357,7 @@ test('load document with settle', async function(assert) {
       "path": "ducks/yellow"
     },
     "state": {
+      "isLoading": false,
       "isLoaded": true,
       "error": null,
       "isDirty": false,
@@ -380,6 +390,7 @@ test('load document with stores.settle', async function(assert) {
       "path": "ducks/yellow"
     },
     "state": {
+      "isLoading": false,
       "isLoaded": true,
       "error": null,
       "isDirty": false,
@@ -408,6 +419,7 @@ test('existing document is not dirty, not loaded', async function(assert) {
   let doc = this.existing({ collection: 'ducks', id: 'yellow', create: true });
   let model = doc.model(true);
   assert.deepEqual(model.get('serialized.state'), {
+    "isLoading": true,
     "error": null,
     "isDirty": false,
     "isError": false,
@@ -427,6 +439,7 @@ test('existing document after load is loaded', async function(assert) {
   await model.load({ optional: true });
 
   assert.deepEqual(model.get('serialized.state'), {
+    "isLoading": false,
     "error": null,
     "isDirty": false,
     "isError": false,
@@ -435,4 +448,26 @@ test('existing document after load is loaded', async function(assert) {
     "isLoaded": true,
     "isSaving": false
   });
+});
+
+test('document isLoading is true for created existing doc', async function(assert) {
+  await this.recreate();
+  await this.coll.doc('yellow').set({ name: 'Yellow' });
+
+  let doc = this.existing({ collection: 'ducks', id: 'yellow', create: true });
+  let model = doc.model(true);
+
+  assert.deepEqual(model.get('serialized.state'), {
+    "error": null,
+    "isDirty": false,
+    "isError": false,
+    "isExisting": undefined,
+    "isLoaded": false,
+    "isLoading": true,
+    "isNew": false,
+    "isSaving": false
+  });
+
+  model.load();
+  await this.stores.settle();
 });

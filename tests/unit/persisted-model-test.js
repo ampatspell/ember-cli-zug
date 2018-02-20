@@ -34,6 +34,7 @@ test('create local model', function(assert) {
       "path": "ducks/yellow"
     },
     "state": {
+      "isLoading": false,
       "isLoaded": true,
       "error": null,
       "isDirty": true,
