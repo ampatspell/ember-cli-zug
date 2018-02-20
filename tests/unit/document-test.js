@@ -299,24 +299,6 @@ test('multiple parallel saves', async function(assert) {
   assert.equal(snapshot.size, 1);
 });
 
-test.skip('load document', async function(assert) {
-  await this.recreate();
-  await this.coll.doc('yellow').set({ name: 'Yellow' });
-
-  let doc = await this.load({ collection: 'ducks', id: 'yellow' });
-  assert.ok(doc);
-
-  assert.deepEqual(doc.get('serialized'), {
-    "collection": "ducks",
-    "id": "yellow",
-    "path": "ducks/yellow",
-    "exists": true,
-    "data": {
-      name: 'Yellow'
-    }
-  });
-});
-
 test('load document with settle', async function(assert) {
   await this.recreate();
   await this.coll.doc('yellow').set({ name: 'Yellow' });
