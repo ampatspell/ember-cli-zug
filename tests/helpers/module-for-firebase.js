@@ -44,7 +44,10 @@ export default function(name, options={}) {
       this.register = (name, factory) => this.instance.register(name, factory);
 
       getter(this, 'stores', () => this.lookup('models:stores'));
-      cached(this, 'store', () => this.stores.createContext('store', firebaseOptions(this.instance)));
+      cached(this, 'store', () => this.stores.createContext('store', {
+        firebase: firebaseOptions(this.instance),
+        modelNameForDocument: (doc, context) => this.modelNameForDocument(doc, context)
+      }));
       getter(this, 'firestore', () => this.store._internal.firestore);
 
       let beforeEach = options.beforeEach && options.beforeEach.apply(this, arguments);

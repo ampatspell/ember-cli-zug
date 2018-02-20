@@ -19,7 +19,8 @@ module('persisted-model', {
     this.register('model:yellow-duck', YellowDuck);
     this.register('model:hamster', Hamster);
     this.identity = this.store._internal.identity.models.storage;
-    // this.create = name => this.store._internal.models.createModel(name);
+    this.existingInternalDocument = opts => this.store._internal.documentsManager.existingInternalDocument(opts);
+    this.internalModelForDocument = doc => this.store._internal.modelsManager.internalModelForDocument(doc);
   }
 });
 
@@ -156,4 +157,18 @@ test('expected model class throws for too specific class', async function(assert
   } catch(err) {
     assert.equal(err.message, `Assertion Failed: model is expected to be 'yellow-duck'`);
   }
+});
+
+test('model class for document', async function(assert) {
+  this.modelNameForDocument = (doc, context) => {
+    assert.equal(doc.get('path'), 'ducks/yellow');
+    assert.equal(context.get('absoluteIdentifier'), 'store');
+    return 'duck';
+  };
+
+  let doc = this.existingInternalDocument({ collection: 'ducks', id: 'yellow', create: true });
+  let internal = this.internalModelForDocument(doc);
+
+  assert.ok(internal);
+  assert.ok(Duck.detectInstance(internal.model(true)));
 });
