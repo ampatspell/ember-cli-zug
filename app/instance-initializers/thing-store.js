@@ -10,7 +10,10 @@ export default {
     let store = registerStoreService({
       app,
       modelNameForDocument(document, store) {
-        console.log(document.get('serialized'), store.get('absoluteIdentifier'));
+        let { collection } = document.getProperties('collection');
+        if(collection === 'people') {
+          return 'person';
+        }
       }
     });
 

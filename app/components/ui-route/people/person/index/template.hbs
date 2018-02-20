@@ -7,18 +7,19 @@
   {{#rows.row}}
     <div class="identity">
       <div>context: {{person.context.absoluteIdentifier}}</div>
-      <div>person: {{person}}</div>
-      <div>data: {{person.data}}</div>
+      <div>model: {{person}}</div>
+      <div>doc: {{person.doc}}</div>
+      <div>data: {{person.doc.data}}</div>
     </div>
   {{/rows.row}}
 
   {{#rows.row}}
-    {{ui-block/json person.data.serialized}}
+    {{ui-block/json person.doc.serialized}}
   {{/rows.row}}
 
   {{#rows.row}}
     <label>Name</label>
-    {{input value=person.data.name}}
+    {{input value=person.name}}
   {{/rows.row}}
 
   {{#rows.row}}
