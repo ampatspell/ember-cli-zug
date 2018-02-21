@@ -14,6 +14,11 @@ export default {
         if(collection === 'people') {
           return 'person';
         }
+      },
+      storeNameForIdentifier(absoluteIdentifier) {
+        if(absoluteIdentifier === 'store') {
+          return 'store';
+        }
       }
     });
 
