@@ -57,6 +57,8 @@ export default function(name, options={}) {
     },
     afterEach() {
       return resolve(options.afterEach && options.afterEach.apply(this, arguments)).then(() => {
+        return this.store.settle();
+      }).then(() => {
         run(() => this.instance.destroy());
         destroyApp(this.application);
       });

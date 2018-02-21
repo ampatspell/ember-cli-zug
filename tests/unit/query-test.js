@@ -1,9 +1,6 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import { all } from 'rsvp';
-import QueryObserver from 'models/-private/model/query-observer';
-import { recreateCollection, waitForLength } from '../helpers/runloop';
-import { assign } from '@ember/polyfills';
+import { recreateCollection } from '../helpers/runloop';
 import PersistedModel from 'models/model/persisted';
 import { attr } from 'models/model/persisted/computed';
 
@@ -32,7 +29,7 @@ test('query collection', async function(assert) {
   assert.equal(query.get('id'), 'foo');
 
   assert.deepEqual(query.getProperties('isLoading', 'isLoaded'), {
-    "isLoading": true,
+    "isLoading": false,
     "isLoaded": false
   });
 
