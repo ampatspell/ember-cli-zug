@@ -36,7 +36,7 @@ const firebaseOptions = instance => {
 
 export default function(name, options={}) {
   module(name, {
-    beforeEach() {
+    beforeEach(...args) {
       this.application = startApp();
       this.instance = this.application.buildInstance();
 
@@ -46,16 +46,17 @@ export default function(name, options={}) {
       getter(this, 'stores', () => this.lookup('models:stores'));
       cached(this, 'store', () => this.stores.createContext('store', {
         firebase: firebaseOptions(this.instance),
+        persistenceEnabled: false,
         modelNameForDocument: (doc, context) => this.modelNameForDocument(doc, context)
       }));
       getter(this, 'firestore', () => this.store._internal.firestore);
 
-      let beforeEach = options.beforeEach && options.beforeEach.apply(this, arguments);
-      return resolve(beforeEach);
+      return this.store.get('ready').then(() => {
+        return resolve(options.beforeEach && options.beforeEach.apply(this, args));
+      });
     },
     afterEach() {
-      let afterEach = options.afterEach && options.afterEach.apply(this, arguments);
-      return resolve(afterEach).then(() => {
+      return resolve(options.afterEach && options.afterEach.apply(this, arguments)).then(() => {
         run(() => this.instance.destroy());
         destroyApp(this.application);
       });
