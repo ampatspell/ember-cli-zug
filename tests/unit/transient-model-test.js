@@ -11,6 +11,7 @@ module('transient-model', {
     this.register('model:duck', Duck);
     this.identity = this.store._internal.identity.models.storage;
     this.create = opts => this.store._internal.modelsManager.createNewInternalModel(opts);
+    this.existing = opts => this.store._internal.modelsManager.existingInternalModel(opts);
   }
 });
 
@@ -41,6 +42,8 @@ test('model is registered in identity and all are destroyed on context destroy',
 
   run(() => this.store.destroy());
 
+  assert.ok(!this.identity.all.includes(internal));
+
   assert.ok(model.isDestroyed);
   assert.ok(internal.isDestroyed);
 });
@@ -54,4 +57,34 @@ test('model is registered in identity and removed on destroy', function(assert) 
   run(() => model.destroy());
 
   assert.ok(!this.identity.all.includes(internal));
+});
+
+test('created model with path is added to identity', function(assert) {
+  let internal = this.create({ name: 'duck', path: 'ducks/hello' });
+
+  assert.ok(this.identity.all.includes(internal));
+  assert.ok(this.identity.ref['ducks/hello'] === internal);
+
+  run(() => this.store.destroy());
+
+  assert.ok(!this.identity.all.includes(internal));
+  assert.ok(this.identity.ref['ducks/hello'] === undefined);
+});
+
+test('model with id is created with existing, later on retrieved', function(assert) {
+  let first = this.existing({ name: 'duck', id: 'one', collection: 'ducks', create: true });
+  let second = this.existing({ name: 'duck', id: 'one', collection: 'ducks', create: true });
+  assert.ok(first === second);
+});
+
+test('path is read only', function(assert) {
+  let internal = this.create({ name: 'duck', path: 'ducks/hello' });
+  let model = internal.model(true);
+  assert.equal(model.get('path'), 'ducks/hello');
+  try {
+    model.set('path', 'foobar');
+  } catch(err) {
+    assert.ok(err.message.includes('Cannot set read-only property "path"'));
+  }
+  assert.equal(model.get('path'), 'ducks/hello');
 });
