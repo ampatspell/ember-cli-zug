@@ -139,7 +139,7 @@ test('expected model class throws', async function(assert) {
     this.store.existing({ name: 'hamster', id: 'yellow', collection: 'ducks' });
     assert.ok(false, 'should throw');
   } catch(err) {
-    assert.equal(err.message, `Assertion Failed: model is expected to be 'hamster'`);
+    assert.equal(err.message, `Assertion Failed: model is expected to be 'hamster' but is 'duck'`);
   }
 });
 
