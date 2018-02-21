@@ -24,13 +24,23 @@ test('create model', function(assert) {
   assert.ok(model.get('ok'));
 });
 
-test.skip('create model with the same id throws', async function(assert) {
-  this.store.model({ name: 'duck', id: 'thing', data: { ok: true } });
+test('create model with props and path', function(assert) {
+  let model = this.store.model({ name: 'duck', path: 'thing', data: { ok: true, message: 'hey there' } });
+
+  assert.equal(model.get('ok'), true);
+  assert.equal(model.get('message'), 'hey there');
+  assert.equal(model.get('path'), 'thing');
+
+  assert.ok(this.store.existing({ name: 'duck', path: 'thing' }) === model);
+});
+
+test('create model with the same path throws', async function(assert) {
+  this.store.model({ name: 'duck', path: 'thing', data: { ok: true } });
   try {
-    this.store.model({ name: 'duck', id: 'thing', data: { ok: true } });
+    this.store.model({ name: 'duck', path: 'thing', data: { ok: true } });
     assert.ok(false, 'should throw');
   } catch(err) {
-    assert.deepEqual(err.toJSON(), {});
+    assert.equal(err.message, `Assertion Failed: transient model with path 'thing' is already registered`);
   }
 });
 
