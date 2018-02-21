@@ -155,7 +155,7 @@ test('expected model class throws for too specific class', async function(assert
     this.store.existing({ name: 'yellow-duck', id: 'yellow', collection: 'ducks' });
     assert.ok(false, 'should throw');
   } catch(err) {
-    assert.equal(err.message, `Assertion Failed: model is expected to be 'yellow-duck'`);
+    assert.equal(err.message, `Assertion Failed: model is expected to be 'yellow-duck' but is 'duck'`);
   }
 });
 
