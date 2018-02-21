@@ -647,3 +647,20 @@ test('resolve non-dirty doc save', async function(assert) {
     "name": "Yellow"
   });
 });
+
+test('non-existant document does not overwrite dirty state', async function(assert) {
+  await this.recreate();
+
+  let doc = this.existing({ collection: 'ducks', id: 'yellow', data: { name: 'yellow' }, create: true });
+  let model = doc.model(true);
+
+  assert.deepEqual(model.get('serialized.data'), {
+    "name": "yellow"
+  });
+
+  await doc.load({ optional: true });
+
+  assert.deepEqual(model.get('serialized.data'), {
+    "name": "yellow"
+  });
+});
