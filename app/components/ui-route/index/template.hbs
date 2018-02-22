@@ -8,9 +8,13 @@
 
   {{else}}
 
+    {{#rows.header}}
+      {{query}}
+    {{/rows.header}}
+
     {{#each query.content as |person|}}
       {{#rows.row}}
-        {{person.doc.path}}
+        {{person.doc.path}} {{person.name}}
       {{/rows.row}}
     {{/each}}
 
