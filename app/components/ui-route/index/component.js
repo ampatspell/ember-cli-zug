@@ -7,11 +7,6 @@ export default Component.extend({
     context: 'store',
     id: 'all-people',
     query: db => db.collection('people').orderBy('__name__', 'asc')
-  }),
-
-  didInsertElement() {
-    this._super();
-    this.get('query').load();
-  }
+  })
 
 });
