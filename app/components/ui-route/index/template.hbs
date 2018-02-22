@@ -1,5 +1,23 @@
 {{#ui-block/rows as |rows|}}
 
+  {{#rows.header}}
+    {{query}}
+  {{/rows.header}}
+
+  {{#rows.header}}
+    Collection:
+    {{#each collectionOptions as |option|}}
+      <span class={{if (eq option collection) 'mark'}} {{action (mut collection) option}}>{{option}}</span>
+    {{/each}}
+  {{/rows.header}}
+
+  {{#rows.header}}
+    Order:
+    {{#each orderOptions as |option|}}
+      <span class={{if (eq option order) 'mark'}} {{action (mut order) option}}>{{option}}</span>
+    {{/each}}
+  {{/rows.header}}
+
   {{#if query.isLoading}}
 
     {{#rows.header}}
@@ -8,13 +26,9 @@
 
   {{else}}
 
-    {{#rows.header}}
-      {{query}}
-    {{/rows.header}}
-
-    {{#each query.content as |person|}}
+    {{#each query.content as |model|}}
       {{#rows.row}}
-        {{person.doc.path}} {{person.name}}
+        {{model.doc.path}} {{get model.doc.data order}}
       {{/rows.row}}
     {{/each}}
 

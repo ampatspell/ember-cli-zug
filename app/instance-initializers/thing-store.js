@@ -11,6 +11,7 @@ export default {
         if(collection === 'people') {
           return 'person';
         }
+        return 'unknown';
       },
       storeNameForIdentifier(absoluteIdentifier) {
         if(absoluteIdentifier === 'store') {

@@ -9,19 +9,19 @@ export default Component.extend({
     return getOwner(this).factoryFor('config:environment').class.thing;
   }),
 
+  orderOptions:      [ '__name__', 'name', 'email', 'message' ],
+  collectionOptions: [ 'blogs', 'people', 'posts' ],
+
   collection: 'people',
-  order: 'name',
+  order:      'name',
 
   query: query(function() {
     let { collection, order } = this.getProperties('collection', 'order');
     return {
       owner: [ 'collection', 'order' ],
       context: 'store',
-      id: 'all-people',
-      query: db => {
-        console.log(`db.collection(${collection}).orderBy(${order})`);
-        return db.collection(collection).orderBy(order, 'asc');
-      }
+      id: `all-${collection}-by-${order}`,
+      query: db => db.collection(collection).orderBy(order, 'asc')
     };
   })
 
