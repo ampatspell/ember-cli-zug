@@ -1,5 +1,7 @@
 'use strict';
 
+let { name, version } = require('../package.json')
+
 module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'thing',
@@ -15,6 +17,10 @@ module.exports = function(environment) {
     },
     APP: {
     },
+    thing: {
+      name,
+      version
+    }
   };
 
   if (environment === 'development') {

@@ -21,3 +21,9 @@
   {{/if}}
 
 {{/ui-block/rows}}
+
+{{#ui-block/rows as |rows|}}
+  {{#rows.row}}
+    {{thing.name}} {{thing.version}}
+  {{/rows.row}}
+{{/ui-block/rows}}

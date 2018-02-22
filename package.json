@@ -15,7 +15,8 @@
     "lint:js": "eslint ./*.js app config lib server tests",
     "start": "ember serve",
     "test": "ember test",
-    "deploy": "ember build -prod && firebase deploy"
+    "bump": "npm version patch; git push --follow-tags",
+    "deploy": "npm run bump; ember build -prod && firebase deploy"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
