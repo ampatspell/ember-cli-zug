@@ -28,7 +28,16 @@
 
     {{#each query.content as |model|}}
       {{#rows.row}}
-        {{model.doc.path}} {{get model.doc.data order}}
+        <div>
+          {{model.doc.path}} {{get model.doc.data order}}
+        </div>
+        <div class="small">
+          {{model}}
+        </div>
+      {{/rows.row}}
+    {{else}}
+      {{#rows.row}}
+        No content
       {{/rows.row}}
     {{/each}}
 

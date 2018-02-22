@@ -18,5 +18,10 @@
     &:last-child {
       border-bottom: 1px solid #eee;
     }
+    > .small {
+      margin-top: 4px;
+      font-size: 11px;
+      color: #777;
+    }
   }
 }
