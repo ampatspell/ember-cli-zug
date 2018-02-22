@@ -1,0 +1,19 @@
+{{#ui-block/rows as |rows|}}
+
+  {{#if query.isLoading}}
+
+    {{#rows.header}}
+      Loading…
+    {{/rows.header}}
+
+  {{else}}
+
+    {{#each query.content as |person|}}
+      {{#rows.row}}
+        {{person.doc.path}}
+      {{/rows.row}}
+    {{/each}}
+
+  {{/if}}
+
+{{/ui-block/rows}}
