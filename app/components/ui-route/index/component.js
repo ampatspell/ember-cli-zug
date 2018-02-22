@@ -10,7 +10,7 @@ export default Component.extend({
   }),
 
   collection: 'people',
-  order: '__name__',
+  order: 'name',
 
   query: query(function() {
     let { collection, order } = this.getProperties('collection', 'order');
