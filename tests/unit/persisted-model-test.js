@@ -64,32 +64,6 @@ test('model has doc', function(assert) {
   assert.ok(model.get('doc'));
 });
 
-test.skip('load model with path', async function(assert) {
-  await this.recreate();
-  await this.coll.doc('yellow').set({ name: 'yellow' });
-
-  let model = await this.store.first({ id: 'yellow', collection: 'ducks' });
-  assert.ok(model);
-});
-
-test.skip('load model with ref', async function(assert) {
-  await this.recreate();
-  let model = await this.store.first(db => db.collection('ducks').doc('yellow'));
-  assert.ok(model);
-});
-
-test.skip('load model with collection ref', async function(assert) {
-  await this.recreate();
-  let model = await this.store.first(db => db.collection('ducks'));
-  assert.ok(model);
-});
-
-test.skip('load model with query', async function(assert) {
-  await this.recreate();
-  let model = await this.store.first(db => db.collection('ducks').where('__name__', '==', 'yellow'));
-  assert.ok(model);
-});
-
 test('save model adds it to identity', async function(assert) {
   await this.recreate();
   let model = this.store.model({ name: 'duck', id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
