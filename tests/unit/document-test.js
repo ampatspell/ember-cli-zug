@@ -607,6 +607,8 @@ test('delete not yet loaded doc', async function(assert) {
 
   await doc.delete();
 
+  await waitForCollectionSize(this.coll, 0);
+
   assert.deepEqual(doc.model(true).get('serialized'), {
     "data": {},
     "ref": {
@@ -620,7 +622,7 @@ test('delete not yet loaded doc', async function(assert) {
       "isError": false,
       "isExisting": false,
       "isLoaded": true,
-      "isLoading": true,
+      "isLoading": false,
       "isNew": false,
       "isSaving": false
     }
