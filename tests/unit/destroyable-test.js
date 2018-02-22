@@ -12,6 +12,9 @@ module('destroyable', {
       return EmberObject.extend({
         id: 'one',
         prop: destroyable('id', {
+          reusable() {
+            return false;
+          },
           create(key) {
             log.push(`create ${this.get('id')}`);
             return Prop.create({ owner: this, key, id: this.get('id') });
