@@ -1,16 +1,14 @@
 import Route from '@ember/routing/route';
+import ForkMixin from 'models/mixins/route/fork';
 
-export default Route.extend({
+export default Route.extend(ForkMixin, {
+
+  context: 'person-edit',
 
   model() {
     let id = this.modelFor('people.person').get('id');
-    let context = this.get('store').fork('person-edit');
-    let model = context.model({ name: 'person/edit', data: { id } });
+    let model = this.fork().model({ name: 'person/edit', data: { id } });
     return model.load();
-  },
-
-  deactivate() {
-    this.get('currentModel.context').destroy();
   }
 
 });
