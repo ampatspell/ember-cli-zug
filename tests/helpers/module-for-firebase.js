@@ -46,7 +46,7 @@ export default function(name, options={}) {
       getter(this, 'stores', () => this.lookup('models:stores'));
       cached(this, 'store', () => this.stores.createContext('store', {
         firebase: firebaseOptions(this.instance),
-        persistenceEnabled: false,
+        firestorePersistenceEnabled: false,
         modelNameForDocument: (doc, context) => this.modelNameForDocument(doc, context)
       }));
       getter(this, 'firestore', () => this.store._internal.firestore);

@@ -5,12 +5,8 @@ export default {
   initialize(app) {
     app.inject('component', 'router', 'service:router');
 
-    app.inject('component', 'store',  'service:store');
-    app.inject('route',     'store',  'service:store');
-
-    registerContextService(app, {
-      // exportInDevelopment: false,
-      // persistenceEnabled: false,
+    registerContextService({
+      app,
       modelNameForDocument(document /*, store */) {
         let { collection } = document.getProperties('collection');
         if(collection === 'people') {
