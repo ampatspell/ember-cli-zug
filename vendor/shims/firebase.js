@@ -3,7 +3,8 @@
   function vendorModule() {
     'use strict';
 
-    let firebase;
+    var firebase;
+
     if(window.FastBoot) {
       firebase = FastBoot.require('firebase');
       FastBoot.require('firebase/firestore');
