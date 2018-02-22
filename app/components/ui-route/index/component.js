@@ -9,10 +9,20 @@ export default Component.extend({
     return getOwner(this).factoryFor('config:environment').class.thing;
   }),
 
-  query: query({
-    context: 'store',
-    id: 'all-people',
-    query: db => db.collection('people').orderBy('__name__', 'asc')
+  collection: 'people',
+  order: '__name__',
+
+  query: query(function() {
+    let { collection, order } = this.getProperties('collection', 'order');
+    return {
+      owner: [ 'collection', 'order' ],
+      context: 'store',
+      id: 'all-people',
+      query: db => {
+        console.log(`db.collection(${collection}).orderBy(${order})`);
+        return db.collection(collection).orderBy(order, 'asc');
+      }
+    };
   })
 
 });
