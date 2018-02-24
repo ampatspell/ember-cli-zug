@@ -1,5 +1,6 @@
 # TODO
 
+* refactor query to support one and array of results
 * computed model
 * computed attr
 * computed identity lookup (relationship base)
