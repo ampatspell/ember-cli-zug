@@ -25,6 +25,12 @@ export default Component.extend({
       id: `all-${collection}-by-${order}`,
       query: db => db.collection(collection).orderBy(order, 'asc')
     };
-  })
+  }),
+
+  actions: {
+    show(model) {
+      this.get('router').transitionTo('model', model.get('doc.path'));
+    }
+  }
 
 });

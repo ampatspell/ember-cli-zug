@@ -12,6 +12,9 @@ export default Component.extend({
     },
     edit() {
       this.get('router').transitionTo('people.person.edit', this.get('person'));
+    },
+    show() {
+      this.get('router').transitionTo('model', this.get('person.doc.path'));
     }
   }
 

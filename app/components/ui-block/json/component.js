@@ -6,7 +6,11 @@ export default Component.extend({
 
   string: computed('value', function() {
     let value = this.get('value');
-    return JSON.stringify(value, null, 2);
+    try {
+      return JSON.stringify(value, null, 2);
+    } catch(err) {
+      return err.message;
+    }
   })
 
 }).reopenClass({

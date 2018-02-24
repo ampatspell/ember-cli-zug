@@ -27,7 +27,7 @@
   {{else}}
 
     {{#each query.content as |model|}}
-      {{#rows.row}}
+      {{#rows.row click=(action 'show' model)}}
         <div>
           {{model.doc.path}} {{get model.doc.data order}}
         </div>
