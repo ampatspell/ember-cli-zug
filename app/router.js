@@ -12,7 +12,7 @@ Router.map(function() {
       this.route('edit');
     });
   });
-  this.route('document', { path: '/document/*path' });
+  this.route('model', { path: '/model/*path' });
 });
 
 export default Router;

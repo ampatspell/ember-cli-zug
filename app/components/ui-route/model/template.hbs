@@ -1,5 +1,8 @@
 {{#ui-block/rows as |rows|}}
   {{#rows.header}}
+    Model {{model}}
+  {{/rows.header}}
+  {{#rows.header}}
     Document {{document.path}} in {{document.context.absoluteIdentifier}}
   {{/rows.header}}
   {{#rows.row click=(action 'select')}}

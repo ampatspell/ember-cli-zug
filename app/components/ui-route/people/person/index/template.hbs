@@ -34,4 +34,8 @@
     </div>
   {{/rows.row}}
 
+  {{#rows.row click=(action 'show')}}
+    Show in /model/{{person.doc.path}}
+  {{/rows.row}}
+
 {{/ui-block/rows}}
