@@ -10,7 +10,7 @@ export default Context.extend({
   // }),
 
   people: computed(function() {
-    return this._internal.modelsManager.existingInternalModel({ name: 'people', path: '-/people', create: true }).model(true);
+    return this.existing({ path: 'singleton/people', name: 'people', create: true });
   })
 
 });
