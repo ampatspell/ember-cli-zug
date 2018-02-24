@@ -1,6 +1,5 @@
 # TODO
 
-* expose models identity
 * computed model
 * computed attr
 * compued relationship base
