@@ -1,9 +1,8 @@
 # TODO
 
-* expose models identity
 * computed model
 * computed attr
-* compued relationship base
+* computed identity lookup (relationship base)
 * model fragment
 * data update instead of replace
 * data.serialized types -- store, preview
