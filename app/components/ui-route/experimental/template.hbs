@@ -1,0 +1,15 @@
+{{#ui-block/rows as |rows|}}
+
+  {{#rows.header}}
+    Experimental
+  {{/rows.header}}
+
+{{/ui-block/rows}}
+
+{{#ui-block/rows as |rows|}}
+  {{#rows.row}}
+    {{ui-block/identity context=store}}
+  {{/rows.row}}
+{{/ui-block/rows}}
+
+{{set-global component=this}}
