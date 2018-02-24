@@ -20,6 +20,7 @@ export default Component.extend({
   query: query(function() {
     let { collection, order } = this.getProperties('collection', 'order');
     return {
+      type: 'array',
       owner: [ 'collection', 'order' ],
       context: 'store',
       id: `all-${collection}-by-${order}`,

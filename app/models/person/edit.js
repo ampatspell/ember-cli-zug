@@ -10,6 +10,7 @@ export default TransientModel.extend({
     let id = this.get('id');
     return {
       id: `person-edit-${id}`,
+      type: 'array',
       query: db => db.collection('people').where('__name__', '==', id)
     }
   }),
