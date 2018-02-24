@@ -1,11 +1,11 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import { all } from 'rsvp';
-import QueryObserver from 'models/-private/model/query-observer';
+import QueryArrayObserver from 'models/-private/model/query-array-observer';
 import { recreateCollection, waitForLength } from '../helpers/runloop';
 import { assign } from '@ember/polyfills';
 
-module('query-observer', {
+module('query-array-observer', {
   async beforeEach() {
     await recreateCollection(this.firestore.collection('ducks'), [
       { name: 'yellow' },
@@ -14,7 +14,7 @@ module('query-observer', {
     ]);
     let delegate = [];
     this.delegate = delegate;
-    this.create = query => new QueryObserver(query, {
+    this.create = query => new QueryArrayObserver(query, {
       createModel(doc) {
         let data = doc.data();
         delegate.push(`create: ${data.name}`);
