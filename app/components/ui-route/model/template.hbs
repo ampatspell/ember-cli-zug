@@ -20,3 +20,9 @@
     {{/rows.row}}
   {{/each}}
 {{/ui-block/rows}}
+
+{{#ui-block/rows as |rows|}}
+  {{#rows.row}}
+    {{ui-block/identity context=model.context}}
+  {{/rows.row}}
+{{/ui-block/rows}}
