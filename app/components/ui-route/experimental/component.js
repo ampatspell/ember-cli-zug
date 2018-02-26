@@ -5,26 +5,21 @@ import { query } from 'models/model/computed';
 export default Component.extend({
   classNameBindings: [ ':ui-route-experimental' ],
 
-  store: service(),
-
   arrayFromQuery: query({
     id: 'array-from-array',
     type: 'array',
-    context: 'store',
     query: db => db.collection('people').orderBy('name', 'asc')
   }),
 
   arrayFromCollection: query({
     id: 'array-from-collection',
     type: 'array',
-    context: 'store',
     query: db => db.collection('people')
   }),
 
   arrayFromDocument: query({
     id: 'array-from-document',
     type: 'array',
-    context: 'store',
     query: db => db.doc('people/ampatspell')
   })
 
