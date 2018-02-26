@@ -7,15 +7,22 @@ export default Component.extend({
 
   store: service(),
 
-  arrayFromArray: query({
+  arrayFromQuery: query({
     id: 'array-from-array',
     type: 'array',
     context: 'store',
     query: db => db.collection('people').orderBy('name', 'asc')
   }),
 
-  arrayFromSingle: query({
-    id: 'array-from-single',
+  arrayFromCollection: query({
+    id: 'array-from-collection',
+    type: 'array',
+    context: 'store',
+    query: db => db.collection('people')
+  }),
+
+  arrayFromDocument: query({
+    id: 'array-from-document',
     type: 'array',
     context: 'store',
     query: db => db.doc('people/ampatspell')

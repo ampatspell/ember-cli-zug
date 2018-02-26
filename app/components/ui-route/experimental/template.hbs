@@ -5,11 +5,15 @@
   {{/rows.header}}
 
   {{#rows.row}}
-    {{arrayFromArray}}
+    {{arrayFromQuery}}
   {{/rows.row}}
 
   {{#rows.row}}
-    {{arrayFromSingle}}
+    {{arrayFromCollection}}
+  {{/rows.row}}
+
+  {{#rows.row}}
+    {{arrayFromDocument}}
   {{/rows.row}}
 
 {{/ui-block/rows}}
