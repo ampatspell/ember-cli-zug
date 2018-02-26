@@ -5,11 +5,21 @@
   {{/rows.header}}
 
   {{#rows.row}}
-    {{arrayFromQuery}}
+    <div>{{arrayFromQuery}}</div>
+    <div class="small">
+      {{#each arrayFromQuery.content as |model|}}
+        <div>{{model}}</div>
+      {{/each}}
+    </div>
   {{/rows.row}}
 
   {{#rows.row}}
-    {{arrayFromCollection}}
+    <div>{{arrayFromCollection}}</div>
+    <div class="small">
+      {{#each arrayFromCollection.content as |model|}}
+        <div>{{model}}</div>
+      {{/each}}
+    </div>
   {{/rows.row}}
 
   {{#rows.row}}

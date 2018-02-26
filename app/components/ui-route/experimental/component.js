@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { inject as service } from '@ember/service';
 import { query } from 'models/model/computed';
 
 export default Component.extend({
@@ -17,10 +16,10 @@ export default Component.extend({
     query: db => db.collection('people')
   }),
 
-  arrayFromDocument: query({
-    id: 'array-from-document',
-    type: 'array',
-    query: db => db.doc('people/ampatspell')
-  })
+  // arrayFromDocument: query({
+  //   id: 'array-from-document',
+  //   type: 'array',
+  //   query: db => db.doc('people/ampatspell')
+  // })
 
 });

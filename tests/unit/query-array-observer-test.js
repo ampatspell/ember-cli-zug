@@ -1,7 +1,7 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import { all } from 'rsvp';
-import QueryArrayObserver from 'models/-private/model/query-array-observer';
+import QueryArrayObserver from 'models/-private/model/observer/query-array-observer';
 import { recreateCollection, waitForLength } from '../helpers/runloop';
 import { assign } from '@ember/polyfills';
 
