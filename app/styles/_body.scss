@@ -20,6 +20,10 @@ body {
     box-sizing: border-box;
   }
 
+  a {
+    color: #000;
+  }
+
   button {
     @include default-font;
     -webkit-appearance: none;
