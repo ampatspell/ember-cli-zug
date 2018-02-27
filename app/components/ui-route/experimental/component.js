@@ -7,19 +7,19 @@ export default Component.extend({
   arrayFromQuery: query({
     id: 'array-from-array',
     type: 'array',
-    query: db => db.collection('people').orderBy('name', 'asc')
+    query: db => db.collection('people').orderBy('name', 'asc').limit(3)
   }),
 
   arrayFromCollection: query({
     id: 'array-from-collection',
     type: 'array',
-    query: db => db.collection('people')
+    query: db => db.collection('people').limit(3)
   }),
 
-  // arrayFromDocument: query({
-  //   id: 'array-from-document',
-  //   type: 'array',
-  //   query: db => db.doc('people/ampatspell')
-  // })
+  arrayFromDocument: query({
+    id: 'array-from-document',
+    type: 'array',
+    query: db => db.doc('people/ampatspell')
+  })
 
 });

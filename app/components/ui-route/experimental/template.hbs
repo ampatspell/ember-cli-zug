@@ -23,7 +23,12 @@
   {{/rows.row}}
 
   {{#rows.row}}
-    {{arrayFromDocument}}
+    <div>{{arrayFromDocument}}</div>
+    <div class="small">
+      {{#each arrayFromDocument.content as |model|}}
+        <div>{{model}}</div>
+      {{/each}}
+    </div>
   {{/rows.row}}
 
 {{/ui-block/rows}}
