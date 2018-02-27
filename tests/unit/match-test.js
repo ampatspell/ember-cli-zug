@@ -1,8 +1,7 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import { recreateCollection } from '../helpers/runloop';
 import PersistedModel from 'models/model/persisted';
-import { id, attr } from 'models/model/persisted/computed';
+import { id } from 'models/model/persisted/computed';
 import { match } from 'models/model/computed';
 
 const Duck = PersistedModel.extend({

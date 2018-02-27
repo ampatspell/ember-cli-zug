@@ -1,9 +1,7 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import { recreateCollection } from '../helpers/runloop';
 import PersistedModel from 'models/model/persisted';
-import { id, attr } from 'models/model/persisted/computed';
-import { match } from 'models/model/computed';
+import { id } from 'models/model/persisted/computed';
 
 const Duck = PersistedModel.extend({
   id: id()
@@ -82,7 +80,7 @@ test('match and rematch single', function(assert) {
 
 test('initial match single', function(assert) {
   let yellow = this.store.model({ name: 'duck', id: 'yellow', collection: 'ducks', data: { friendId: 'green' } });
-  let green = this.store.model({ name: 'duck', id: 'yellow', collection: 'ducks', data: {} });
+  this.store.model({ name: 'duck', id: 'yellow', collection: 'ducks', data: {} });
 
   let log = [];
 
