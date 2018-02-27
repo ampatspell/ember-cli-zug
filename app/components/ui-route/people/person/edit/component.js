@@ -1,6 +1,10 @@
 import Component from '@ember/component';
+import { readOnly } from '@ember/object/computed';
 
 export default Component.extend({
+
+  model: null,
+  person: readOnly('model.person'),
 
   actions: {
     save() {

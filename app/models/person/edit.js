@@ -10,12 +10,12 @@ export default TransientModel.extend({
     let id = this.get('id');
     return {
       id: `person-edit-${id}`,
-      type: 'array',
+      type: 'single',
       query: db => db.collection('people').where('__name__', '==', id)
     }
   }),
 
-  person: readOnly('query.content.firstObject'),
+  person: readOnly('query.content'),
 
   async load() {
     await this.get('query').load();
