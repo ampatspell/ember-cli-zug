@@ -7,7 +7,7 @@ const Duck = PersistedModel.extend({
   id: id()
 });
 
-module('matcher', {
+module('matcher-single', {
   async beforeEach() {
     this.modelNameForDocument = () => 'duck';
     this.register('model:duck', Duck);
