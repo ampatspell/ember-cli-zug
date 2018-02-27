@@ -23,5 +23,14 @@
       font-size: 11px;
       color: #777;
     }
+    > .src {
+      margin: 0 0 5px 0;
+      white-space: pre-line;
+      font-size: 11px;
+      color: #777;
+      &::first-line {
+        line-height: 0;
+      }
+    }
   }
 }

@@ -5,6 +5,10 @@
   {{/rows.header}}
 
   {{#rows.row}}
+    <div class="src">
+      type: 'array'
+      query: db => db.collection('people').orderBy('name', 'asc').limit(3)
+    </div>
     <div>{{arrayFromQuery}}</div>
     <div class="small">
       {{#each arrayFromQuery.content as |model|}}
@@ -14,6 +18,10 @@
   {{/rows.row}}
 
   {{#rows.row}}
+    <div class="src">
+      type: 'array'
+      query: db => db.collection('people').limit(3)
+    </div>
     <div>{{arrayFromCollection}}</div>
     <div class="small">
       {{#each arrayFromCollection.content as |model|}}
@@ -23,6 +31,10 @@
   {{/rows.row}}
 
   {{#rows.row}}
+    <div class="src">
+      type: 'array'
+      query: db => db.doc('people/ampatspell')
+    </div>
     <div>{{arrayFromDocument}}</div>
     <div class="small">
       {{#each arrayFromDocument.content as |model|}}
@@ -32,6 +44,10 @@
   {{/rows.row}}
 
   {{#rows.row}}
+    <div class="src">
+      type: 'single'
+      query: db => db.collection('people').orderBy('name', 'asc')
+    </div>
     <div>{{singleFromQuery}}</div>
     <div class="small">
       {{singleFromQuery.content}}
@@ -39,6 +55,10 @@
   {{/rows.row}}
 
   {{#rows.row}}
+    <div class="src">
+      type: 'single',
+      query: db => db.doc('people/ampatspell')
+    </div>
     <div>{{singleFromDocument}}</div>
     <div class="small">
       {{singleFromDocument.content}}
