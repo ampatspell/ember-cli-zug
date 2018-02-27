@@ -19,8 +19,8 @@ export default PersistedModel.extend({
 
   id: id(),
 
-  name:    attr(),
-  email:   attr(),
+  name:  attr(),
+  email: attr(),
 
   blogs: match({
     type: 'single',
