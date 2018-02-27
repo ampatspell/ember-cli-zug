@@ -11,6 +11,13 @@
 * firebase session
 * firebase storage
 
+```
+QueryArray
+QueryFirst
+DocumentArray
+DocumentFirst
+```
+
 ``` javascript
 export default Model.extend({
 
