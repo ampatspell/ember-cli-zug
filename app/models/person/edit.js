@@ -1,5 +1,5 @@
 import TransientModel from 'models/model/transient';
-import { query } from 'models/model/computed';
+import { query } from 'models/computed';
 import { readOnly } from '@ember/object/computed';
 
 export default TransientModel.extend({

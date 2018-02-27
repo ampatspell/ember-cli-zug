@@ -1,7 +1,7 @@
 import { computed } from '@ember/object';
 import { getOwner } from '@ember/application';
 import Component from '@ember/component';
-import { query } from 'models/model/computed';
+import { query } from 'models/computed';
 
 const passthrough = value => value;
 

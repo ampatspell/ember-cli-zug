@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route';
-import ForkMixin from 'models/mixins/route/fork';
+import ForkMixin from 'thing/mixins/route/fork';
 
 export default Route.extend(ForkMixin, {
 

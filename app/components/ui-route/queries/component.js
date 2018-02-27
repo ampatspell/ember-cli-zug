@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { query } from 'models/model/computed';
+import { query } from 'models/computed';
 
 export default Component.extend({
   classNameBindings: [ ':ui-route-queries' ],
