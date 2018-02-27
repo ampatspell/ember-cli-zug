@@ -17,7 +17,7 @@ module('matcher-single', {
 
 test('match and rematch single', function(assert) {
   let yellow = this.store.model({ name: 'duck', id: 'yellow', collection: 'ducks', data: { friendId: null } });
-  let green = this.store.model({ name: 'duck', id: 'yellow', collection: 'ducks', data: {} });
+  let green = this.store.model({ name: 'duck', id: 'green', collection: 'ducks', data: {} });
 
   let log = [];
 
@@ -76,11 +76,34 @@ test('match and rematch single', function(assert) {
     'didUpdate',
     'didUpdate'
   ]);
+
+  green.set('doc.data.friendId', null);
+
+  assert.ok(matcher.content === null);
+  assert.deepEqual(log, [
+    'didUpdate',
+    'didUpdate',
+    'didUpdate',
+    'didUpdate',
+    'didUpdate'
+  ]);
+
+  let red = this.store.model({ name: 'duck', id: 'red', collection: 'ducks', data: { friendId: 'green' } });
+
+  assert.ok(matcher.content === red);
+  assert.deepEqual(log, [
+    'didUpdate',
+    'didUpdate',
+    'didUpdate',
+    'didUpdate',
+    'didUpdate',
+    'didUpdate'
+  ]);
 });
 
 test('initial match single', function(assert) {
   let yellow = this.store.model({ name: 'duck', id: 'yellow', collection: 'ducks', data: { friendId: 'green' } });
-  this.store.model({ name: 'duck', id: 'yellow', collection: 'ducks', data: {} });
+  this.store.model({ name: 'duck', id: 'green', collection: 'ducks', data: {} });
 
   let log = [];
 
