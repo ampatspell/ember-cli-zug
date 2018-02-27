@@ -4,4 +4,4 @@
 
 Nothing here yet. Experimental.
 
-Soon `lib/models` in-repo-addon will be `ember-coil`.
+Soon `lib/models` in-repo-addon will be `ember-something-something`.
