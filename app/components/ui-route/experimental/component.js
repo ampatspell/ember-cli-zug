@@ -26,6 +26,12 @@ export default Component.extend({
     id: 'single-from-query',
     type: 'single',
     query: db => db.collection('people').orderBy('name', 'asc')
+  }),
+
+  singleFromDocument: query({
+    id: 'single-from-document',
+    type: 'single',
+    query: db => db.doc('people/ampatspell')
   })
 
 });
