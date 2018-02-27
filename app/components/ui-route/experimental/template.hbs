@@ -1,0 +1,17 @@
+{{#ui-block/rows as |rows|}}
+
+  {{#rows.header}}
+    Experimental
+  {{/rows.header}}
+
+  {{#rows.row}}
+    {{ui-block/json model.doc.data.serialized}}
+  {{/rows.row}}
+
+  {{#rows.row}}
+    {{model.name}}
+  {{/rows.row}}
+
+{{/ui-block/rows}}
+
+{{set-global component=this model=model}}
