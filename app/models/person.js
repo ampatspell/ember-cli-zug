@@ -5,9 +5,9 @@ export default PersistedModel.extend({
 
   id: id(),
 
-  name: attr('name'),
-  email: attr('email'),
-  version: attr('version'),
+  name:    attr(),
+  email:   attr(),
+  version: attr(),
 
   save: promise('save')
 

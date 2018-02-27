@@ -6,6 +6,6 @@ export default Component.extend({
 
   model: computed(function() {
     return this.get('store').model({ name: 'thing', data: { info: { name: 'thingie' } } });
-  }),
+  })
 
 });
