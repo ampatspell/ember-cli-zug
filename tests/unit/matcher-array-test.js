@@ -43,7 +43,7 @@ test('match and rematch array', function(assert) {
 });
 
 test('initial match array', function(assert) {
-  let yellow = this.store.model({ name: 'duck', id: 'yellow', collection: 'ducks', data: { friendId: 'green' } });
+  this.store.model({ name: 'duck', id: 'yellow', collection: 'ducks', data: { friendId: 'green' } });
   this.store.model({ name: 'duck', id: 'green', collection: 'ducks', data: {} });
 
   let matcher = this.create({
