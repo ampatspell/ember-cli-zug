@@ -41,3 +41,15 @@ test('load', async function(assert) {
   assert.equal(model.get('createdAt').getTime(), this.now.getTime());
   assert.equal(model.get('address'), null);
 });
+
+test('mutate', async function(assert) {
+  let model = this.store.model({ name: 'duck', data: { name: 'yellow' } });
+
+  assert.equal(model.get('name'), 'yellow');
+
+  let result = model.set('name', 'green');
+  assert.equal(result, 'green');
+
+  assert.equal(model.get('name'), 'green');
+  assert.equal(model.get('doc.data.name'), 'green');
+});
