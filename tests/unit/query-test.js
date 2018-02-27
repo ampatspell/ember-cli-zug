@@ -5,7 +5,7 @@ import PersistedModel from 'models/model/persisted';
 import { attr } from 'models/model/persisted/computed';
 
 const Duck = PersistedModel.extend({
-  name: attr('name')
+  name: attr()
 });
 
 module('query', {
