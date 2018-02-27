@@ -23,9 +23,10 @@ module('query', {
 });
 
 test('query collection', async function(assert) {
-  let internal = this.create({ id: 'foo', query: db => db.collection('ducks').orderBy('name') });
+  let internal = this.create({ id: 'foo', type: 'array', query: db => db.collection('ducks').orderBy('name') });
   let query = internal.model(true);
 
+  assert.equal(query.get('type'), 'array');
   assert.equal(query.get('id'), 'foo');
 
   assert.deepEqual(query.getProperties('isLoading', 'isLoaded'), {

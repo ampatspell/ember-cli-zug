@@ -1,0 +1,56 @@
+{{#ui-block/rows as |rows|}}
+
+  {{#rows.header}}
+    Experimental
+  {{/rows.header}}
+
+  {{#rows.row}}
+    <div>{{arrayFromQuery}}</div>
+    <div class="small">
+      {{#each arrayFromQuery.content as |model|}}
+        <div>{{model}}</div>
+      {{/each}}
+    </div>
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <div>{{arrayFromCollection}}</div>
+    <div class="small">
+      {{#each arrayFromCollection.content as |model|}}
+        <div>{{model}}</div>
+      {{/each}}
+    </div>
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <div>{{arrayFromDocument}}</div>
+    <div class="small">
+      {{#each arrayFromDocument.content as |model|}}
+        <div>{{model}}</div>
+      {{/each}}
+    </div>
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <div>{{singleFromQuery}}</div>
+    <div class="small">
+      {{singleFromQuery.content}}
+    </div>
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <div>{{singleFromDocument}}</div>
+    <div class="small">
+      {{singleFromDocument.content}}
+    </div>
+  {{/rows.row}}
+
+{{/ui-block/rows}}
+
+{{#ui-block/rows as |rows|}}
+  {{#rows.row}}
+    {{ui-block/identity context=context}}
+  {{/rows.row}}
+{{/ui-block/rows}}
+
+{{set-global component=this}}

@@ -6,7 +6,14 @@
 
   {{#rows.row}}
     <div class="identity">
-      <div>context: {{person.context.absoluteIdentifier}}</div>
+      <div>context: {{model.context.absoluteIdentifier}}</div>
+      <div>model: {{model}}</div>
+      <div>query: {{model.query}}</div>
+    </div>
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <div class="identity">
       <div>model: {{person}}</div>
       <div>doc: {{person.doc}}</div>
       <div>data: {{person.doc.data}}</div>

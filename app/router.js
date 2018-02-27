@@ -13,6 +13,7 @@ Router.map(function() {
     });
   });
   this.route('model', { path: '/model/*path' });
+  this.route('experimental');
 });
 
 export default Router;

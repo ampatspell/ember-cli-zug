@@ -15,11 +15,12 @@ export default Component.extend({
   collectionOptions: passthrough([ 'blogs', 'people', 'posts' ]),
 
   collection: 'people',
-  order:      'name',
+  order:      '__name__',
 
   query: query(function() {
     let { collection, order } = this.getProperties('collection', 'order');
     return {
+      type: 'array',
       owner: [ 'collection', 'order' ],
       context: 'store',
       id: `all-${collection}-by-${order}`,
