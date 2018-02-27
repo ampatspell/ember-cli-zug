@@ -1,0 +1,3 @@
+module.exports = {
+  excludes: [ 'thing/**/*' ]
+}
