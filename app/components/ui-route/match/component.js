@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { query, match } from 'models/computed';
+import { query, match } from 'models/model/computed';
 
 export default Component.extend({
   classNameBindings: [ ':ui-route-match' ],

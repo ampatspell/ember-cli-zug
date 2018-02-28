@@ -1,5 +1,5 @@
 import TransientModel from 'models/model/transient';
-import { query } from 'models/computed';
+import { query } from 'models/model/computed';
 
 export default TransientModel.extend({
 

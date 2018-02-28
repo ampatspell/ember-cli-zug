@@ -2,7 +2,7 @@ import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import TransientModel from 'models/model/transient';
 import PersistentModel from 'models/model/persisted';
-import { query } from 'models/computed';
+import { query } from 'models/model/computed';
 import { recreateCollection } from '../helpers/runloop';
 import { cacheFor } from 'models/-private/util/destroyable-computed';
 import { run } from '@ember/runloop';
