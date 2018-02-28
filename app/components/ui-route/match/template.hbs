@@ -38,6 +38,10 @@
     {{/rows.header}}
 
     {{#rows.row}}
+      <div class="src">
+        type: 'single'
+        matches: (model, owner) => model.get('name') === owner.get('name');
+      </div>
       {{#if first}}
         {{ui-block/json first.doc.data.serialized}}
       {{else}}
@@ -54,6 +58,10 @@
     {{/rows.header}}
 
     {{#rows.row}}
+      <div class="src">
+        type: 'array'
+        matches: (model, owner) => model.get('name').includes(owner.get('name'));
+      </div>
       {{#each includes as |person|}}
         {{ui-block/json person.doc.data.serialized}}
       {{else}}
