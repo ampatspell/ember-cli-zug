@@ -1,5 +1,6 @@
 # TODO
 
+* destroy transient model
 * computed model
 * transforms for attr
 * model fragment
