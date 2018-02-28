@@ -1,5 +1,6 @@
 # TODO
 
+* remove query-array and query-single distinction in public space
 * destroy transient model
 * computed model
 * transforms for attr
