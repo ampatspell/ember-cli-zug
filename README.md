@@ -27,5 +27,5 @@ import {
 import {
   query,
   match
-} from 'ember-zeug/model/computed'
+} from 'ember-zeug/model/computed';
 ```
