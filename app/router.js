@@ -14,6 +14,7 @@ Router.map(function() {
   });
   this.route('model', { path: '/model/*path' });
   this.route('queries');
+  this.route('match');
   this.route('experimental');
 });
 

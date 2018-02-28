@@ -1,0 +1,68 @@
+{{#ui-block/rows as |rows|}}
+
+  {{#rows.header}}
+    Match
+    {{#ui-block/links url='https://github.com/ampatspell/thing/tree/master/app/components/ui-route/match' as |links|}}
+      {{links.link title='component' url='component.js'}}
+      {{links.link title='template' url='template.hbs'}}
+    {{/ui-block/links}}
+  {{/rows.header}}
+
+  {{#rows.row}}
+    <div>{{if query.isLoading 'Loading…' (concat 'Loaded ' query.content.length ' models')}}</div>
+    <div class="small">{{query}}</div>
+    <div class="small">
+      {{#each query.content as |model|}}
+        <div>{{model.name}}</div>
+      {{/each}}
+    </div>
+  {{/rows.row}}
+
+{{/ui-block/rows}}
+
+{{#if query.isLoaded}}
+
+  {{#ui-block/rows as |rows|}}
+
+    {{#rows.row}}
+      <label>Name</label>
+      {{input value=name}}
+    {{/rows.row}}
+
+  {{/ui-block/rows}}
+
+  {{#ui-block/rows as |rows|}}
+
+    {{#rows.header}}
+      First with name
+    {{/rows.header}}
+
+    {{#rows.row}}
+      {{#if first}}
+        {{ui-block/json first.doc.data.serialized}}
+      {{else}}
+        <div class="small">Person with name "{{name}}" not found</div>
+      {{/if}}
+    {{/rows.row}}
+
+  {{/ui-block/rows}}
+
+  {{#ui-block/rows as |rows|}}
+
+    {{#rows.header}}
+      Name includes
+    {{/rows.header}}
+
+    {{#rows.row}}
+      {{#each includes as |person|}}
+        {{ui-block/json person.doc.data.serialized}}
+      {{else}}
+        <div class="small">Person with name containing "{{name}}" not found</div>
+      {{/each}}
+    {{/rows.row}}
+
+  {{/ui-block/rows}}
+
+{{/if}}
+
+{{set-global component=this model=model}}
