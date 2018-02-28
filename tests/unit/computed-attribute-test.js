@@ -14,7 +14,7 @@ const Duck = PersistedModel.extend({
 
 });
 
-module('attribute', {
+module('computed-attribute', {
   async beforeEach() {
     this.now = new Date();
     this.coll = this.firestore.collection('ducks');

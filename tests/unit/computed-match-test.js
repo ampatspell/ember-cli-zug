@@ -24,7 +24,7 @@ const Duck = PersistedModel.extend({
   })
 });
 
-module('match', {
+module('computed-match', {
   async beforeEach() {
     this.modelNameForDocument = () => 'duck';
     this.register('model:duck', Duck);
