@@ -10,7 +10,15 @@ const Duck = PersistedModel.extend({
   email:     attr({ type: 'string' }),
   isNice:    attr({ key: 'is_nice', type: 'boolean' }),
   createdAt: attr({ key: 'created_at', type: 'timestamp' }),
-  address:   attr({ type: 'string' })
+  address:   attr({ type: 'string' }),
+
+  customKey: 'name',
+  custom: attr(function() {
+    return {
+      owner: [ 'customKey' ],
+      key: this.get('customKey')
+    };
+  }),
 
 });
 
@@ -52,4 +60,11 @@ test('mutate', async function(assert) {
 
   assert.equal(model.get('name'), 'green');
   assert.equal(model.get('doc.data.name'), 'green');
+});
+
+test('custom attr key', async function(assert) {
+  let model = this.store.model({ name: 'duck', data: { name: 'yellow', email: 'yellow@gmail.com' } });
+  assert.equal(model.get('custom'), 'yellow');
+  model.set('customKey', 'email');
+  assert.equal(model.get('custom'), 'yellow@gmail.com');
 });
