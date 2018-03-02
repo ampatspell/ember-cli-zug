@@ -95,3 +95,49 @@ test('object replace primitive value with primitive value', function(assert) {
     name: 'larry'
   });
 });
+
+test('object replace object with primitive', function(assert) {
+  let doc = this.create({ person: { name: 'zeeba' } });
+
+  assert.deepEqual(doc.get('serialized'), {
+    "person": {
+      "name": "zeeba"
+    }
+  });
+
+  let person = doc._internal.content.person;
+  assert.ok(person.parent === doc._internal);
+
+  doc.set('person', 'zeeba');
+
+  assert.deepEqual(doc.get('serialized'), {
+    "person": "zeeba"
+  });
+
+  assert.ok(person.parent === null);
+});
+
+test('object replace primitive with object', function(assert) {
+  let doc = this.create({ person: 'zeeba' });
+
+  assert.deepEqual(doc.get('serialized'), {
+    "person": "zeeba"
+  });
+
+  doc.set('person', { name: 'zeeba' });
+
+  assert.deepEqual(doc.get('serialized'), {
+    "person": {
+      "name": "zeeba"
+    }
+  });
+
+  assert.ok(doc._internal.content.person.parent === doc._internal);
+});
+
+test('object with empty array', function(assert) {
+  let doc = this.create({ names: [] });
+  assert.deepEqual(doc.get('serialized'), {
+    names: []
+  });
+});
