@@ -47,7 +47,6 @@ test('object replace with object', function(assert) {
   //     "email": "duck@gmail.com"
   //   }
   // });
-  console.log(doc._internal);
 });
 
 test('object set primitive value', function(assert) {
