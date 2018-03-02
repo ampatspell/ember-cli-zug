@@ -141,3 +141,71 @@ test('object with empty array', function(assert) {
     names: []
   });
 });
+
+test('object with empty array replace', function(assert) {
+  let doc = this.create({ names: [] });
+
+  let first = doc._internal.content.names;
+
+  assert.deepEqual(doc.get('serialized'), {
+    names: []
+  });
+
+  doc.set('names', []);
+  let second = doc._internal.content.names;
+
+  assert.ok(first);
+  assert.ok(first === second);
+});
+
+test('object with array of strings', function(assert) {
+  let doc = this.create({ names: [ 'one', 'two' ] });
+  assert.deepEqual(doc.get('serialized'), {
+    names: [ 'one', 'two' ]
+  });
+});
+
+test('object with array of objects', function(assert) {
+  let doc = this.create({ names: [ { name: 'one' }, { name: 'two' } ] });
+
+  let array = doc._internal.content.names;
+
+  assert.ok(array.parent === doc._internal);
+  assert.ok(array.content[0].parent === array);
+  assert.ok(array.content[1].parent === array);
+
+  assert.deepEqual(doc.get('serialized'), {
+    "names": [
+      {
+        "name": "one"
+      },
+      {
+        "name": "two"
+      }
+    ]
+  });
+});
+
+test('object with array of strings replace with objects', function(assert) {
+  let doc = this.create({ names: [ 'one', 'two' ] });
+
+  assert.deepEqual(doc.get('serialized'), {
+    "names": [
+      "one",
+      "two"
+    ]
+  });
+
+  doc.set('names', [ { name: 'one' }, { name: 'two' } ]);
+
+  assert.deepEqual(doc.get('serialized'), {
+    "names": [
+      {
+        "name": "one"
+      },
+      {
+        "name": "two"
+      }
+    ]
+  });
+});
