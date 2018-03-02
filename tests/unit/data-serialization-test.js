@@ -4,7 +4,7 @@ import { test } from '../helpers/qunit';
 module('data-serialization', {
   beforeEach() {
     this.manager = this.store._internal.dataManager;
-    this.create = json => this.manager.createInternal(json).model(true);
+    this.create = json => this.manager.createInternal(json, 'model').model(true);
   }
 });
 
