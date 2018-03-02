@@ -23,7 +23,7 @@ export default PersistedModel.extend({
 });
 
 // models/person/address.js
-export default PerssitedObject.extend({
+export default PersistedObject.extend({
 
   street:  attr(),
   city:    attr(),
@@ -39,6 +39,8 @@ person.set('address', address);
 person.set('address.street', 'zeeba str'); // sets model.doc.data.address.street
 
 let address = store.object({ name: 'person/address', data: { street: 'zeeba str' } }); // initial data applied on set
+let adresses = store.array({ name: 'person/addresses' });
+person.set('addresses', addresses);
 person.get('addresses').pushObject(address);
 person.get('addresses.firstObject').set('street', 'zeeba str');
 ```
