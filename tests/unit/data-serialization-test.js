@@ -53,12 +53,21 @@ test('object set primitive value', function(assert) {
   let doc = this.create();
   assert.equal(doc.get('name'), undefined);
 
+  assert.deepEqual(doc.toJSON(), {
+  });
+  // assert.deepEqual(doc.get('serialized'), {
+  //   name: 'zeeba'
+  // });
+
   doc.set('name', 'zeeba');
   assert.equal(doc.get('name'), 'zeeba');
 
-  assert.deepEqual(doc.get('serialized'), {
+  assert.deepEqual(doc.toJSON(), {
     name: 'zeeba'
   });
+  // assert.deepEqual(doc.get('serialized'), {
+  //   name: 'zeeba'
+  // });
 });
 
 test('object replace primitive value with primitive value', function(assert) {
@@ -71,7 +80,10 @@ test('object replace primitive value with primitive value', function(assert) {
   doc.set('name', 'larry');
   assert.equal(doc.get('name'), 'larry');
 
-  assert.deepEqual(doc.get('serialized'), {
-    name: 'zeeba'
+  assert.deepEqual(doc.toJSON(), {
+    name: 'larry'
   });
+  // assert.deepEqual(doc.get('serialized'), {
+  //   name: 'larry'
+  // });
 });
