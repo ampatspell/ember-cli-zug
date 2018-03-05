@@ -591,6 +591,7 @@ test('array with objects doesnt replace equal ones', function(assert) {
   let doc = this.create({
     ducks: [
       { name: 'yellow' },
+      { name: 'blue' },
       { name: 'green' }
     ]
   });
@@ -606,7 +607,7 @@ test('array with objects doesnt replace equal ones', function(assert) {
   let second = doc._internal.content.ducks.content.copy();
 
   assert.ok(first[0] === second[0]);
-  assert.ok(first[1] === second[2]);
+  assert.ok(first[2] === second[2]);
 
   assert.deepEqual(doc.get('serialized'), {
     "ducks": [
