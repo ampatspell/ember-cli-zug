@@ -12,6 +12,7 @@ Router.map(function() {
       this.route('edit');
     });
   });
+  this.route('crud');
   this.route('model', { path: '/model/*path' });
   this.route('queries');
   this.route('match');

@@ -1,0 +1,20 @@
+{{#ui-block/rows as |rows|}}
+  {{#rows.header}}
+    {{title}}
+  {{/rows.header}}
+  {{#if query.isLoading}}
+    {{#rows.row}}
+      Loading…
+    {{/rows.row}}
+  {{else}}
+    {{#each models as |model|}}
+      {{#rows.row click=(action 'select' model)}}
+        {{component row model=model}}
+      {{/rows.row}}
+    {{else}}
+      {{#rows.row}}
+        Nothing here yet
+      {{/rows.row}}
+    {{/each}}
+  {{/if}}
+{{/ui-block/rows}}

@@ -1,0 +1,12 @@
+{{#ui-block/rows as |rows|}}
+  {{#rows.header}}
+    Selection
+  {{/rows.header}}
+  {{#rows.row}}
+    {{#if selection}}
+      {{ui-block/json selection.doc.serialized}}
+    {{else}}
+      Nothing selected
+    {{/if}}
+  {{/rows.row}}
+{{/ui-block/rows}}

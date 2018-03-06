@@ -1,0 +1,21 @@
+{{#ui-block/master-detail as |md|}}
+
+  {{#md.master}}
+
+    {{ui-route/crud/master/people context=context select=(action 'select')}}
+    {{ui-route/crud/master/blogs context=context select=(action 'select')}}
+  {{/md.master}}
+
+  {{#md.detail}}
+    {{ui-route/crud/detail/selection context=context selection=selection}}
+  {{/md.detail}}
+
+{{/ui-block/master-detail}}
+
+{{#ui-block/rows as |rows|}}
+  {{#rows.row}}
+    {{ui-block/identity context=context}}
+  {{/rows.row}}
+{{/ui-block/rows}}
+
+{{set-global crud=this context=context}}

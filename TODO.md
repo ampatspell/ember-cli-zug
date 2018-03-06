@@ -1,5 +1,6 @@
 # TODO
 
+* event for `isExisting=true|false`
 * transforms for attr
 * tests for query computed
 * computed model
