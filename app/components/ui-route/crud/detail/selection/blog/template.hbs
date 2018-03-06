@@ -1,1 +1,12 @@
-{{model}}
+{{#ui-block/rows as |rows|}}
+
+  {{#rows.header}}
+    {{model.title}}
+  {{/rows.header}}
+
+  {{#rows.row}}
+    <div class="key">Title</div>
+    <div class="value">{{model.title}}</div>
+  {{/rows.row}}
+
+{{/ui-block/rows}}

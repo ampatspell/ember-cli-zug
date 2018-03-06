@@ -1,1 +1,17 @@
-{{model}}
+{{#ui-block/rows as |rows|}}
+
+  {{#rows.header}}
+    {{model.name}}
+  {{/rows.header}}
+
+  {{#rows.row}}
+    <div class="key">Name</div>
+    <div class="value">{{model.name}}</div>
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <div class="key">Email</div>
+    <div class="value">{{model.email}}</div>
+  {{/rows.row}}
+
+{{/ui-block/rows}}
