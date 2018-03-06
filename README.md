@@ -26,7 +26,9 @@ import {
 
 import {
   query,
-  match
+  match,
+  transient,
+  fork
 } from 'ember-zeug/model/computed';
 ```
 
@@ -206,6 +208,29 @@ export default Component.extend({
       let name = owner.get('name');
       return { name: 'thing', data: { name } };
     }
+  })
+
+});
+```
+
+### Fork
+
+Forks a nested context which is destroyed when owner is.
+
+``` javascript
+export default Component.extend({
+
+  context: null,
+
+  name: 'hey',
+
+  forked: fork(function() {
+    let name = this.get('name');
+    return {
+      context: 'context',
+      owner: [ 'name' ],
+      name
+    };
   })
 
 });
