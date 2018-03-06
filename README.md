@@ -53,7 +53,7 @@ export default PersistedModel.extend({
 ``` javascript
 export default PersistedModel.extend({
 
-  // -> data
+  // -> doc.data
 
   name: attr({ type: 'string', key: 'name' }),
 
@@ -72,6 +72,8 @@ export default PersistedModel.extend({
 
 ``` javascript
 const State = TransientModel.extend({
+
+  // -> any
 
   ducks: query({
     type: 'array',
@@ -101,6 +103,8 @@ const State = TransientModel.extend({
 
 ``` javascript
 const Duck = PersistedModel.extend({
+
+  // -> any
 
   friend: match({
     type: 'single',
