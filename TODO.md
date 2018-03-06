@@ -1,6 +1,5 @@
 # TODO
 
-* data array updates instead of replace where possible
 * destroy data internals on detach
 * tests for query computed
 * destroy transient model
