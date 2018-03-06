@@ -30,6 +30,68 @@ import {
 } from 'ember-zeug/model/computed';
 ```
 
+## Model
+
+### Persisted model
+
+``` javascript
+export default PersistedModel.extend({
+
+  context,
+  path,
+
+  modelName,
+  modelType, // persisted
+
+  isPersistedModel, // true
+  isTransientModel, // false
+
+  doc: {
+    context,
+    id,
+    collection,
+    path,
+
+    isNew,
+    isDirty,
+    isLoaded,
+    isLoading,
+    isSaving,
+    isExisting,
+    isError,
+    error,
+
+    data: {
+      // firestore document as observable ember objects
+    },
+
+    serialized, // property which includes path, state, data
+
+    load,
+    save,
+    delete,
+  }
+
+});
+```
+
+### Transient model
+
+``` javascript
+export default TransientModel.extend({
+
+  context,
+  path, // optional
+
+  modelName,
+  modelType, // transient
+
+  isPersistedModel, // false
+  isTransientModel, // true
+
+});
+```
+
 ## Computed properties
 
 ### Document
