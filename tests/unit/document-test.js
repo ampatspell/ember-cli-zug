@@ -680,7 +680,7 @@ test('save with document reference', async function(assert) {
   assert.ok(snapshot.data().ref.isEqual(ref));
 });
 
-test.only('load with document reference', async function(assert) {
+test('load with document reference', async function(assert) {
   let ref = this.coll.doc('foo');
 
   await this.recreate();
