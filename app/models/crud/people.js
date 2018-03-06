@@ -6,6 +6,6 @@ export default Collection.extend({
 
   collection: 'people',
   order: 'name',
-  model: 'person',
+  type: 'person',
 
 });

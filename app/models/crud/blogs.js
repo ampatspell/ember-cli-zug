@@ -6,6 +6,6 @@ export default Collection.extend({
 
   collection: 'blogs',
   order: 'title',
-  model: 'blog',
+  type: 'blog',
 
 });

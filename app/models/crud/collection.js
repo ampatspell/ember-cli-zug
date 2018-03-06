@@ -18,13 +18,13 @@ export default TransientModel.extend({
 
   models: match({
     type: 'array',
-    owner: [ 'model' ],
-    model: [ 'modelName', 'doc.isExisting' ],
+    owner: [ 'type' ],
+    model: [ 'type', 'doc.isExisting' ],
     matches(model, owner) {
       if(!model.get('doc.isExisting')) {
         return;
       }
-      return model.get('modelName') === `crud/${owner.get('model')}`;
+      return model.get('type') === owner.get('type');
     }
   }),
 
