@@ -666,3 +666,35 @@ test('non-existant document does not overwrite dirty state', async function(asse
     "name": "yellow"
   });
 });
+
+test('save with document reference', async function(assert) {
+  await this.recreate();
+
+  let ref = this.coll.doc('foo');
+  let doc = this.local({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow', ref } });
+
+  await doc.save();
+
+  let snapshot = await this.firestore.doc('ducks/yellow').get();
+  assert.ok(snapshot.data().ref.isEqual(ref));
+});
+
+test('load with document reference', async function(assert) {
+  let ref = this.coll.doc('foo');
+
+  await this.recreate();
+  await this.firestore.doc('ducks/yellow').set({ ref });
+
+  let doc = this.existing({ collection: 'ducks', id: 'yellow', create: true });
+  let model = doc.model(true);
+  await doc.load();
+
+  assert.deepEqual(model.get('serialized.data'), {
+    "ref": {
+      "path": "ducks/foo",
+      "type": "document-reference"
+    }
+  });
+
+  assert.ok(model.get('data.ref').isEqual(ref));
+});

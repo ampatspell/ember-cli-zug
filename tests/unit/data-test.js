@@ -3,6 +3,7 @@ import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import DataObject from 'models/-private/model/data/object';
 import DataArray from 'models/-private/model/data/array';
+import firebase from 'firebase';
 
 const Thing = EmberObject.extend({
   toJSON() {
@@ -13,6 +14,8 @@ const Thing = EmberObject.extend({
 module('data', {
   beforeEach() {
     this.manager = this.store._internal.dataManager;
+    this.doc = path => this.store._internal.firestore.doc(path);
+    this.geopoint = (lat, lng) => new firebase.firestore.GeoPoint(lat, lng);
     this.create = json => this.manager.createInternal(json, 'model').model(true);
   }
 });
@@ -621,5 +624,60 @@ test('array with objects doesnt replace equal ones', function(assert) {
         "name": "green"
       }
     ]
+  });
+});
+
+test('serialize and deserialize ref', function(assert) {
+  let ref = this.doc('author/zeeba');
+  let doc = this.create({ owner: ref });
+  assert.ok(doc._internal.content.owner === ref);
+
+  assert.deepEqual(doc.get('serialized'), {
+    "owner": {
+      "path": "author/zeeba",
+      "type": "document-reference"
+    }
+  });
+
+  assert.deepEqual(doc.toJSON('model'), {
+    "owner": ref
+  });
+
+  assert.deepEqual(doc.toJSON('storage'), {
+    "owner": ref
+  });
+});
+
+test('document reference update equality', function(assert) {
+  let ref1 = this.doc('author/zeeba');
+  let ref2 = this.doc('author/zeeba');
+  assert.ok(ref1 !== ref2);
+
+  let doc = this.create({ owner: ref1 });
+  assert.ok(doc._internal.content.owner === ref1);
+
+  doc.set('owner', ref2);
+  assert.ok(doc._internal.content.owner === ref1);
+});
+
+test('serialize and deserialize geopoint', function(assert) {
+  let geopoint = this.geopoint(10, 20);
+  let doc = this.create({ location: geopoint });
+  assert.ok(doc._internal.content.location === geopoint);
+
+  assert.deepEqual(doc.get('serialized'), {
+    "location": {
+      "latitude": 10,
+      "longitude": 20,
+      "type": "geopoint"
+    }
+  });
+
+  assert.deepEqual(doc.toJSON('model'), {
+    "location": geopoint
+  });
+
+  assert.deepEqual(doc.toJSON('storage'), {
+    "location": geopoint
   });
 });
