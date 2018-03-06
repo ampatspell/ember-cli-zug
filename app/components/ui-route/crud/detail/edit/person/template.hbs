@@ -1,0 +1,22 @@
+{{#ui-block/rows as |rows|}}
+
+  {{#rows.header}}
+    {{model.name}}
+  {{/rows.header}}
+
+  {{#rows.row}}
+    <label>Name</label>
+    {{input value=model.name}}
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <label>Email</label>
+    {{input value=model.email}}
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <button {{action 'save'}}>Save</button>
+    <button {{action 'cancel'}}>Cancel</button>
+  {{/rows.row}}
+
+{{/ui-block/rows}}

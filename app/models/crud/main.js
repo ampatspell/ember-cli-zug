@@ -13,5 +13,14 @@ export default TransientModel.extend({
   blogs: collection('blogs'),
 
   selection: null,
+  isEditing: false,
+
+  select(selection) {
+    this.setProperties({ isEditing: false, selection });
+  },
+
+  edit(selection) {
+    this.setProperties({ isEditing: true, selection });
+  }
 
 });

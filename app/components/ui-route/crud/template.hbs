@@ -6,7 +6,11 @@
   {{/md.master}}
 
   {{#md.detail}}
-    {{ui-route/crud/detail/selection selection=crud.selection}}
+    {{#if crud.isEditing}}
+      {{ui-route/crud/detail/edit selection=crud.selection}}
+    {{else}}
+      {{ui-route/crud/detail/show selection=crud.selection edit=(action 'edit')}}
+    {{/if}}
   {{/md.detail}}
 
 {{/ui-block/master-detail}}

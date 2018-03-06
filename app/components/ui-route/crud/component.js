@@ -22,7 +22,10 @@ export default Component.extend({
 
   actions: {
     select(model) {
-      this.set('crud.selection', model);
+      this.get('crud').select(model);
+    },
+    edit(model) {
+      this.get('crud').edit(model);
     }
   }
 

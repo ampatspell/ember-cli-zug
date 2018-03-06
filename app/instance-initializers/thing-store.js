@@ -9,7 +9,7 @@ export default {
       modelNameForDocument(document, context) {
         let { collection } = document.getProperties('collection');
 
-        if(context.get('absoluteIdentifier') === 'store/crud') {
+        if(context.get('absoluteIdentifier').startsWith('store/crud')) {
           if(collection === 'people') {
             return 'crud/person';
           }
