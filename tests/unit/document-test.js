@@ -672,7 +672,6 @@ test('save with document reference', async function(assert) {
 
   let ref = this.coll.doc('foo');
   let doc = this.local({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow', ref } });
-  let model = doc.model(true);
 
   await doc.save();
 
