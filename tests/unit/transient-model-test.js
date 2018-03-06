@@ -98,3 +98,18 @@ test('path is read only', function(assert) {
   }
   assert.equal(model.get('path'), 'ducks/hello');
 });
+
+test('destroy model with path', function(assert) {
+  let model = this.store.model({ name: 'duck', path: 'ducks/one', data: { ok: true } });
+  let internal = model._internal;
+  assert.ok(model);
+  assert.ok(internal);
+
+  assert.ok(this.identity.all.includes(internal));
+  assert.ok(this.identity.ref['ducks/one'] === internal);
+
+  run(() => model.destroy());
+
+  assert.ok(!this.identity.all.includes(internal));
+  assert.ok(!this.identity.ref['ducks/one']);
+});
