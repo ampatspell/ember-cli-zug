@@ -1,6 +1,5 @@
 # TODO
 
-* destroy data internals on detach
 * tests for query computed
 * destroy transient model
 * computed model
