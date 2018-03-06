@@ -1,5 +1,6 @@
 # TODO
 
+* fork context computed property
 * event for `isExisting=true|false`
 * transforms for attr
 * tests for query computed
