@@ -1,12 +1,9 @@
-{{#ui-block/rows as |rows|}}
-  {{#rows.header}}
-    Selection
-  {{/rows.header}}
-  {{#rows.row}}
-    {{#if selection}}
-      {{ui-block/json selection.doc.serialized}}
-    {{else}}
+{{#if selection}}
+  {{component componentName model=selection}}
+{{else}}
+  {{#ui-block/rows as |rows|}}
+    {{#rows.row}}
       Nothing selected
-    {{/if}}
-  {{/rows.row}}
-{{/ui-block/rows}}
+    {{/rows.row}}
+  {{/ui-block/rows}}
+{{/if}}

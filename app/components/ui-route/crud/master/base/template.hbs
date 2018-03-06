@@ -1,15 +1,15 @@
 {{#ui-block/rows as |rows|}}
   {{#rows.header}}
-    {{title}}
+    {{collection.title}}
   {{/rows.header}}
-  {{#if query.isLoading}}
+  {{#if collection.query.isLoading}}
     {{#rows.row}}
       Loading…
     {{/rows.row}}
   {{else}}
-    {{#each models as |model|}}
+    {{#each collection.models as |model|}}
       {{#rows.row click=(action 'select' model)}}
-        {{component row model=model}}
+        {{component row model=model selected=(eq model selection)}}
       {{/rows.row}}
     {{else}}
       {{#rows.row}}

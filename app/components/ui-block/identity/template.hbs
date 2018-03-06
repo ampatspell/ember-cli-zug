@@ -8,6 +8,9 @@
       {{#if model.isPersistedModel}}
         {{model.doc.path}}
       {{else if model.isTransientModel}}
+        {{#if model.path}}
+          {{model.path}}
+        {{/if}}
         {{model}}
       {{/if}}
       <span class="secondary">({{model.modelType}})</span>

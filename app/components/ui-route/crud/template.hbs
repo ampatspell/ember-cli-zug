@@ -1,21 +1,20 @@
 {{#ui-block/master-detail as |md|}}
 
   {{#md.master}}
-
-    {{ui-route/crud/master/people context=context select=(action 'select')}}
-    {{ui-route/crud/master/blogs context=context select=(action 'select')}}
+    {{ui-route/crud/master/people collection=crud.people selection=crud.selection select=(action 'select')}}
+    {{ui-route/crud/master/blogs collection=crud.blogs selection=crud.selection select=(action 'select')}}
   {{/md.master}}
 
   {{#md.detail}}
-    {{ui-route/crud/detail/selection context=context selection=selection}}
+    {{ui-route/crud/detail/selection selection=crud.selection}}
   {{/md.detail}}
 
 {{/ui-block/master-detail}}
 
 {{#ui-block/rows as |rows|}}
   {{#rows.row}}
-    {{ui-block/identity context=context}}
+    {{ui-block/identity context=crud.context}}
   {{/rows.row}}
 {{/ui-block/rows}}
 
-{{set-global crud=this context=context}}
+{{set-global component=this context=crud.context crud=crud}}

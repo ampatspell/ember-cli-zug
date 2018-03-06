@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { transient } from 'models/model/computed';
 
 export default Component.extend({
   classNameBindings: [ ':ui-route-crud' ],
@@ -8,16 +9,20 @@ export default Component.extend({
     return this.get('store').fork('crud');
   }).readOnly(),
 
+  crud: transient({
+    create() {
+      return { name: 'crud/main' };
+    }
+  }),
+
   willDestroy() {
     this.get('context').destroy();
     this._super();
   },
 
-  selection: null,
-
   actions: {
     select(model) {
-      this.set('selection', model);
+      this.set('crud.selection', model);
     }
   }
 
