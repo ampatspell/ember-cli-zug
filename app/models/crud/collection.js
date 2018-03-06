@@ -24,7 +24,7 @@ export default TransientModel.extend({
       if(!model.get('doc.isExisting')) {
         return;
       }
-      return model.get('modelName') === owner.get('model');
+      return model.get('modelName') === `crud/${owner.get('model')}`;
     }
   }),
 

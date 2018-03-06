@@ -6,14 +6,25 @@ export default {
     app.inject('component', 'router', 'service:router');
 
     registerContextService(app, {
-      modelNameForDocument(document) {
+      modelNameForDocument(document, context) {
         let { collection } = document.getProperties('collection');
+
+        if(context.get('absoluteIdentifier') === 'store/crud') {
+          if(collection === 'people') {
+            return 'crud/person';
+          }
+          if(collection === 'blogs') {
+            return 'crud/blog';
+          }
+        }
+
         if(collection === 'people') {
           return 'person';
         }
         if(collection === 'blogs') {
           return 'blog';
         }
+
         return 'unknown';
       },
       storeNameForIdentifier(absoluteIdentifier) {
