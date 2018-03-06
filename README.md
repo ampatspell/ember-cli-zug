@@ -188,3 +188,25 @@ const Duck = PersistedModel.extend({
 
 });
 ```
+
+### Transient
+
+Creates a transient model which is destroyed when owner (component in this case) is destroyed and recreated when dependencies (`owner`) change.
+
+``` javascript
+export default Component.extend({
+
+  context: null,
+
+  name: 'hey',
+
+  thing: transient({
+    owner: [ 'name' ],
+    create(owner) {
+      let name = owner.get('name');
+      return { name: 'thing', data: { name } };
+    }
+  })
+
+});
+```

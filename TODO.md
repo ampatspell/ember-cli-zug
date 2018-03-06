@@ -8,3 +8,4 @@
 * firebase session
 * firebase storage
 * fastboot shoebox for models, documents, query states
+* transient computed property should have `{ type: single / array }`
