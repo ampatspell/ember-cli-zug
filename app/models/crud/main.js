@@ -28,7 +28,7 @@ export default TransientModel.extend({
     model.save();
   },
 
-  cancel(model) {
+  cancel() {
     this.set('isEditing', false);
   }
 
