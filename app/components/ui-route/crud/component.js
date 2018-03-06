@@ -1,13 +1,14 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { transient } from 'models/model/computed';
+import { transient, fork } from 'models/model/computed';
 
 export default Component.extend({
   classNameBindings: [ ':ui-route-crud' ],
 
-  context: computed(function() {
-    return this.get('store').fork('crud');
-  }).readOnly(),
+  context: fork({
+    context: 'store',
+    name: 'crud'
+  }),
 
   crud: transient({
     create() {
