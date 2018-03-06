@@ -7,7 +7,7 @@
 
   {{#md.detail}}
     {{#if crud.isEditing}}
-      {{ui-route/crud/detail/edit selection=crud.selection}}
+      {{ui-route/crud/detail/edit selection=crud.selection save=(action 'save') cancel=(action 'cancel')}}
     {{else}}
       {{ui-route/crud/detail/show selection=crud.selection edit=(action 'edit')}}
     {{/if}}

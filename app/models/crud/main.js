@@ -21,6 +21,15 @@ export default TransientModel.extend({
 
   edit(selection) {
     this.setProperties({ isEditing: true, selection });
+  },
+
+  save(model) {
+    this.set('isEditing', false);
+    model.save();
+  },
+
+  cancel(model) {
+    this.set('isEditing', false);
   }
 
 });

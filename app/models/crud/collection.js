@@ -1,5 +1,7 @@
 import TransientModel from 'models/model/transient';
 import { query, match } from 'models/model/computed';
+import { sort } from '@ember/object/computed';
+import { computed } from '@ember/object';
 
 export default TransientModel.extend({
 
@@ -16,7 +18,7 @@ export default TransientModel.extend({
     };
   }),
 
-  models: match({
+  matched: match({
     type: 'array',
     owner: [ 'type' ],
     model: [ 'type', 'doc.isExisting' ],
@@ -27,5 +29,12 @@ export default TransientModel.extend({
       return model.get('type') === owner.get('type');
     }
   }),
+
+  modelsSortingDesc: computed('order', function() {
+    let order = this.get('order');
+    return [ `${order}:asc` ];
+  }),
+
+  models: sort('matched', 'modelsSortingDesc'),
 
 });
