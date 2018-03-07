@@ -4,6 +4,14 @@
   {{#rows.row}}
     {{ui-block/identity context=context}}
   {{/rows.row}}
+  {{#rows.row}}
+    <div class="key">Dirty models</div>
+    {{#each edit.dirty as |model|}}
+      {{model}}
+    {{else}}
+      No dirty models
+    {{/each}}
+  {{/rows.row}}
 {{/ui-block/rows}}
 
 {{set-global edit=edit}}

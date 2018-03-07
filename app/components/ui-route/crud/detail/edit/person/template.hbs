@@ -14,6 +14,25 @@
     {{input value=model.edit.email}}
   {{/rows.row}}
 
+  {{#if model.blogs.isLoading}}
+    {{#rows.row}}
+      Loading blogs…
+    {{/rows.row}}
+  {{else}}
+    {{#rows.row}}
+      {{#each model.blogs.content as |blog|}}
+        <div>
+          <input type="checkbox"
+            checked={{eq blog.owner model.edit}}
+            onchange={{action (action 'toggleBlog' blog model.edit)
+            value='target.checked'}}
+          />
+          {{blog.title}}
+        </div>
+      {{/each}}
+    {{/rows.row}}
+  {{/if}}
+
   {{#rows.row}}
     <button {{action 'save'}}>Save</button>
     <button {{action 'done'}}>Cancel</button>

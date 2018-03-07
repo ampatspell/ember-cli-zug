@@ -1,6 +1,6 @@
 # TODO
 
-* fork context computed property
+* fork context computed property should destroy context after settle
 * event for `isExisting=true|false`
 * transforms for attr
 * tests for query computed

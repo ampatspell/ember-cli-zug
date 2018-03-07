@@ -1,6 +1,7 @@
 import TransientModel from 'models/model/transient';
-import { query } from 'models/model/computed';
+import { query, match } from 'models/model/computed';
 import { readOnly } from '@ember/object/computed';
+import { all } from 'rsvp';
 
 export default TransientModel.extend({
 
@@ -17,9 +18,24 @@ export default TransientModel.extend({
 
   edit: readOnly('query.content'),
 
+  dirty: match({
+    type: 'array',
+    model: [ 'doc.isExisting', 'doc.isDirty' ],
+    matches(model, owner) {
+      if(!model.get('doc.isExisting')) {
+        return;
+      }
+      return model.get('doc.isDirty');
+    }
+  }),
+
+  saveDirty() {
+    return all(this.get('dirty').map(model => model.save()));
+  },
+
   save() {
     let model = this.get('edit');
-    return model.save();
+    return model.save().then(() => this.saveDirty());
   }
 
 });
