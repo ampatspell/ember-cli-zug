@@ -21,7 +21,7 @@ export default TransientModel.extend({
   dirty: match({
     type: 'array',
     model: [ 'doc.isExisting', 'doc.isDirty' ],
-    matches(model, owner) {
+    matches(model) {
       if(!model.get('doc.isExisting')) {
         return;
       }
