@@ -7,6 +7,7 @@
       Loading…
     {{/rows.row}}
   {{else}}
+    {{log 'loaded' (concat collection.query)}}
     {{#each collection.models as |model|}}
       {{#rows.row click=(action 'select' model)}}
         {{component row model=model selected=(eq model selection)}}
