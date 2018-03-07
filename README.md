@@ -202,12 +202,12 @@ export default Component.extend({
 
   name: 'hey',
 
-  thing: transient({
-    owner: [ 'name' ],
-    create(owner) {
-      let name = owner.get('name');
-      return { name: 'thing', data: { name } };
-    }
+  thing: transient(function() {
+    let name = this.get('name');
+    return {
+      owner: [ 'name' ],
+      props: { name: 'thing', data: { name } }
+    };
   })
 
 });

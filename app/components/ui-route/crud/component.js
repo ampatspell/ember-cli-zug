@@ -10,9 +10,7 @@ export default Component.extend({
   }),
 
   crud: transient({
-    create() {
-      return { name: 'crud/main' };
-    }
+    props: { name: 'crud/main' }
   }),
 
   willDestroy() {
