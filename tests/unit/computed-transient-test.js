@@ -11,13 +11,13 @@ const State = TransientModel.extend({
 
   name: 'foobar',
 
-  basic: transient({
-    context: 'context',
-    owner: [ 'name' ],
-    create(owner) {
-      let name = owner.get('name');
-      return { name: 'thing', data: { name } };
-    }
+  basic: transient(function() {
+    let name = this.get('name');
+    return {
+      context: 'context',
+      owner: [ 'name' ],
+      props: { name: 'thing', data: { name } },
+    };
   }),
 
 });
