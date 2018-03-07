@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { transient, fork } from 'models/model/computed';
 
 export default Component.extend({
