@@ -13,11 +13,6 @@ export default Component.extend({
     props: { name: 'crud/main' }
   }),
 
-  willDestroy() {
-    this.get('context').destroy();
-    this._super();
-  },
-
   actions: {
     select(model) {
       this.get('crud').select(model);
