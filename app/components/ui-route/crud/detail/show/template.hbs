@@ -1,5 +1,5 @@
-{{#if selection}}
-  {{component componentName model=selection edit=edit}}
+{{#if model}}
+  {{component componentName model=model edit=edit}}
 {{else}}
   {{#ui-block/rows as |rows|}}
     {{#rows.row}}

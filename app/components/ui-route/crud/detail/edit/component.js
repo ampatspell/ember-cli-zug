@@ -6,12 +6,12 @@ export default Component.extend({
   componentNamePrefix: 'edit',
 
   context: fork({
-    context: 'selection.context',
+    context: 'model.context',
     name: 'edit'
   }),
 
-  model: transient(function() {
-    let model = this.get('selection');
+  edit: transient(function() {
+    let model = this.get('model');
     let { type } = model.getProperties('type');
     return {
       props: { name: `crud/edit/${type}`, data: { pristine: model } }
@@ -20,7 +20,7 @@ export default Component.extend({
 
   actions: {
     save() {
-      this.get('model').save();
+      this.get('edit').save();
       let done = this.get('done');
       done && done();
     }
