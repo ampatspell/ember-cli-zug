@@ -1,6 +1,7 @@
 # TODO
 
 * fork context computed property should destroy context after settle
+* data update from snapshot should mark doc `{ isDirty: false }`
 * event for `isExisting=true|false`
 * transforms for attr
 * tests for query computed
