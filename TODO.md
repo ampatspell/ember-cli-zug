@@ -13,3 +13,4 @@
 * transient computed property should have `{ type: single / array }`
 * `context.modelClassForNameExists(name)` -- useful for prefixing classes based on context in `modelNameForDocument`
 * match computed property sorting
+* queries computed property which merges multiple query states (isLoading, isError, errrors) (and additional promises?)
