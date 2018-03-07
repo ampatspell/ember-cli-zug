@@ -20,10 +20,10 @@ export default Component.extend({
 
   actions: {
     save() {
-      this.get('edit').save().finally(() => {
-        let done = this.get('done');
-        done && done();
-      });
+      this.get('edit').save();
+
+      let done = this.get('done');
+      done && done();
     }
   },
 
