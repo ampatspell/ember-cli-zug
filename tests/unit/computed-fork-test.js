@@ -3,6 +3,7 @@ import { test } from '../helpers/qunit';
 import TransientModel from 'models/model/transient';
 import { fork } from 'models/model/computed';
 import { run } from '@ember/runloop';
+import { recreateCollection, wait } from '../helpers/runloop';
 
 const Thing = TransientModel.extend({
 });
@@ -23,6 +24,9 @@ const State = TransientModel.extend({
 
 module('computed-fork', {
   async beforeEach() {
+    this.coll = this.firestore.collection('ducks');
+    this.recreate = () => recreateCollection(this.coll);
+
     this.modelNameForDocument = () => 'duck';
     this.register('model:state', State);
     this.register('model:thing', Thing);
@@ -59,9 +63,36 @@ test('destroy created', function(assert) {
   assert.ok(!second.isDestroyed);
 });
 
-test('owner destroy destroys forked', function(assert) {
+test('owner destroy destroys forked', async function(assert) {
   let model = this.store.model({ name: 'state' });
   let first = model.get('forked');
   run(() => model.destroy());
+  await first.settle();
   assert.ok(first.isDestroyed);
+});
+
+test('owner destroy destroys forked after settle', async function(assert) {
+  await this.recreate();
+
+  let model = this.store.model({ name: 'state' });
+  let context = model.get('forked');
+
+  let duck = context.model({ name: 'duck', collection: 'ducks', id: 'yellow', data: { name: 'yellow' } });
+  let promise = duck.get('doc').save();
+
+  run(() => model.destroy());
+
+  assert.ok(!context.isDestroyed);
+  assert.ok(!duck.isDestroyed);
+
+  await promise;
+  await wait();
+
+  assert.ok(context.isDestroyed);
+  assert.ok(duck.isDestroyed);
+
+  let doc = await this.coll.doc('yellow').get();
+  assert.deepEqual(doc.data(), {
+    "name": "yellow"
+  });
 });
