@@ -1,1 +1,7 @@
 {{component componentName model=model save=(action 'save') done=done}}
+
+{{#ui-block/rows as |rows|}}
+  {{#rows.row}}
+    {{ui-block/identity context=context}}
+  {{/rows.row}}
+{{/ui-block/rows}}
