@@ -1,6 +1,5 @@
 # TODO
 
-* fork context computed property should destroy context after settle
 * transforms for attr
 * tests for query computed
 * model, array fragments
