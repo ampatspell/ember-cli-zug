@@ -6,11 +6,12 @@
   {{/md.master}}
 
   {{#md.detail}}
-    {{#if crud.isEditing}}
-      {{ui-route/crud/detail/edit selection=crud.selection save=(action 'save') cancel=(action 'cancel')}}
-    {{else}}
-      {{ui-route/crud/detail/show selection=crud.selection edit=(action 'edit')}}
-    {{/if}}
+    {{ui-route/crud/detail
+      selection=crud.selection
+      edit=(action 'edit')
+      save=(action 'save')
+      cancel=(action 'cancel')
+    }}
   {{/md.detail}}
 
 {{/ui-block/master-detail}}

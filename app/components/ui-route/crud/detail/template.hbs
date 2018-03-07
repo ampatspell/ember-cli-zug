@@ -1,0 +1,5 @@
+{{#if crud.isEditing}}
+  {{ui-route/crud/detail/edit selection=selection save=save cancel=cancel}}
+{{else}}
+  {{ui-route/crud/detail/show selection=selection edit=edit}}
+{{/if}}
