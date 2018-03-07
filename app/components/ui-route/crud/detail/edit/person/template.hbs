@@ -1,22 +1,22 @@
 {{#ui-block/rows as |rows|}}
 
   {{#rows.header}}
-    {{model.name}}
+    {{model.pristine.name}}
   {{/rows.header}}
 
   {{#rows.row}}
     <label>Name</label>
-    {{input value=model.name}}
+    {{input value=model.edit.name}}
   {{/rows.row}}
 
   {{#rows.row}}
     <label>Email</label>
-    {{input value=model.email}}
+    {{input value=model.edit.email}}
   {{/rows.row}}
 
   {{#rows.row}}
     <button {{action 'save'}}>Save</button>
-    <button {{action 'cancel'}}>Cancel</button>
+    <button {{action 'done'}}>Cancel</button>
   {{/rows.row}}
 
 {{/ui-block/rows}}

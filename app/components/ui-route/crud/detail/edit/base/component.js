@@ -7,9 +7,9 @@ export default Component.extend({
       let { save, model } = this.getProperties('save', 'model');
       save && save(model);
     },
-    cancel() {
-      let { cancel, model } = this.getProperties('cancel', 'model');
-      cancel && cancel(model);
+    done() {
+      let done = this.get('done');
+      done && done();
     }
   }
 

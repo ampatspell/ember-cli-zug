@@ -1,17 +1,25 @@
 {{#ui-block/rows as |rows|}}
 
   {{#rows.header}}
-    {{model.title}}
+    {{model.pristine.title}}
   {{/rows.header}}
 
-  {{#rows.row}}
-    <label>Title</label>
-    {{input value=model.title}}
-  {{/rows.row}}
+  {{#if model.query.isLoading}}
+    {{#rows.row}}
+      Loading…
+    {{/rows.row}}
+  {{else}}
 
-  {{#rows.row}}
-    <button {{action 'save'}}>Save</button>
-    <button {{action 'cancel'}}>Cancel</button>
-  {{/rows.row}}
+    {{#rows.row}}
+      <label>Title</label>
+      {{input value=model.edit.title}}
+    {{/rows.row}}
+
+    {{#rows.row}}
+      <button {{action 'save'}}>Save</button>
+      <button {{action 'done'}}>Cancel</button>
+    {{/rows.row}}
+
+  {{/if}}
 
 {{/ui-block/rows}}

@@ -20,11 +20,8 @@ export default Component.extend({
     edit(model) {
       this.get('crud').edit(model);
     },
-    save(model) {
-      this.get('crud').save(model);
-    },
-    cancel(model) {
-      this.get('crud').cancel(model);
+    done() {
+      this.get('crud').done();
     }
   }
 
