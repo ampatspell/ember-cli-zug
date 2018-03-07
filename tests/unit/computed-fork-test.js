@@ -54,7 +54,9 @@ test('destroy created', function(assert) {
   let first = model.get('forked');
   run(() => first.destroy());
   let second = model.get('forked');
-  assert.ok(first === second);
+  assert.ok(first !== second);
+  assert.ok(first.isDestroyed);
+  assert.ok(!second.isDestroyed);
 });
 
 test('owner destroy destroys forked', function(assert) {
