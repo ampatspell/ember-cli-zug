@@ -1,6 +1,6 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import { recreateCollection, waitForCollectionSize, wait } from '../helpers/runloop';
+import { recreateCollection, waitForCollectionSize, wait, waitForProp } from '../helpers/runloop';
 import { all } from 'rsvp';
 
 module('document', {
@@ -697,4 +697,22 @@ test('load with document reference', async function(assert) {
   });
 
   assert.ok(model.get('data.ref').isEqual(ref));
+});
+
+test('snapshot update marks document non-dirty', async function(assert) {
+  await this.recreate();
+
+  let doc = this.local({ id: 'yellow', collection: 'ducks', data: { name: 'Yellow' } });
+  let model = doc.model(true);
+
+  await model.save();
+
+  assert.equal(model.get('isDirty'), false);
+  model.set('data.name', 'Green');
+  assert.equal(model.get('isDirty'), true);
+
+  await this.coll.doc('yellow').set({ name: 'Red' }, { merge: true });
+  await waitForProp(model, 'data.name', 'Red');
+
+  assert.equal(model.get('isDirty'), false);
 });
