@@ -12,7 +12,7 @@ export default TransientModel.extend({
   query: query(function() {
     let { collection, order } = this.getProperties('collection', 'order');
     return {
-      id: 'crud-collection-${collection}-by-${order}',
+      id: `crud-collection-${collection}-by-${order}`,
       type: 'array',
       query: db => db.collection(collection).orderBy(order, 'asc')
     };

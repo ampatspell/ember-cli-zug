@@ -121,7 +121,7 @@ test('settle', async function(assert) {
   assert.equal(duck.get('isLoading'), true);
   assert.equal(duck.get('content'), null);
 
-  await this.store.settle();
+  await run(() => this.store.settle());
 
   assert.equal(duck.get('isLoading'), false);
   assert.equal(duck.get('content.doc.id'), 'green');

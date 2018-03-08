@@ -67,7 +67,9 @@ test('owner destroy destroys forked', async function(assert) {
   let model = this.store.model({ name: 'state' });
   let first = model.get('forked');
   run(() => model.destroy());
-  await first.settle();
+
+  await run(() => first.settle());
+
   assert.ok(first.isDestroyed);
 });
 
@@ -86,7 +88,7 @@ test('owner destroy destroys forked after settle', async function(assert) {
   assert.ok(!context.isDestroyed);
   assert.ok(!duck.isDestroyed);
 
-  await context.settle();
+  await run(() => context.settle());
 
   assert.ok(context.isDestroyed);
   assert.ok(duck.isDestroyed);
