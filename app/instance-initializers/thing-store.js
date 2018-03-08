@@ -1,3 +1,5 @@
+import { Promise as RSVPPromise } from 'rsvp';
+
 import registerContextService from 'models/register-context-service';
 
 const firebase = {
@@ -40,6 +42,8 @@ const storeNameForIdentifier = absoluteIdentifier => {
 export default {
   name: 'thing:store',
   initialize(app) {
+    window.Promise = RSVPPromise;
+
     app.inject('component', 'router', 'service:router');
 
     registerContextService(app, {
