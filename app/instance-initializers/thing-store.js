@@ -1,5 +1,4 @@
 import { Promise as RSVPPromise } from 'rsvp';
-
 import registerContextService from 'models/register-context-service';
 
 const firebase = {
