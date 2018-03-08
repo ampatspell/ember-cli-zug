@@ -1,24 +1,16 @@
 import * as functions from 'firebase-functions';
 import * as express from 'express';
-// import * as fastbootMiddleware from 'fastboot-express-middleware';
+import * as fastbootMiddleware from 'fastboot-express-middleware';
+import * as path from 'path';
 
-// let dist = './dist';
+const dist = path.resolve(__dirname, '../dist');
 
-let app = express();
-// app.use(express.static(dist, { index: false }));
-// app.get('/*', fastbootMiddleware(dist));
+const app = express();
 
-// exports.fastboot = functions.https.onRequest(app);
+app.use(express.static(dist, { index: false }));
+app.get('/*', fastbootMiddleware(dist));
 
-app.get('/', (req, res) => {
-  res.json({ path: '/' });
-});
-
-app.get('*', (req, res) => {
-  res.json({ path: '*' });
-});
-
-exports.hello = functions.https.onRequest((req, res) => {
+exports.fastboot = functions.https.onRequest((req, res) => {
   if(!req.path) {
     req.url = `/${req.url}`;
   }
