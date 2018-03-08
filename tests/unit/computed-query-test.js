@@ -106,3 +106,23 @@ test('property is reused, query -- recreated', async function(assert) {
   await second.load();
   assert.deepEqual(second.get('content').mapBy('doc.id'), [ "yellow", "green", "red" ]);
 });
+
+test('settle', async function(assert) {
+  await this.recreate();
+
+  let state = this.store.model({ name: 'state' });
+  let duck = state.get('duck');
+
+  assert.equal(duck.get('isLoading'), true);
+  assert.equal(duck.get('content'), null);
+
+  duck.load();
+
+  assert.equal(duck.get('isLoading'), true);
+  assert.equal(duck.get('content'), null);
+
+  await this.store.settle();
+
+  assert.equal(duck.get('isLoading'), false);
+  assert.equal(duck.get('content.doc.id'), 'green');
+});
