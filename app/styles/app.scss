@@ -1,5 +1,10 @@
 @import "body";
 
+#loading {
+  padding: 5px 10px;
+  font-weight: 600;
+}
+
 .ui-application {
   > .header {
     padding: 5px 10px 10px 10px;
