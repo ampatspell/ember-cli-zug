@@ -3,7 +3,7 @@ import { test } from '../helpers/qunit';
 import TransientModel from 'models/model/transient';
 import { fork } from 'models/model/computed';
 import { run } from '@ember/runloop';
-import { recreateCollection, wait } from '../helpers/runloop';
+import { recreateCollection } from '../helpers/runloop';
 
 const Thing = TransientModel.extend({
 });
@@ -78,15 +78,15 @@ test('owner destroy destroys forked after settle', async function(assert) {
   let context = model.get('forked');
 
   let duck = context.model({ name: 'duck', collection: 'ducks', id: 'yellow', data: { name: 'yellow' } });
-  let promise = duck.get('doc').save();
+
+  duck.get('doc').save();
 
   run(() => model.destroy());
 
   assert.ok(!context.isDestroyed);
   assert.ok(!duck.isDestroyed);
 
-  await promise;
-  await wait();
+  await context.settle();
 
   assert.ok(context.isDestroyed);
   assert.ok(duck.isDestroyed);
