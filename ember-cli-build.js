@@ -13,5 +13,7 @@ module.exports = function(defaults) {
   app.import('node_modules/firebase/firebase-firestore.js');
   app.import('vendor/shims/firebase.js');
 
+  app.import('vendor/ember-resolver/legacy-shims.js');
+
   return app.toTree();
 };
