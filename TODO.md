@@ -1,5 +1,6 @@
 # TODO
 
+* figure out api for session and storage so that I have a better understanding regarding exports
 * transforms for attr
 * tests for query computed
 * model, array fragments
