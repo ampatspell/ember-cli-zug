@@ -32,6 +32,32 @@ import {
 } from 'ember-zeug/model/computed';
 ```
 
+## Context
+
+``` javascript
+export default Context.extend({
+
+  identifier,
+  absoluteIdentifier,
+
+  ready,
+
+  identity,
+
+  fork,
+  model,
+  existing,
+  query,
+  matcher,
+  load,
+  first,
+
+  settle,
+  hasModelClassForName,
+
+});
+```
+
 ## Model
 
 ### Persisted model
