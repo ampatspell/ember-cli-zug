@@ -28,7 +28,7 @@ import {
   query,
   match,
   transient,
-  fork
+  nest
 } from 'ember-zeug/model/computed';
 ```
 
@@ -44,7 +44,7 @@ export default Context.extend({
 
   identity,
 
-  fork,
+  nest,
   model,
   existing,
   query,
@@ -239,9 +239,9 @@ export default Component.extend({
 });
 ```
 
-### Fork
+### Nest
 
-Forks a nested context which is destroyed when owner is.
+Create a nested context which is destroyed when owner is.
 
 ``` javascript
 export default Component.extend({
@@ -250,7 +250,7 @@ export default Component.extend({
 
   name: 'hey',
 
-  forked: fork(function() {
+  nested: nest(function() {
     let name = this.get('name');
     return {
       context: 'context',
