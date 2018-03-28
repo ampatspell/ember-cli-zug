@@ -1,10 +1,10 @@
 import Component from '@ember/component';
-import { transient, fork } from 'models/model/computed';
+import { transient, nest } from 'models/model/computed';
 
 export default Component.extend({
   classNameBindings: [ ':ui-route-crud' ],
 
-  context: fork({
+  context: nest({
     context: 'store',
     name: 'crud'
   }),

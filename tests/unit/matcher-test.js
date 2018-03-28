@@ -42,7 +42,7 @@ test('create single', async function(assert) {
 });
 
 test('destroy context', async function(assert) {
-  let context = this.store.fork('foof');
+  let context = this.store.nest('foof');
   let model = context.matcher({ type: 'single', matches: () => true });
   let internal = model._internal;
 

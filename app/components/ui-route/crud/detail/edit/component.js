@@ -1,11 +1,11 @@
 import Component from '../base/component';
-import { fork, transient } from 'models/model/computed';
+import { nest, transient } from 'models/model/computed';
 
 export default Component.extend({
 
   componentNamePrefix: 'edit',
 
-  context: fork({
+  context: nest({
     context: 'model.context',
     name: 'edit'
   }),

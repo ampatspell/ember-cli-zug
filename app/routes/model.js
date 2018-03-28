@@ -4,7 +4,7 @@ export default Route.extend({
 
   model(props) {
     let { path } = props;
-    return this.get('store').fork('document').first({ path, optional: true });
+    return this.get('store').nest('document').first({ path, optional: true });
   },
 
   deactivate() {
