@@ -5,9 +5,9 @@ export default Mixin.create(DestroyContext, {
 
   context: null,
 
-  fork(name) {
+  nest(name) {
     name = name || this.get('context');
-    return this.get('store').fork(name);
+    return this.get('store').nest(name);
   }
 
 });
