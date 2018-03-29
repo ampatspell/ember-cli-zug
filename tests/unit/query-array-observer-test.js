@@ -15,6 +15,7 @@ module('query-array-observer', {
     let delegate = [];
     this.delegate = delegate;
     this.create = query => new QueryArrayObserver(this.store._internal, query, {
+      onMetadata() {},
       createModel(doc) {
         let data = doc.data();
         delegate.push(`create: ${data.name}`);
