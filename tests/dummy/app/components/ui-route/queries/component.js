@@ -19,7 +19,7 @@ export default Component.extend({
   arrayFromDocument: query({
     id: 'array-from-document',
     type: 'array',
-    query: db => db.doc('people/ampatspell')
+    query: db => db.doc('people/N2pxhCYUSYtnosbaqZwJ')
   }),
 
   singleFromQuery: query({
@@ -31,7 +31,7 @@ export default Component.extend({
   singleFromDocument: query({
     id: 'single-from-document',
     type: 'single',
-    query: db => db.doc('people/ampatspell')
+    query: db => db.doc('people/N2pxhCYUSYtnosbaqZwJ')
   })
 
 });
