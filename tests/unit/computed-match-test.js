@@ -1,8 +1,8 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import PersistedModel from 'models/model/persisted';
-import { id } from 'models/model/persisted/computed';
-import { match } from 'models/model/computed';
+import PersistedModel from 'ember-cli-zug/model/persisted';
+import { id } from 'ember-cli-zug/model/persisted/computed';
+import { match } from 'ember-cli-zug/model/computed';
 
 const Duck = PersistedModel.extend({
   id: id(),

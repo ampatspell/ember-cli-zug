@@ -1,6 +1,6 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import PersistedModel from 'models/model/persisted';
+import PersistedModel from 'ember-cli-zug/model/persisted';
 import { recreateCollection } from '../helpers/runloop';
 
 const Duck = PersistedModel.extend();

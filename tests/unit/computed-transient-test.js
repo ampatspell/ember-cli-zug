@@ -1,7 +1,7 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import TransientModel from 'models/model/transient';
-import { transient } from 'models/model/computed';
+import TransientModel from 'ember-cli-zug/model/transient';
+import { transient } from 'ember-cli-zug/model/computed';
 import { run } from '@ember/runloop';
 
 const Thing = TransientModel.extend({

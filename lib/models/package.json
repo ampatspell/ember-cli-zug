@@ -1,9 +1,0 @@
-{
-  "name": "models",
-  "dependencies": {
-    "ember-cli-babel": "^6.6.0"
-  },
-  "keywords": [
-    "ember-addon"
-  ]
-}

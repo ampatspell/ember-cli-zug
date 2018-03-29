@@ -1,7 +1,7 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import PersistedModel from 'models/model/persisted';
-import InternalPersistedModel from 'models/-private/model/internal-persisted-model';
+import PersistedModel from 'ember-cli-zug/model/persisted';
+import InternalPersistedModel from 'ember-cli-zug/-private/model/internal-persisted-model';
 import { recreateCollection } from '../helpers/runloop';
 import { run } from '@ember/runloop';
 
