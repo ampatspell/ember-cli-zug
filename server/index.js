@@ -7,12 +7,12 @@ module.exports = app => {
   const serve = require('serve-static');
 
   let config = {
-    apiKey: "AIzaSyDyjC_rsH7_BYJwjKgIrHhoSvRBfNnjGrQ",
-    databaseURL: "https://ohne-zeit.firebaseio.com",
-    storageBucket: "ohne-zeit.appspot.com",
-    authDomain: "ohne-zeit.firebaseapp.com",
-    messagingSenderId: "491555737764",
-    projectId: "ohne-zeit"
+    apiKey: "AIzaSyApr48AJWch97DybXXVhF53LJttudP8E2Y",
+    authDomain: "ember-cli-zug.firebaseapp.com",
+    databaseURL: "https://ember-cli-zug.firebaseio.com",
+    projectId: "ember-cli-zug",
+    storageBucket: "ember-cli-zug.appspot.com",
+    messagingSenderId: "102388675337"
   };
 
   app.use('/coverage', serve(path.join(__dirname, '../coverage'), { 'index': [ 'index.html' ] }));

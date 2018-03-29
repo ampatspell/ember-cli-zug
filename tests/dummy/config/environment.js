@@ -51,12 +51,12 @@ module.exports = function(environment) {
     ENV.test = {
       firebase: {
         config: {
-          apiKey: "AIzaSyAOqRA96vnTlCnvGvb7PtwyARfvxSx7gDA",
-          authDomain: "ohne-zeit-test.firebaseapp.com",
-          databaseURL: "https://ohne-zeit-test.firebaseio.com",
-          projectId: "ohne-zeit-test",
-          storageBucket: "ohne-zeit-test.appspot.com",
-          messagingSenderId: "1043845604698"
+          apiKey: "AIzaSyAvm8v8kXS3iHsg3EBxAk-mZZcYdeOuj3E",
+          authDomain: "ember-cli-zug-travis.firebaseapp.com",
+          databaseURL: "https://ember-cli-zug-travis.firebaseio.com",
+          projectId: "ember-cli-zug-travis",
+          storageBucket: "ember-cli-zug-travis.appspot.com",
+          messagingSenderId: "715071933357"
         }
       }
     }
