@@ -4,7 +4,6 @@
 * transforms for attr
 * tests for query computed
 * model, array fragments
-* expose snapshot-observer metadata
 * firebase session
 * firebase storage
 * fastboot shoebox for models, documents, query states
