@@ -57,10 +57,19 @@ test('load array', async function(assert) {
   let state = this.store.model({ name: 'state' });
   let ducks = state.get('ducks');
 
+  assert.deepEqual(ducks.get('metadata'), undefined);
+
   assert.equal(ducks.get('isLoading'), true);
+  assert.deepEqual(ducks.get('metadata'), undefined);
+
   assert.deepEqual(ducks.get('content').mapBy('doc.id'), []);
 
   await ducks.load();
+
+  assert.deepEqual(ducks.get('metadata'), {
+    "fromCache": true,
+    "hasPendingWrites": false
+  });
 
   assert.equal(ducks.get('isLoading'), false);
   assert.deepEqual(ducks.get('content').mapBy('doc.id'), [ "green", "red", "yellow" ]);
@@ -72,10 +81,17 @@ test('load single', async function(assert) {
   let state = this.store.model({ name: 'state' });
   let duck = state.get('duck');
 
+  assert.deepEqual(duck.get('metadata'), undefined);
+
   assert.equal(duck.get('isLoading'), true);
   assert.equal(duck.get('content'), null);
 
   await duck.load();
+
+  assert.deepEqual(duck.get('metadata'), {
+    "fromCache": false,
+    "hasPendingWrites": false
+  });
 
   assert.equal(duck.get('isLoading'), false);
   assert.equal(duck.get('content.doc.id'), 'green');
@@ -122,6 +138,11 @@ test('settle', async function(assert) {
   assert.equal(duck.get('content'), null);
 
   await run(() => this.store.settle());
+
+  assert.deepEqual(duck.get('metadata'), {
+    "fromCache": false,
+    "hasPendingWrites": false
+  });
 
   assert.equal(duck.get('isLoading'), false);
   assert.equal(duck.get('content.doc.id'), 'green');
