@@ -33,12 +33,12 @@ module.exports = {
         'tests/dummy/app/**'
       ],
       parserOptions: {
-        sourceType: 'script',
-        ecmaVersion: 2015
+        ecmaVersion: 6
       },
       env: {
         browser: false,
-        node: true
+        node: true,
+        es6: true
       },
       plugins: ['node'],
       rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
