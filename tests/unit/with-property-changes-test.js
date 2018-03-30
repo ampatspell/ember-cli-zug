@@ -1,6 +1,6 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import withPropertyChanges from 'models/-private/util/with-property-changes';
+import withPropertyChanges from 'ember-cli-zug/-private/util/with-property-changes';
 
 class Model {
   constructor() {

@@ -1,10 +1,10 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import TransientModel from 'models/model/transient';
-import PersistentModel from 'models/model/persisted';
-import { query } from 'models/model/computed';
+import TransientModel from 'ember-cli-zug/model/transient';
+import PersistentModel from 'ember-cli-zug/model/persisted';
+import { query } from 'ember-cli-zug/model/computed';
 import { recreateCollection } from '../helpers/runloop';
-import { cacheFor } from 'models/-private/util/destroyable-computed';
+import { cacheFor } from 'ember-cli-zug/-private/util/destroyable-computed';
 import { run } from '@ember/runloop';
 
 const State = TransientModel.extend({

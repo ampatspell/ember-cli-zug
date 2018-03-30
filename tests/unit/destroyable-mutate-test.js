@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import { run } from '@ember/runloop';
-import destroyable from 'models/-private/util/destroyable-computed';
+import destroyable from 'ember-cli-zug/-private/util/destroyable-computed';
 
 const Prop = EmberObject.extend();
 

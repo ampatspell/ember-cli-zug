@@ -1,7 +1,7 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import TransientModel from 'models/model/transient';
-import InternalTransientModel from 'models/-private/model/internal-transient-model';
+import TransientModel from 'ember-cli-zug/model/transient';
+import InternalTransientModel from 'ember-cli-zug/-private/model/internal-transient-model';
 import { run } from '@ember/runloop';
 
 const Duck = TransientModel.extend();

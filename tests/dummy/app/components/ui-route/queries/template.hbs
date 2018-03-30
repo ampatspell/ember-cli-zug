@@ -1,0 +1,80 @@
+{{#ui-block/rows as |rows|}}
+
+  {{#rows.header}}
+    Queries
+    {{#ui-block/links url='https://github.com/ampatspell/thing/tree/master/app/components/ui-route/queries' as |links|}}
+      {{links.link title='component' url='component.js'}}
+      {{links.link title='template' url='template.hbs'}}
+    {{/ui-block/links}}
+  {{/rows.header}}
+
+  {{#rows.row}}
+    <div class="src">
+      type: 'array'
+      query: db => db.collection('people').orderBy('name', 'asc').limit(3)
+    </div>
+    <div>{{arrayFromQuery}}</div>
+    <div class="small">
+      {{#each arrayFromQuery.content as |model|}}
+        <div>{{model}}</div>
+      {{/each}}
+    </div>
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <div class="src">
+      type: 'array'
+      query: db => db.collection('people').limit(3)
+    </div>
+    <div>{{arrayFromCollection}}</div>
+    <div class="small">
+      {{#each arrayFromCollection.content as |model|}}
+        <div>{{model}}</div>
+      {{/each}}
+    </div>
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <div class="src">
+      type: 'array'
+      query: db => db.doc('people/N2pxhCYUSYtnosbaqZwJ')
+    </div>
+    <div>{{arrayFromDocument}}</div>
+    <div class="small">
+      {{#each arrayFromDocument.content as |model|}}
+        <div>{{model}}</div>
+      {{/each}}
+    </div>
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <div class="src">
+      type: 'single'
+      query: db => db.collection('people').orderBy('name', 'asc')
+    </div>
+    <div>{{singleFromQuery}}</div>
+    <div class="small">
+      {{singleFromQuery.content}}
+    </div>
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <div class="src">
+      type: 'single',
+      query: db => db.doc('people/N2pxhCYUSYtnosbaqZwJ')
+    </div>
+    <div>{{singleFromDocument}}</div>
+    <div class="small">
+      {{singleFromDocument.content}}
+    </div>
+  {{/rows.row}}
+
+{{/ui-block/rows}}
+
+{{#ui-block/rows as |rows|}}
+  {{#rows.row}}
+    {{ui-block/identity context=context}}
+  {{/rows.row}}
+{{/ui-block/rows}}
+
+{{set-global component=this}}

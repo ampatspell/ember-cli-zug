@@ -1,19 +1,10 @@
 'use strict';
 
-const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
-  let app = new EmberApp(defaults, {
-    addons: {
-      blacklist: [ 'ember-cli-fastboot' ]
-    }
+  let app = new EmberAddon(defaults, {
   });
-
-  app.import('node_modules/firebase/firebase.js');
-  app.import('node_modules/firebase/firebase-firestore.js');
-  app.import('vendor/shims/firebase.js');
-
-  app.import('vendor/ember-resolver/legacy-shims.js');
 
   return app.toTree();
 };

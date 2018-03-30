@@ -1,7 +1,7 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import TransientModel from 'models/model/transient';
-import { nest } from 'models/model/computed';
+import TransientModel from 'ember-cli-zug/model/transient';
+import { nest } from 'ember-cli-zug/model/computed';
 import { run } from '@ember/runloop';
 import { recreateCollection } from '../helpers/runloop';
 

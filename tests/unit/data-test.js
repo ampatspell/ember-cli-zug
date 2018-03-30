@@ -1,8 +1,8 @@
 import EmberObject from '@ember/object';
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
-import DataObject from 'models/-private/model/data/object';
-import DataArray from 'models/-private/model/data/array';
+import DataObject from 'ember-cli-zug/-private/model/data/object';
+import DataArray from 'ember-cli-zug/-private/model/data/array';
 import firebase from 'firebase';
 
 const Thing = EmberObject.extend({

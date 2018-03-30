@@ -1,0 +1,13 @@
+<div class="header">
+  <div class="title">{{zug.name}} v{{zug.version}}</div>
+  <div class="pages">
+    {{link-to 'index' 'index'}}
+    {{link-to 'crud' 'crud'}}
+    {{link-to 'people' 'people'}}
+    {{link-to 'queries' 'queries'}}
+    {{link-to 'match' 'match'}}
+  </div>
+</div>
+<div class="content">
+  {{yield}}
+</div>

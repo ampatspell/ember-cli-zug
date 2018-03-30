@@ -1,20 +1,18 @@
-# thing
+# ember-cli-zug
 
 [![Build Status](https://travis-ci.org/ampatspell/thing.svg?branch=master)](https://travis-ci.org/ampatspell/thing)
 
 Nothing here yet. Experimental.
 
-Soon `lib/models` in-repo-addon will be `ember-zeug` (whatever the name will be).
-
 ## Exports
 
 ``` javascript
-import registerContextService from 'ember-zeug/register-context/service';
+import registerContextService from 'ember-cli-zug/register-context/service';
 
-import Context from 'ember-zeug/context';
+import Context from 'ember-cli-zug/context';
 
-import PersistedModel from 'ember-zeug/model/persisted';
-import TransientModel from 'ember-zeug/model/transient';
+import PersistedModel from 'ember-cli-zug/model/persisted';
+import TransientModel from 'ember-cli-zug/model/transient';
 
 import {
   id,
@@ -22,14 +20,14 @@ import {
   path,
   promise,
   attr
-} from 'ember-zeug/model/persisted/computed';
+} from 'ember-cli-zug/model/persisted/computed';
 
 import {
   query,
   match,
   transient,
   nest
-} from 'ember-zeug/model/computed';
+} from 'ember-cli-zug/model/computed';
 ```
 
 ## Context

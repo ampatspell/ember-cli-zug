@@ -20,12 +20,12 @@ const cached = (object, name, fn) => Object.defineProperty(object, name, {
 });
 
 const defaultConfig = {
-  "apiKey": "AIzaSyDyjC_rsH7_BYJwjKgIrHhoSvRBfNnjGrQ",
-  "databaseURL": "https://ohne-zeit.firebaseio.com",
-  "storageBucket": "ohne-zeit.appspot.com",
-  "authDomain": "ohne-zeit.firebaseapp.com",
-  "messagingSenderId": "491555737764",
-  "projectId": "ohne-zeit"
+  apiKey: "AIzaSyApr48AJWch97DybXXVhF53LJttudP8E2Y",
+  authDomain: "ember-cli-zug.firebaseapp.com",
+  databaseURL: "https://ember-cli-zug.firebaseio.com",
+  projectId: "ember-cli-zug",
+  storageBucket: "ember-cli-zug.appspot.com",
+  messagingSenderId: "102388675337"
 };
 
 const firebaseOptions = instance => {
@@ -43,7 +43,7 @@ export default function(name, options={}) {
       this.lookup = name => this.instance.lookup(name);
       this.register = (name, factory) => this.instance.register(name, factory);
 
-      getter(this, 'stores', () => this.lookup('models:stores'));
+      getter(this, 'stores', () => this.lookup('zug:stores'));
       cached(this, 'store', () => this.stores.createContext('store', {
         firebase: firebaseOptions(this.instance),
         firestorePersistenceEnabled: false,
