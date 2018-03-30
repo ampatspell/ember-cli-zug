@@ -3,7 +3,7 @@ import { test } from '../helpers/qunit';
 import TransientModel from 'ember-cli-zug/model/transient';
 import PersistentModel from 'ember-cli-zug/model/persisted';
 import { query } from 'ember-cli-zug/model/computed';
-import { recreateCollection } from '../helpers/runloop';
+import { recreateCollection, waitForCollectionSize } from '../helpers/runloop';
 import { cacheFor } from 'ember-cli-zug/-private/util/destroyable-computed';
 import { run } from '@ember/runloop';
 
@@ -17,6 +17,11 @@ const State = TransientModel.extend({
   duck: query({
     type: 'single',
     query: db => db.collection('ducks').orderBy('name')
+  }),
+
+  latest: query({
+    type: 'single',
+    query: db => db.collection('ducks').orderBy('pos', 'desc')
   }),
 
   order: 'name',
@@ -43,11 +48,11 @@ module('computed-query', {
     this.register('model:state', State);
 
     this.coll = this.firestore.collection('ducks');
-    this.recreate = () => recreateCollection(this.coll, [
+    this.recreate = (insert=true) => recreateCollection(this.coll, insert ? [
       { __name__: 'yellow', name: 'yellow', pos: 0 },
       { __name__: 'green',  name: 'green',  pos: 1 },
       { __name__: 'red',    name: 'red',    pos: 2 }
-    ]);
+    ] : null);
   }
 });
 
@@ -146,4 +151,27 @@ test('settle', async function(assert) {
 
   assert.equal(duck.get('isLoading'), false);
   assert.equal(duck.get('content.doc.id'), 'green');
+});
+
+test('single replaces model', async function(assert) {
+  await this.recreate(false);
+
+  let state = this.store.model({ name: 'state' });
+  let duck = state.get('latest');
+
+  await duck.load();
+
+  const insert = async (pos, count) => {
+    await this.coll.add({ pos });
+    await waitForCollectionSize(this.coll, count);
+  };
+
+  await insert(3, 1);
+  assert.equal(duck.get('content.doc.data.pos'), 3);
+
+  await insert(2, 2);
+  assert.equal(duck.get('content.doc.data.pos'), 3);
+
+  await insert(4, 3);
+  assert.equal(duck.get('content.doc.data.pos'), 4);
 });
