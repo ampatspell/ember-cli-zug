@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-zug",
-  "version": "0.0.23",
+  "version": "0.1.0",
   "description": "Google Cloud Firestore persistence library for Ember.js",
   "keywords": [
     "ember-addon",
