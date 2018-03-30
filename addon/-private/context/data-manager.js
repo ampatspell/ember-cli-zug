@@ -7,8 +7,9 @@ import InstanceSerializer from './serializers/instance-serializer';
 import PrimitiveSerializer from './serializers/primitive-serializer';
 import DocumentReferenceSerializer from './serializers/document-reference-serializer';
 import GeoPointSerializer from './serializers/geopoint-serializer';
+import FieldValueSerializer from './serializers/field-value-serializer';
 import { isInternal, toInternal, nothing } from '../model/data/util';
-import { isDocumentReference, isGeoPoint } from '../util/firestore-types';
+import { isDocumentReference, isGeoPoint, isFieldValue } from '../util/firestore-types';
 
 const formats = [ 'model', 'preview', 'storage' ];
 const assertFormat = format => {
@@ -26,7 +27,8 @@ export default class DataManager extends Destroyable {
       'instance':           new InstanceSerializer(context),
       'primitive':          new PrimitiveSerializer(context),
       'document-reference': new DocumentReferenceSerializer(context),
-      'geopoint':           new GeoPointSerializer(context)
+      'geopoint':           new GeoPointSerializer(context),
+      'field-value':        new FieldValueSerializer(context)
     };
   }
 
@@ -41,6 +43,8 @@ export default class DataManager extends Destroyable {
       serializer = 'document-reference';
     } else if(isGeoPoint(object)) {
       serializer = 'geopoint';
+    } else if(isFieldValue(object)) {
+      serializer = 'field-value';
     } else {
       let type = typeOf(object);
       if(type === 'object') {
