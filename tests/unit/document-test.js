@@ -3,7 +3,7 @@ import { test } from '../helpers/qunit';
 import { recreateCollection, waitForCollectionSize, wait, waitForProp } from '../helpers/runloop';
 import { all } from 'rsvp';
 import { typeOf } from '@ember/utils';
-import { serverTimestamp } from 'ember-cli-zug/util';
+import { serverTimestamp } from 'ember-cli-zug/utils';
 
 module('document', {
   beforeEach() {
