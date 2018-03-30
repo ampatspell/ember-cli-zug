@@ -6,6 +6,12 @@
 
 > Documentation coming soon.
 
+> See dummy and [ohne zeit](https://github.com/ampatspell/ohne-zeit) for inspiration.
+
+## Demo
+
+[Dummy](http://ember-cli-zug.firebaseapp.com/)
+
 ## Install
 
 Create a new ember app
