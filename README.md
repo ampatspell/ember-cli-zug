@@ -50,7 +50,7 @@ installing ember-cli-zug
 Installed addon package.
 ```
 
-Open (Firebase Console)[https://console.firebase.google.com], select existing or create a new project.
+Open [Firebase Console](https://console.firebase.google.com), select existing or create a new project.
 
 Make sure Cloud Firestore is enabled in Database section.
 
@@ -70,7 +70,7 @@ let firebase = {
 ...
 ```
 
-Start the app, check out the console.
+Start the app, check out the dev tools console.
 
 ```
 $ ember s
