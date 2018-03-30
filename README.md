@@ -2,7 +2,9 @@
 
 [Google Cloud Firestore](https://firebase.google.com/products/firestore/) persistence library for [Ember.js](https://emberjs.com/).
 
-> Warning: This addon is currently under heavy development. Not ready for production yet. Documentation coming soon.
+> Warning: This addon is currently under development. Not ready for production yet.
+
+> Documentation coming soon.
 
 ## Install
 
