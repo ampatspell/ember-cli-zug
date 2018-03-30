@@ -8,8 +8,72 @@
 
 ## Install
 
+Create a new ember app
+
+```
+$ ember new foof
+$ cd foof
+```
+
+Remove `ember-data` and `ember-ajax` from package.json
+
+``` diff
+{
+  "name": "foof",
+  "version": "0.0.0",
+  ...
+  "devDependencies": {
+    ...
+    "ember-cli": "~3.0.0",
+-    "ember-ajax": "^3.0.0",
+-    "ember-data": "~3.0.0",
+    "ember-export-application-global": "^2.0.0",
+    "ember-load-initializers": "^1.0.0",
+    ...
+  },
+  ...
+}
+```
+
+Install addon
+
 ```
 $ ember install ember-cli-zug
+
+npm: Installed ember-cli-zug
+installing ember-cli-zug
+  create /app/instance-initializers/foof-injections.js
+  create /app/instance-initializers/foof-store.js
+  create /app/models/message.js
+  create /app/models/state.js
+  create /app/routes/application.js
+Installed addon package.
+```
+
+Open (Firebase Console)[https://console.firebase.google.com], select existing or create a new project.
+
+Make sure Cloud Firestore is enabled in Database section.
+
+Open Project Overview and click on "Add Firebase to your web app".
+
+Copy the contents of `config` and paste it in `app/instance-initializers/foof-store.js` `firebase` like this:
+
+``` javascript
+let firebase = {
+  apiKey: "...",
+  authDomain: "...",
+  databaseURL: "...",
+  projectId: "...",
+  storageBucket: "...",
+  messagingSenderId: "..."
+};
+...
+```
+
+Start the app, check out the console.
+
+```
+$ ember s
 ```
 
 ## Exports
