@@ -16,7 +16,7 @@ export default EmberObject.extend(InternalMixin, {
   modelType: constructorProperty(),
 
   isPersistedModel: modelType('persisted'),
-  isTransientModel: modelType('transient'),
+  isTransientModel: modelType('transient')
 
 }).reopenClass({
 
