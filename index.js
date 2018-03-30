@@ -34,9 +34,7 @@ module.exports = {
     trees.push(new Funnel(path.dirname(require.resolve('firebase/firebase')), {
       files: [
         'firebase.js',
-        'firebase.js.map',
-        'firebase-firestore.js',
-        'firebase.js.map',
+        'firebase-firestore.js'
       ],
       destDir: '/ember-cli-zug'
     }));
