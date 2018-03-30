@@ -10,7 +10,7 @@ let path = require('path');
 module.exports = {
   name: 'ember-cli-zug',
   isDevelopingAddon() {
-    return true;
+    return false;
   },
   included(app) {
     this._super.apply(this, arguments);
