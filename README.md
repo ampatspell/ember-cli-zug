@@ -1,8 +1,14 @@
-# ember-cli-zug
+# ember-cli-zug [![Build Status](https://travis-ci.org/ampatspell/ember-cli-zug.svg?branch=master)](https://travis-ci.org/ampatspell/ember-cli-zug)
 
-[![Build Status](https://travis-ci.org/ampatspell/ember-cli-zug.svg?branch=master)](https://travis-ci.org/ampatspell/ember-cli-zug)
+[Google Cloud Firestore](https://firebase.google.com/products/firestore/) persistence library for [Ember.js](https://emberjs.com/).
 
-Nothing here yet. Experimental.
+> Warning: This addon is currently under heavy development. Not ready for production yet. Documentation coming soon.
+
+## Install
+
+```
+$ ember install ember-cli-zug
+```
 
 ## Exports
 

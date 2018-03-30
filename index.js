@@ -27,7 +27,7 @@ module.exports = {
     }
 
     trees.push(create('ember-cli-zug/versions.js', [
-      `Ember.libraries.register('ember-cli-zug', '${pkg.version}');`,
+      `Ember.libraries.register('${pkg.name}', '${pkg.version}');`,
       `Ember.libraries.register('Firebase SDK', '${firebase.SDK_VERSION}');`
     ].join('\n')));
 

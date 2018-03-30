@@ -1,17 +1,27 @@
 {
   "name": "ember-cli-zug",
   "version": "0.0.23",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Google Cloud Firestore persistence library for Ember.js",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember",
+    "persistence",
+    "storage",
+    "models",
+    "firebase",
+    "firestore",
+    "relationships"
   ],
   "license": "MIT",
-  "author": "",
+  "author": "Arnis Vuskans <ampatspell@gmail.com> (http://www.amateurinmotion.com/)",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ampatspell/ember-cli-zug.git"
+  },
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint ./*.js addon addon-test-support app config lib server test-support tests",
