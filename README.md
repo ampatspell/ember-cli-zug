@@ -1,6 +1,6 @@
 # ember-cli-zug
 
-[![Build Status](https://travis-ci.org/ampatspell/thing.svg?branch=master)](https://travis-ci.org/ampatspell/thing)
+[![Build Status](https://travis-ci.org/ampatspell/ember-cli-zug.svg?branch=master)](https://travis-ci.org/ampatspell/ember-cli-zug)
 
 Nothing here yet. Experimental.
 
