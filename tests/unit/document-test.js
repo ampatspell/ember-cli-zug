@@ -2,6 +2,8 @@ import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import { recreateCollection, waitForCollectionSize, wait, waitForProp } from '../helpers/runloop';
 import { all } from 'rsvp';
+import { typeOf } from '@ember/utils';
+import { serverTimestamp } from 'ember-cli-zug/util';
 
 module('document', {
   beforeEach() {
@@ -715,4 +717,49 @@ test('snapshot update marks document non-dirty', async function(assert) {
   await waitForProp(model, 'data.name', 'Red');
 
   assert.equal(model.get('isDirty'), false);
+});
+
+test('save local with server timestamp', async function(assert) {
+  await this.recreate();
+
+  let doc = this.local({
+    id: 'yellow',
+    collection: 'ducks',
+    data: {
+      now: serverTimestamp()
+    }
+  });
+
+  let model = doc.model(true);
+
+  await model.save();
+
+  await waitForCollectionSize(this.firestore.collection('ducks'), 1);
+
+  assert.equal(typeOf(model.get('data.now')), 'date');
+});
+
+test('update with server timestamp', async function(assert) {
+  await this.recreate();
+
+  let doc = this.local({
+    id: 'yellow',
+    collection: 'ducks',
+    data: {
+      now: serverTimestamp()
+    }
+  });
+
+  let model = doc.model(true);
+  await model.save();
+  await waitForCollectionSize(this.firestore.collection('ducks'), 1);
+
+  let now = model.get('data.now');
+
+  model.set('data.now', serverTimestamp());
+  await model.save();
+  await waitForCollectionSize(this.firestore.collection('ducks'), 1);
+
+  assert.equal(typeOf(model.get('data.now')), 'date');
+  assert.ok(model.get('data.now').getTime() !== now.getTime());
 });
