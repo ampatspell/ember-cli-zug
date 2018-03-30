@@ -72,7 +72,6 @@ export default Context.extend({
 export default PersistedModel.extend({
 
   context,
-  path,
 
   modelName,
   modelType, // persisted
