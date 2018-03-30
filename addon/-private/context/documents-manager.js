@@ -78,7 +78,7 @@ export default class DocumentsManager extends Destroyable {
   loadedInternalDocumentForSnapshot(snapshot) {
     let ref = snapshot.ref;
     let exists = snapshot.exists;
-    let data = snapshot.data();
+    let data = snapshot.data({ serverTimestamps: 'estimate' });
     return this.loadedInternalDocument(ref, exists, data, 'storage');
   }
 
