@@ -5,17 +5,14 @@
 
     var firebase;
 
-    if(window.FastBoot) {
+    if(typeof FastBoot !== 'undefined') {
       firebase = FastBoot.require('firebase');
       FastBoot.require('firebase/firestore');
     } else {
       firebase = self['firebase'];
     }
 
-    return {
-      'default': firebase,
-      __esModule: true
-    };
+    return firebase;
   }
 
   define('firebase', [], vendorModule);

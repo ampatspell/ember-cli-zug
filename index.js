@@ -2,20 +2,22 @@
 
 let create = require('broccoli-file-creator');
 let mergeTrees = require('broccoli-merge-trees');
+var Funnel = require('broccoli-funnel');
 let firebase = require('firebase');
 let pkg = require('./package.json');
+let path = require('path');
 
 module.exports = {
   name: 'ember-cli-zug',
   isDevelopingAddon() {
     return true;
   },
-  included() {
-    this._super.included.apply(this, arguments);
-    this.import(require.resolve('firebase/firebase'));
-    this.import(require.resolve('firebase/firebase-firestore'));
-    this.import('vendor/ember-cli-zug/firebase-shim.js');
-    this.import('vendor/ember-cli-zug/versions.js');
+  included(app) {
+    this._super.apply(this, arguments);
+    app.import('vendor/ember-cli-zug/firebase.js');
+    app.import('vendor/ember-cli-zug/firebase-firestore.js');
+    app.import('vendor/ember-cli-zug/firebase-shim.js');
+    app.import('vendor/ember-cli-zug/versions.js');
   },
   treeForVendor(vendorTree) {
     let trees = [];
@@ -28,6 +30,16 @@ module.exports = {
       `Ember.libraries.register('ember-cli-zug', '${pkg.version}');`,
       `Ember.libraries.register('Firebase SDK', '${firebase.SDK_VERSION}');`
     ].join('\n')));
+
+    trees.push(new Funnel(path.dirname(require.resolve('firebase/firebase')), {
+      files: [
+        'firebase.js',
+        'firebase.js.map',
+        'firebase-firestore.js',
+        'firebase.js.map',
+      ],
+      destDir: '/ember-cli-zug'
+    }));
 
     return mergeTrees(trees);
   }
