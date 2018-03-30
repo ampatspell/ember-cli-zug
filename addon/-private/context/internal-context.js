@@ -61,7 +61,7 @@ export default class InternalContext extends Internal {
         return `context:${name}`;
       }
     }
-    return 'models:context';
+    return 'zug:context';
   }
 
   createModel() {

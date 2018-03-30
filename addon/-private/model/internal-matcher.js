@@ -16,7 +16,7 @@ export default class InternalMatcher extends Internal {
   }
 
   createModel() {
-    return this.context.factoryFor('models:matcher').create({ _internal: this });
+    return this.context.factoryFor('zug:matcher').create({ _internal: this });
   }
 
   get identity() {

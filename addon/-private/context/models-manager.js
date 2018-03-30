@@ -23,7 +23,7 @@ export default class ModelsManager extends Destroyable {
   }
 
   _extendedModelClassForName(normalizedName) {
-    let factoryName = `models:model/${normalizedName}`;
+    let factoryName = `zug:model/${normalizedName}`;
     let factory = this.context.factoryFor(factoryName);
     return { factory, factoryName };
   }

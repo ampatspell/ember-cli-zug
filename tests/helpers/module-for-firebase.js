@@ -43,7 +43,7 @@ export default function(name, options={}) {
       this.lookup = name => this.instance.lookup(name);
       this.register = (name, factory) => this.instance.register(name, factory);
 
-      getter(this, 'stores', () => this.lookup('models:stores'));
+      getter(this, 'stores', () => this.lookup('zug:stores'));
       cached(this, 'store', () => this.stores.createContext('store', {
         firebase: firebaseOptions(this.instance),
         firestorePersistenceEnabled: false,

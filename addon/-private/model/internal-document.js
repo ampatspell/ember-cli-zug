@@ -26,7 +26,7 @@ export default class InternalDocument extends Internal {
   }
 
   createModel() {
-    return this.factoryFor('models:document').create({ _internal: this });
+    return this.factoryFor('zug:document').create({ _internal: this });
   }
 
   get documents() {

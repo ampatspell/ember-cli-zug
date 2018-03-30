@@ -8,7 +8,7 @@ export default typed(class InternalObject extends InternalData {
   }
 
   createModel() {
-    return this.factoryFor('models:data/object').create({ _internal: this });
+    return this.factoryFor('zug:data/object').create({ _internal: this });
   }
 
   //

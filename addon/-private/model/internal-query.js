@@ -32,7 +32,7 @@ export default class InternalQuery extends Internal {
   }
 
   createModel() {
-    return this.context.factoryFor('models:query').create({ _internal: this });
+    return this.context.factoryFor('zug:query').create({ _internal: this });
   }
 
   load() {

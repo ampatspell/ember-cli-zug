@@ -10,14 +10,14 @@ import DataArray from 'ember-cli-zug/-private/model/data/array';
 export default {
   name: 'zug:internal',
   initialize(container) {
-    container.register('models:stores', Stores);
-    container.register('models:context', Context);
+    container.register('zug:stores', Stores);
+    container.register('zug:context', Context);
 
-    container.register('models:identity', Identity);
-    container.register('models:query', Query);
-    container.register('models:matcher', Matcher);
-    container.register('models:document', Document);
-    container.register('models:data/object', DataObject);
-    container.register('models:data/array', DataArray);
+    container.register('zug:identity', Identity);
+    container.register('zug:query', Query);
+    container.register('zug:matcher', Matcher);
+    container.register('zug:document', Document);
+    container.register('zug:data/object', DataObject);
+    container.register('zug:data/array', DataArray);
   }
 }

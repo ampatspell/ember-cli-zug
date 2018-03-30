@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route';
-import NestMixin from 'thing/mixins/route/nest';
+import NestMixin from 'dummy/mixins/route/nest';
 
 export default Route.extend(NestMixin, {
 

@@ -10,7 +10,7 @@ export default typed(class InternalArray extends InternalData {
   }
 
   createModel() {
-    return this.factoryFor('models:data/array').create({ _internal: this, content: this.content });
+    return this.factoryFor('zug:data/array').create({ _internal: this, content: this.content });
   }
 
   withPropertyChanges(notify, cb) {

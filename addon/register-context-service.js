@@ -51,7 +51,7 @@ export default (...args) => {
 
   // create context
 
-  let stores = app.lookup('models:stores');
+  let stores = app.lookup('zug:stores');
 
   let store = stores.createContext(identifier, {
     firebase,

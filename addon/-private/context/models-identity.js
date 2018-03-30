@@ -26,7 +26,7 @@ export default class ModelsIdentity extends Internal {
   }
 
   createModel() {
-    return this.context.factoryFor('models:identity').create({ content: this.storage.all });
+    return this.context.factoryFor('zug:identity').create({ content: this.storage.all });
   }
 
   storeInternalModel(internal) {
