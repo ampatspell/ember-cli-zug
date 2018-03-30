@@ -74,6 +74,7 @@
     "firebase/firestore"
   ],
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "demoURL": "https://ember-cli-zug.firebaseapp.com/"
   }
 }
