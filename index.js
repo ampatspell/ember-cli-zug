@@ -15,7 +15,9 @@ module.exports = {
   included(app) {
     this._super.apply(this, arguments);
     app.import('vendor/ember-cli-zug/firebase.js');
+    app.import('vendor/ember-cli-zug/firebase.js.map');
     app.import('vendor/ember-cli-zug/firebase-firestore.js');
+    app.import('vendor/ember-cli-zug/firebase-firestore.js.map');
     app.import('vendor/ember-cli-zug/firebase-shim.js');
     app.import('vendor/ember-cli-zug/versions.js');
   },
@@ -34,7 +36,9 @@ module.exports = {
     trees.push(new Funnel(path.dirname(require.resolve('firebase/firebase')), {
       files: [
         'firebase.js',
-        'firebase-firestore.js'
+        'firebase.js.map',
+        'firebase-firestore.js',
+        'firebase-firestore.js.map'
       ],
       destDir: '/ember-cli-zug'
     }));
