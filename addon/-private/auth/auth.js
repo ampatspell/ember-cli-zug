@@ -1,8 +1,10 @@
 import EmberObject from '@ember/object';
-import { InternalMixin, modelprop } from '../model/internal';
+import { InternalMixin, modelprop, invoke } from '../model/internal';
 
 export default EmberObject.extend(InternalMixin, {
 
   methods: modelprop(),
+
+  signOut: invoke('signOut'),
 
 });

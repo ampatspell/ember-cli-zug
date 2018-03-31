@@ -1,6 +1,7 @@
 import Internal from '../model/internal';
 import AuthMethods from './internal-methods';
 import firebase from 'firebase';
+import { resolve } from 'rsvp';
 
 export default class Auth extends Internal {
 
@@ -25,6 +26,12 @@ export default class Auth extends Internal {
     }
     return auth;
   }
+
+  signOut() {
+    return resolve(this.auth.signOut()).then(() => undefined);
+  }
+
+  //
 
   willDestroy() {
     this.methods.destroy();

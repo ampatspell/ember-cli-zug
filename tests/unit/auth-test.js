@@ -45,8 +45,18 @@ test('anonymous method is destroyed on destroy', async function(assert) {
   assert.ok(anon.isDestroyed);
 });
 
-test('available method names', async function(assert) {
+test('available auth method names', async function(assert) {
   assert.deepEqual(this.store.get('auth.methods.available'), [
     'anonymous'
   ]);
 });
+
+test('sign out', async function(assert) {
+  let promise = this.store.get('auth').signOut();
+  assert.ok(promise);
+  let result = await promise;
+  assert.ok(result === undefined);
+});
+
+// test('sign in anonymously', async function(assert) {
+// });
