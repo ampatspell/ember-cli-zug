@@ -4,6 +4,29 @@
     Experimental
   {{/rows.header}}
 
+  {{#if store.auth.user}}
+
+    {{#rows.row}}
+      {{store.auth.user}}
+    {{/rows.row}}
+
+    {{#rows.row}}
+      {{ui-block/json store.auth.user.serialized}}
+    {{/rows.row}}
+
+  {{else}}
+
+    {{#rows.row}}
+      No store.auth.user
+    {{/rows.row}}
+
+  {{/if}}
+
+  {{#rows.row}}
+    <button {{action 'signIn'}}>Sign in</button>
+    <button {{action 'signOut'}}>Sign out</button>
+  {{/rows.row}}
+
 {{/ui-block/rows}}
 
 {{set-global component=this}}
