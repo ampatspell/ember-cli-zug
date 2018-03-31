@@ -40,6 +40,9 @@ export default EmberObject.extend(InternalMixin, {
   // name
   hasModelClassForName: invoke('hasModelClassForName'),
 
+  // firebase.app.App
+  app: prop('firebase'),
+
   toStringExtension() {
     let identifier = this.get('absoluteIdentifier');
     return `${identifier}`;
