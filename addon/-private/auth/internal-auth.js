@@ -40,7 +40,7 @@ export default class InternalAuth extends Internal {
       }
       next = new InternalUser(this.context, this, user);
     } else {
-      if(!user) {
+      if(!current) {
         return;
       }
       next = null;
