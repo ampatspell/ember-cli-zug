@@ -87,3 +87,14 @@ test('sign in anonymously out and in again', async function(assert) {
   assert.ok(first.isDestroying);
   assert.ok(!second.isDestroying);
 });
+
+// test('sign in with email', async function(assert) {
+//   let auth = this.store.get('auth');
+//   await auth.signOut();
+//   let anon = auth.get('methods.email');
+//   let result = await anon.signIn(......);
+//   let user = auth.get('user');
+//   assert.equal(user.get('isAnonymous'), false);
+//   assert.equal(user.get('email'), 'ampatspell@gmail.com');
+//   assert.ok(result === user);
+// });
