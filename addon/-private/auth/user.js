@@ -20,8 +20,15 @@ const PropertiesMixin = Mixin.create(keys.reduce((hash, key) => {
   return hash;
 }, {}));
 
+const serialized = () => computed(...keys, function() {
+  return this.getProperties(...keys);
+}).readOnly();
+
 // metadata: creationTime, lastSignInTime
 // providerData
 
 export default EmberObject.extend(InternalMixin, PropertiesMixin, {
+
+  serialized: serialized()
+
 });
