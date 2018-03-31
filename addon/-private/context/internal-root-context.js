@@ -1,4 +1,5 @@
 import InternalContext from './internal-context';
+import Auth from '../auth/internal-auth';
 import configureFirebase from './firebase-initializer';
 import { assert } from '@ember/debug';
 
@@ -20,6 +21,7 @@ export default class InternalRootContext extends InternalContext {
     super(stores, identifier);
     this.root = this;
     this.opts = validate(opts);
+    this.auth = new Auth(this);
     this._configure(identifier, opts);
   }
 
@@ -36,6 +38,7 @@ export default class InternalRootContext extends InternalContext {
 
   willDestroy() {
     this.stores.rootContextWillDestroy(this);
+    this.auth.destroy();
     this.firebase && this.firebase.delete();
     super.willDestroy();
   }

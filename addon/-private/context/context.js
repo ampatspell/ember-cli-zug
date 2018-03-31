@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import { InternalMixin, internal, prop, model, promise, invoke } from '../model/internal';
+import { InternalMixin, internal, prop, modelprop, model, promise, invoke } from '../model/internal';
 
 const identity = () => internal(function(key, internal) {
   return internal.identity.models.model(true);
@@ -12,6 +12,8 @@ export default EmberObject.extend(InternalMixin, {
   ready:              prop('ready'),
 
   identity: identity(),
+
+  auth: modelprop('auth'),
 
   // identifier
   nest: model('nest'),
