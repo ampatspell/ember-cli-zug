@@ -1,7 +1,7 @@
 import Internal from '../model/internal';
-import { createMethod, types } from './methods/index';
+import { createMethod, types } from './methods/registry';
 
-export default class AuthMethods extends Internal {
+export default class InternalAuthMethods extends Internal {
 
   constructor(context, auth) {
     super();

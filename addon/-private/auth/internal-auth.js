@@ -5,7 +5,7 @@ import { resolve } from 'rsvp';
 import { join } from '@ember/runloop';
 import { assert } from '@ember/debug';
 
-export default class Auth extends Internal {
+export default class InternalAuth extends Internal {
 
   constructor(context) {
     super();
