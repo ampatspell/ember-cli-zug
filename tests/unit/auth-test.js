@@ -32,3 +32,21 @@ test('methods are destroyed', async function(assert) {
   run(() => this.store.destroy());
   assert.ok(methods.isDestroyed);
 });
+
+test('anonymous method exists', async function(assert) {
+  let anon = this.store.get('auth.methods.anonymous');
+  assert.ok(anon);
+  assert.ok(anon.get('type') === 'anonymous');
+});
+
+test('anonymous method is destroyed on destroy', async function(assert) {
+  let anon = this.store.get('auth.methods.anonymous');
+  run(() => this.store.destroy());
+  assert.ok(anon.isDestroyed);
+});
+
+test('available method names', async function(assert) {
+  assert.deepEqual(this.store.get('auth.methods.available'), [
+    'anonymous'
+  ]);
+});
