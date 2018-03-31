@@ -7,9 +7,9 @@ export default class InternalAnonymous extends Method {
     return 'anonymous';
   }
 
-  onSignedIn(res) {
-    let { additionalUserInfo, user } = res;
-    console.log('onSignedIn', additionalUserInfo, user);
+  onSignedIn() {
+    let user = this.auth.user;
+    return user && user.model(true);
   }
 
   signIn() {

@@ -63,6 +63,27 @@ test('sign in anonymously', async function(assert) {
   await auth.signOut();
   let anon = auth.get('methods.anonymous');
   let result = await anon.signIn();
-  console.log(result);
-  assert.ok(auth.get('user'));
+  let user = auth.get('user');
+  assert.ok(user.get('isAnonymous'));
+  assert.ok(result === user);
+});
+
+test('sign in anonymously out and in again', async function(assert) {
+  let auth = this.store.get('auth');
+  await auth.signOut();
+
+  let anon = auth.get('methods.anonymous');
+
+  await anon.signIn();
+  let first = auth.get('user');
+
+  await auth.signOut();
+
+  await anon.signIn();
+  let second = auth.get('user');
+
+  assert.ok(first !== second);
+
+  assert.ok(first.isDestroying);
+  assert.ok(!second.isDestroying);
 });

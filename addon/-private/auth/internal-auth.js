@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import { resolve } from 'rsvp';
 import { join } from '@ember/runloop';
 import { assert } from '@ember/debug';
+import InternalUser from './internal-user';
 
 export default class InternalAuth extends Internal {
 
@@ -16,8 +17,7 @@ export default class InternalAuth extends Internal {
 
   onContextReady() {
     this.startObservingAuthState();
-    let curr = this.auth.currentUser;
-    console.log('onContextReady', curr);
+    this.onUser(this.auth.currentUser);
   }
 
   createModel() {
@@ -28,6 +28,32 @@ export default class InternalAuth extends Internal {
 
   get user() {
     return this._user;
+  }
+
+  onUser(user) {
+    let current = this._user;
+    let next;
+
+    if(user) {
+      if(current && current.user === user) {
+        return;
+      }
+      next = new InternalUser(this.context, this, user);
+    } else {
+      if(!user) {
+        return;
+      }
+      next = null;
+    }
+
+    this.withPropertyChanges(true, changed => {
+      this._user = next;
+      changed('user');
+    });
+
+    if(current) {
+      current.destroy();
+    }
   }
 
   //
@@ -44,7 +70,7 @@ export default class InternalAuth extends Internal {
   }
 
   onAuthStateChanged(user) {
-    console.log('onAuthStateChanged', user);
+    this.onUser(user);
   }
 
   startObservingAuthState() {
