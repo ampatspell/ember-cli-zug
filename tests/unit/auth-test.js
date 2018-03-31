@@ -20,3 +20,15 @@ test('auth is destroyed on context destroy', async function(assert) {
   run(() => this.store.destroy());
   assert.ok(auth.isDestroyed);
 });
+
+test('auth has methods', async function(assert) {
+  let auth = this.store.get('auth');
+  assert.ok(auth.get('methods'));
+});
+
+test('methods are destroyed', async function(assert) {
+  let auth = this.store.get('auth');
+  let methods = auth.get('methods');
+  run(() => this.store.destroy());
+  assert.ok(methods.isDestroyed);
+});

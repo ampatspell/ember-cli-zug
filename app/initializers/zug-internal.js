@@ -7,6 +7,7 @@ import Document from 'ember-cli-zug/-private/model/document';
 import DataObject from 'ember-cli-zug/-private/model/data/object';
 import DataArray from 'ember-cli-zug/-private/model/data/array';
 import Auth from 'ember-cli-zug/-private/auth/auth';
+import AuthMethods from 'ember-cli-zug/-private/auth/methods';
 
 export default {
   name: 'zug:internal',
@@ -15,6 +16,8 @@ export default {
     container.register('zug:context', Context);
 
     container.register('zug:auth', Auth);
+    container.register('zug:auth/methods', AuthMethods);
+
     container.register('zug:identity', Identity);
     container.register('zug:query', Query);
     container.register('zug:matcher', Matcher);
