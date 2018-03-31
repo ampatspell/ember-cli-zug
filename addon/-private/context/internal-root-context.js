@@ -29,10 +29,15 @@ export default class InternalRootContext extends InternalContext {
     return this.identifier;
   }
 
+  onReady() {
+    this.auth.onContextReady();
+  }
+
   _configure(identifier, opts) {
     this.ready = configureFirebase(identifier, opts.firestorePersistenceEnabled, opts.firebase).then(firebase => {
       this.firebase = firebase;
       this.firestore = firebase.firestore();
+      this.onReady();
     });
   }
 

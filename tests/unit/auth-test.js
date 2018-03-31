@@ -58,5 +58,11 @@ test('sign out', async function(assert) {
   assert.ok(result === undefined);
 });
 
-// test('sign in anonymously', async function(assert) {
-// });
+test('sign in anonymously', async function(assert) {
+  let auth = this.store.get('auth');
+  await auth.signOut();
+  let anon = auth.get('methods.anonymous');
+  let result = await anon.signIn();
+  console.log(result);
+  assert.ok(auth.get('user'));
+});

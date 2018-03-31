@@ -5,6 +5,8 @@ export default EmberObject.extend(InternalMixin, {
 
   methods: modelprop(),
 
-  signOut: invoke('signOut'),
+  user: modelprop(),
+
+  signOut: invoke('signOut')
 
 });
