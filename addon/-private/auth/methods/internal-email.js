@@ -1,5 +1,4 @@
 import Method from './internal-method';
-import { resolve } from 'rsvp';
 
 export default class InternalEmail extends Method {
 

@@ -1,5 +1,4 @@
 import Internal from '../../model/internal';
-import { resolve } from 'rsvp';
 
 export default class InternalMethod extends Internal {
 
