@@ -20,6 +20,7 @@ export default class InternalNestedContext extends InternalContext {
   _configure(parent) {
     this.firebase  = parent.firebase;
     this.firestore = parent.firestore;
+    this.auth      = parent.auth;
     this.ready     = parent.ready;
   }
 

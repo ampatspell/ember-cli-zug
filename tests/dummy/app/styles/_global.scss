@@ -26,7 +26,8 @@ label {
   font-weight: 400;
 }
 
-input[type='text'] {
+input[type='text'],
+input[type='password'] {
   font-family: $font-family;
   font-size: 13px;
   -webkit-appearance: none;

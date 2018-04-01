@@ -24,6 +24,8 @@ let modelNameForDocument = document => {
   }
 };
 
+let restoreUser = (user, context) => {};
+
 export default {
   name: '<%= dasherizedPackageName %>:store',
   initialize(app) {
@@ -32,7 +34,8 @@ export default {
     let store = registerContextService({
       app,
       firebase,
-      modelNameForDocument
+      modelNameForDocument,
+      restoreUser
     });
 
     // create transient model in root context and register it as a `state` service
