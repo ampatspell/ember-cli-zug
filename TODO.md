@@ -1,5 +1,6 @@
 # TODO
 
+* auth operations should be included in settle
 * storage reference parent
 * figure out api for storage so that I have a better understanding regarding exports
 * link anonymous to account

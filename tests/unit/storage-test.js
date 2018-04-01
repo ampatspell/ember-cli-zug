@@ -46,3 +46,47 @@ test('create ref from url', async function(assert) {
     "name": "bar"
   });
 });
+
+test('put string', async function(assert) {
+  let ref = this.storage.ref({ path: 'hello' });
+
+  // ref.put({ type: 'data', data: blob, metadata: {} });
+  let task = ref.put({
+    type: 'string',
+    data: 'hello world as a raw string',
+    format: 'raw',
+    metadata: {
+      contentType: 'text/plain',
+      customMetadata: { ok: true }
+    }
+  });
+
+  assert.ok(task);
+  assert.equal(task.get('type'), 'string');
+
+  let promise = task.get('promise');
+  assert.ok(promise);
+
+  await promise;
+});
+
+test('put blob', async function(assert) {
+  let ref = this.storage.ref({ path: 'hello' });
+
+  let task = ref.put({
+    type: 'data',
+    data: new Blob([ 'hello world as a blob' ]),
+    metadata: {
+      contentType: 'text/plain',
+      customMetadata: { ok: true }
+    }
+  });
+
+  assert.ok(task);
+  assert.equal(task.get('type'), 'data');
+
+  let promise = task.get('promise');
+  assert.ok(promise);
+
+  await promise;
+});

@@ -13,6 +13,7 @@ import AuthMethodAnonymous from 'ember-cli-zug/-private/auth/methods/anonymous';
 import AuthMethodEmail from 'ember-cli-zug/-private/auth/methods/email';
 import Storage from 'ember-cli-zug/-private/storage/storage';
 import StorageReference from 'ember-cli-zug/-private/storage/reference';
+import StorageTask from 'ember-cli-zug/-private/storage/task';
 
 export default {
   name: 'zug:internal',
@@ -28,6 +29,7 @@ export default {
 
     container.register('zug:storage', Storage);
     container.register('zug:storage/reference', StorageReference);
+    container.register('zug:storage/task', StorageTask);
 
     container.register('zug:identity', Identity);
     container.register('zug:query', Query);
