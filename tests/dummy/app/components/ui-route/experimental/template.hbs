@@ -8,6 +8,11 @@
     {{/ui-block/links}}
   {{/rows.header}}
 
+  {{#rows.row}}
+    {{ui-input/file update=(action 'update')}}
+    <button {{action 'upload'}}>Upload</button>
+  {{/rows.row}}
+
 {{/ui-block/rows}}
 
 {{set-global component=this}}
