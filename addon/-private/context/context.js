@@ -14,6 +14,7 @@ export default EmberObject.extend(InternalMixin, {
   identity: identity(),
 
   auth: modelprop('auth'),
+  storage: modelprop('storage'),
 
   // identifier
   nest: model('nest'),

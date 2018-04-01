@@ -11,6 +11,7 @@ import AuthUser from 'ember-cli-zug/-private/auth/user';
 import AuthMethods from 'ember-cli-zug/-private/auth/methods';
 import AuthMethodAnonymous from 'ember-cli-zug/-private/auth/methods/anonymous';
 import AuthMethodEmail from 'ember-cli-zug/-private/auth/methods/email';
+import Storage from 'ember-cli-zug/-private/storage/storage';
 
 export default {
   name: 'zug:internal',
@@ -23,6 +24,8 @@ export default {
     container.register('zug:auth/methods', AuthMethods);
     container.register('zug:auth/methods/anonymous', AuthMethodAnonymous);
     container.register('zug:auth/methods/email', AuthMethodEmail);
+
+    container.register('zug:storage', Storage);
 
     container.register('zug:identity', Identity);
     container.register('zug:query', Query);
