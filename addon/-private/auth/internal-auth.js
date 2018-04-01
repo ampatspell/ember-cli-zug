@@ -15,7 +15,7 @@ export default class InternalAuth extends Internal {
     this._user = undefined;
   }
 
-  onContextReady() {
+  configure() {
     this.startObservingAuthState();
     this.onUser(this.auth.currentUser);
   }

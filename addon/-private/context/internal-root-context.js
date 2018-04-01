@@ -2,6 +2,7 @@ import InternalContext from './internal-context';
 import Auth from '../auth/internal-auth';
 import configureFirebase from './firebase-initializer';
 import { assert } from '@ember/debug';
+import { resolve } from 'rsvp';
 
 const validate = opts => {
   assert(`options must be object`, typeof opts === 'object');
@@ -29,16 +30,22 @@ export default class InternalRootContext extends InternalContext {
     return this.identifier;
   }
 
-  onReady() {
-    this.auth.onContextReady();
+  _configureFirebase(identifier, opts) {
+    return configureFirebase(identifier, opts.firestorePersistenceEnabled, opts.firebase).then(firebase => {
+      this.firebase = firebase;
+      this.firestore = firebase.firestore();
+    });
+  }
+
+  _configureAuth() {
+    return this.auth.configure();
   }
 
   _configure(identifier, opts) {
-    this.ready = configureFirebase(identifier, opts.firestorePersistenceEnabled, opts.firebase).then(firebase => {
-      this.firebase = firebase;
-      this.firestore = firebase.firestore();
-      this.onReady();
-    });
+    this.ready = resolve()
+      .then(() => this._configureFirebase(identifier, opts))
+      .then(() => this._configureAuth())
+      .then(() => undefined);
   }
 
   willDestroy() {
