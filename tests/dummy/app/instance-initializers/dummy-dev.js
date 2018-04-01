@@ -55,7 +55,7 @@ const playground = async store => {
         console.log('onError', err);
         cancel();
       },
-      complete => {
+      () => {
         dump('done');
         cancel();
       }
