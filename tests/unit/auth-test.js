@@ -1,6 +1,7 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import { run } from '@ember/runloop';
+import { wait } from '../helpers/runloop';
 
 module('auth');
 
