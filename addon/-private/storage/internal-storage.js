@@ -41,12 +41,19 @@ export default class InternalStorage extends Internal {
     return new Reference(this.context, this, ref);
   }
 
-  ref(path) {
-    return this.createReference(this.storage.ref(path));
+  refFromOptions(opts={}) {
+    let { path, url } = opts;
+    assert(`path or url is requied`, path || url);
+    let storage = this.storage;
+    if(path) {
+      return storage.ref(path);
+    }
+    return storage.refFromURL(url);
   }
 
-  refFromURL(url) {
-    return this.createReference(this.storage.refFromURL(url));
+  ref(opts) {
+    let ref = this.refFromOptions(opts);
+    return this.createReference(ref);
   }
 
 }

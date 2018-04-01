@@ -3,7 +3,6 @@ import { InternalMixin, model } from '../model/internal';
 
 export default EmberObject.extend(InternalMixin, {
 
-  ref: model('ref'),
-  urlRef: model('refFromURL')
+  ref: model('ref')
 
 });

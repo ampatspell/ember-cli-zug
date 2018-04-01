@@ -26,7 +26,7 @@ test('storage is destroyed on context destroy', async function(assert) {
 });
 
 test('create ref', async function(assert) {
-  let ref = this.storage.ref('hello');
+  let ref = this.storage.ref({ path: 'hello' });
   assert.ok(ref);
   assert.ok(ref._internal);
   assert.deepEqual(ref.get('serialized'), {
@@ -37,7 +37,7 @@ test('create ref', async function(assert) {
 });
 
 test('create ref from url', async function(assert) {
-  let ref = this.storage.urlRef('gs://foo/bar');
+  let ref = this.storage.ref({ url: 'gs://foo/bar' });
   assert.ok(ref);
   assert.ok(ref._internal);
   assert.deepEqual(ref.get('serialized'), {
