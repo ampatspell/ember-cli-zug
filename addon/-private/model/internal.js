@@ -4,6 +4,17 @@ import Destroyable from './destroyable';
 import withPropertyChanges from '../util/with-property-changes';
 import rm from '../util/array-remove';
 
+export const propertiesMixin = (prop, keys) => Mixin.create(keys.reduce((hash, key) => {
+  hash[key] = computed(function() {
+    return this._internal[prop][key];
+  }).readOnly();
+  return hash;
+}, {}));
+
+export const serialized = keys => computed(...keys, function() {
+  return this.getProperties(...keys);
+}).readOnly();
+
 export const InternalMixin = Mixin.create({
 
   _internal: null,
