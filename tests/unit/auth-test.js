@@ -99,3 +99,43 @@ test('sign in with email', async function(assert) {
   assert.equal(user.get('email'), 'ampatspell@gmail.com');
   assert.ok(result === user);
 });
+
+test('delete account', async function(assert) {
+  let auth = this.store.get('auth');
+  await auth.signOut();
+
+  let anon = auth.get('methods.anonymous');
+  await anon.signIn();
+
+  let user = auth.get('user');
+
+  await user.delete();
+
+  assert.ok(!auth.get('user'));
+});
+
+test.only('sign up with email and delete', async function(assert) {
+  let auth = this.store.get('auth');
+  await auth.signOut();
+
+  let method = auth.get('methods.email');
+
+  let signup = await method.signUp('ampatspell+test@gmail.com', 'hello-world');
+  let user = auth.get('user');
+
+  assert.ok(user);
+  assert.ok(signup === user);
+  assert.equal(user.get('email'), 'ampatspell+test@gmail.com');
+
+  await user.delete();
+
+  user = auth.get('user');
+  assert.ok(!user);
+
+  try {
+    await method.signIn('ampatspell+test@gmail.com', 'hello-world');
+    assert.ok(false, 'should throw');
+  } catch(err) {
+    assert.equal(err.code, 'auth/user-not-found');
+  }
+});

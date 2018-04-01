@@ -89,6 +89,17 @@ export default class InternalAuth extends Internal {
 
   //
 
+  withAuth(fn) {
+    let auth = this.auth;
+    return resolve(fn(auth));
+  }
+
+  withAuthReturningUser(fn) {
+    return this.withAuth(fn).then(() => this.user);
+  }
+
+  //
+
   willDestroy() {
     this.stopObservingAuthState();
     this.methods.destroy();

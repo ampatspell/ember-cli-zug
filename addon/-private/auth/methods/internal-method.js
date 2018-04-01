@@ -18,17 +18,8 @@ export default class InternalMethod extends Internal {
 
   //
 
-  get user() {
-    return this.auth.user;
-  }
-
-  withAuth(fn) {
-    let auth = this.auth.auth;
-    return resolve(fn(auth));
-  }
-
   withAuthReturningUser(fn) {
-    return this.withAuth(fn).then(() => this.user);
+    return this.auth.withAuthReturningUser(fn);
   }
 
 }

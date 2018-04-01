@@ -24,8 +24,8 @@ export const invoke = (name, fn) => function() {
   return result;
 };
 
-export const promise = name => invoke(name, function(promise) {
-  return promise.then(() => this);
+export const promise = (name, fn) => invoke(name, function(promise) {
+  return promise.then(arg => fn ? fn.call(this, arg) : this);
 });
 
 export const modelpromise = name => invoke(name, function(promise) {

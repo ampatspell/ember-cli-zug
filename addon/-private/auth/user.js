@@ -1,6 +1,6 @@
 import EmberObject, { computed } from '@ember/object';
 import Mixin from '@ember/object/mixin';
-import { InternalMixin } from '../model/internal';
+import { InternalMixin, promise } from '../model/internal';
 
 const keys = [
   'uid',
@@ -24,11 +24,12 @@ const serialized = () => computed(...keys, function() {
   return this.getProperties(...keys);
 }).readOnly();
 
-// metadata: creationTime, lastSignInTime
-// providerData
+const promiseUndefined = name => promise(name, () => undefined);
 
 export default EmberObject.extend(InternalMixin, PropertiesMixin, {
 
-  serialized: serialized()
+  serialized: serialized(),
+
+  delete: promiseUndefined('delete'),
 
 });

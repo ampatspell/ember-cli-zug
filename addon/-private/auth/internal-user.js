@@ -1,4 +1,5 @@
 import Internal from '../model/internal';
+import { resolve } from 'rsvp';
 
 export default class InternalUser extends Internal {
 
@@ -11,6 +12,14 @@ export default class InternalUser extends Internal {
 
   createModel() {
     return this.context.factoryFor('zug:auth/user').create({ _internal: this });
+  }
+
+  onDeleted() {
+    this.auth.onUser(null);
+  }
+
+  delete() {
+    return resolve(this.user.delete()).then(() => this.onDeleted());
   }
 
 }
