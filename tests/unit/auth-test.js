@@ -118,14 +118,17 @@ test('sign up with email and delete', async function(assert) {
   let auth = this.store.get('auth');
   await auth.signOut();
 
+  let email = `ampatspell+${Date.now()}@gmail.com`;
+  let password = 'hello-world';
+
   let method = auth.get('methods.email');
 
-  let signup = await method.signUp('ampatspell+test@gmail.com', 'hello-world');
+  let signup = await method.signUp(email, password);
   let user = auth.get('user');
 
   assert.ok(user);
   assert.ok(signup === user);
-  assert.equal(user.get('email'), 'ampatspell+test@gmail.com');
+  assert.equal(user.get('email'), email);
 
   await user.delete();
 
@@ -133,7 +136,7 @@ test('sign up with email and delete', async function(assert) {
   assert.ok(!user);
 
   try {
-    await method.signIn('ampatspell+test@gmail.com', 'hello-world');
+    await method.signIn(email, password);
     assert.ok(false, 'should throw');
   } catch(err) {
     assert.equal(err.code, 'auth/user-not-found');
