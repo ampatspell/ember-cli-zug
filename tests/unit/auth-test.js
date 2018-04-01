@@ -114,7 +114,7 @@ test('delete account', async function(assert) {
   assert.ok(!auth.get('user'));
 });
 
-test.only('sign up with email and delete', async function(assert) {
+test('sign up with email and delete', async function(assert) {
   let auth = this.store.get('auth');
   await auth.signOut();
 
