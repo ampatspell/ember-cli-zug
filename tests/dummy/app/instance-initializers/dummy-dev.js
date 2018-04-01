@@ -35,7 +35,11 @@ const playground = async store => {
 
     // task is thenable
 
+    let _snapshot;
+
     const dump = (name, snapshot) => {
+      snapshot = snapshot || _snapshot;
+      _snapshot = snapshot;
       let { downloadURL, metadata, state, bytesTransferred, totalBytes } = snapshot;
       let percent = bytesTransferred / totalBytes * 100;
       console.log(name, `${percent}%`, state, metadata, downloadURL);
@@ -52,7 +56,7 @@ const playground = async store => {
         cancel();
       },
       complete => {
-        console.log('done');
+        dump('done');
         cancel();
       }
     );
