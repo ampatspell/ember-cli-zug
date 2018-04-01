@@ -8,68 +8,6 @@
     {{/ui-block/links}}
   {{/rows.header}}
 
-  {{#if store.auth.user}}
-
-    {{#rows.row}}
-      {{store.auth.user}}
-    {{/rows.row}}
-
-    {{#rows.row}}
-      {{ui-block/json store.auth.user.serialized}}
-    {{/rows.row}}
-
-    {{#rows.row}}
-      <button {{action 'signOut'}}>Sign out</button>
-    {{/rows.row}}
-
-  {{else}}
-
-    {{#rows.row}}
-      No store.auth.user
-    {{/rows.row}}
-
-  {{/if}}
-
-{{/ui-block/rows}}
-
-{{#ui-block/rows as |rows|}}
-
-  {{#rows.header}}
-    Anonymous
-  {{/rows.header}}
-
-  {{#rows.row}}
-    <button {{action 'signInAnonymous'}}>Sign in</button>
-  {{/rows.row}}
-
-{{/ui-block/rows}}
-
-{{#ui-block/rows as |rows|}}
-
-  {{#rows.header}}
-    Email
-  {{/rows.header}}
-
-  {{#if error}}
-    {{#rows.row}}
-      {{error.message}}
-    {{/rows.row}}
-  {{/if}}
-
-  {{#rows.row}}
-    <label>Email</label>
-    {{input value=email}}
-  {{/rows.row}}
-
-  {{#rows.row}}
-    <label>Password</label>
-    {{input value=password type='password'}}
-  {{/rows.row}}
-
-  {{#rows.row}}
-    <button {{action 'signInEmail' email password}}>Sign in</button>
-  {{/rows.row}}
-
 {{/ui-block/rows}}
 
 {{set-global component=this}}
