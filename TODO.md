@@ -1,6 +1,8 @@
 # TODO
 
 * figure out api for storage so that I have a better understanding regarding exports
+* link anonymous to account
+* login with facebook, google, github
 * transforms for attr
 * tests for query computed
 * model, array fragments
