@@ -47,7 +47,8 @@ test('anonymous method is destroyed on destroy', async function(assert) {
 
 test('available auth method names', async function(assert) {
   assert.deepEqual(this.store.get('auth.methods.available'), [
-    'anonymous'
+    'anonymous',
+    'email'
   ]);
 });
 
@@ -88,13 +89,13 @@ test('sign in anonymously out and in again', async function(assert) {
   assert.ok(!second.isDestroying);
 });
 
-// test('sign in with email', async function(assert) {
-//   let auth = this.store.get('auth');
-//   await auth.signOut();
-//   let anon = auth.get('methods.email');
-//   let result = await anon.signIn(......);
-//   let user = auth.get('user');
-//   assert.equal(user.get('isAnonymous'), false);
-//   assert.equal(user.get('email'), 'ampatspell@gmail.com');
-//   assert.ok(result === user);
-// });
+test('sign in with email', async function(assert) {
+  let auth = this.store.get('auth');
+  await auth.signOut();
+  let method = auth.get('methods.email');
+  let result = await method.signIn('ampatspell@gmail.com', 'hello-world');
+  let user = auth.get('user');
+  assert.equal(user.get('isAnonymous'), false);
+  assert.equal(user.get('email'), 'ampatspell@gmail.com');
+  assert.ok(result === user);
+});

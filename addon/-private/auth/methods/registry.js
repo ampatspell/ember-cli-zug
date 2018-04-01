@@ -1,7 +1,9 @@
-import Anonymous from './internal-anonymous';
+import anonymous from './internal-anonymous';
+import email from './internal-email';
 
 const mapping = {
-  anonymous: Anonymous
+  anonymous,
+  email
 };
 
 export const types = Object.keys(mapping);
@@ -11,5 +13,5 @@ export const createMethod = (type, ...args) => {
   if(!Method) {
     return;
   }
-  return new Method(...args);
+  return new Method(type, ...args);
 }

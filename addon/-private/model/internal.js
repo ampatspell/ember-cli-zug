@@ -28,6 +28,10 @@ export const promise = name => invoke(name, function(promise) {
   return promise.then(() => this);
 });
 
+export const modelpromise = name => invoke(name, function(promise) {
+  return promise.then(internal => internal && internal.model(true));
+});
+
 export const model = name => invoke(name, internal => internal && internal.model(true));
 
 export const internal = fn => computed(function(key) {
