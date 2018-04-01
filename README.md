@@ -119,6 +119,7 @@ export default Context.extend({
   ready,
 
   identity,
+  auth,
 
   nest,
   model,
@@ -130,6 +131,38 @@ export default Context.extend({
 
   settle,
   hasModelClassForName,
+
+});
+```
+
+## Auth
+
+``` javascript
+export default Auth.extend({
+
+  methods: {
+    anonymous: {
+      signIn
+    },
+    email: {
+      signIn,
+      signUp
+    }
+  },
+
+  user: {
+    uid,
+    isAnonymous,
+    displayName,
+    email,
+    ...
+
+    serialized,
+
+    delete
+  },
+
+  signOut
 
 });
 ```
