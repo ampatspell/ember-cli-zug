@@ -90,3 +90,7 @@ test('put blob', async function(assert) {
 
   await promise;
 });
+
+// register running tasks
+// properties for task
+// metadata model
