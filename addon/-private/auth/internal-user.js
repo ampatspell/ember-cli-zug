@@ -14,6 +14,10 @@ export default class InternalUser extends Internal {
     return this.context.factoryFor('zug:auth/user').create({ _internal: this });
   }
 
+  restore() {
+    return this.context.onAuthUser(this);
+  }
+
   onDeleted() {
     this.auth.onUser(null);
   }

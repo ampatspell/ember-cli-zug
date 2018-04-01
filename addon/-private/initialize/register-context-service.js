@@ -22,6 +22,10 @@ import exportInDevelopment from './export-in-development';
 //       return 'store';
 //     }
 //   }
+//   async restoreUser(user, context) {
+//     let model = await context.first({ id: `users/${user.get('uid')}` });
+//     ...
+//   }
 // });
 export default (...args) => {
   let props = toProps(args);
@@ -34,6 +38,7 @@ export default (...args) => {
     exportServiceInDevelopment,
     modelNameForDocument,
     storeNameForIdentifier,
+    restoreUser,
     injectService,
     injectServiceAs,
     injectServiceInto
@@ -48,7 +53,8 @@ export default (...args) => {
     firebase,
     firestorePersistenceEnabled,
     modelNameForDocument,
-    storeNameForIdentifier
+    storeNameForIdentifier,
+    restoreUser
   });
 
 

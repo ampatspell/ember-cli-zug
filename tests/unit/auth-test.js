@@ -142,3 +142,27 @@ test('sign up with email and delete', async function(assert) {
     assert.equal(err.code, 'auth/user-not-found');
   }
 });
+
+test('sign in with restore', async function(assert) {
+  let auth = this.store.get('auth');
+  await auth.signOut();
+
+  let log = [];
+  this.store._internal.opts.restoreUser = user => {
+    log.push(user.get('uid'));
+    return wait(10)
+      .then(() => user.set('ok', true))
+      .then(() => wait(10));
+  }
+
+  let anon = auth.get('methods.anonymous');
+  let result = await anon.signIn();
+  let user = auth.get('user');
+
+  assert.ok(user.get('isAnonymous'));
+  assert.ok(result === user);
+  assert.ok(user.get('ok'));
+  assert.deepEqual(log, [
+    user.get('uid')
+  ]);
+});

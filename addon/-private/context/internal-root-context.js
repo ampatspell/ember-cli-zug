@@ -6,10 +6,11 @@ import { resolve } from 'rsvp';
 
 const validate = opts => {
   assert(`options must be object`, typeof opts === 'object');
-  let { firebase, modelNameForDocument, storeNameForIdentifier, firestorePersistenceEnabled } = opts;
+  let { firebase, modelNameForDocument, storeNameForIdentifier, restoreUser, firestorePersistenceEnabled } = opts;
   assert(`options.firebase must be object`, !firebase || typeof firebase === 'object');
   assert(`options.modelNameForDocument must be function`, typeof modelNameForDocument === 'function');
   assert(`options.storeNameForIdentifier must be function`, !storeNameForIdentifier || typeof storeNameForIdentifier === 'function');
+  assert(`options.restoreUser must be function`, !restoreUser || typeof restoreUser === 'function');
   if(typeof firestorePersistenceEnabled === 'undefined') {
     opts.firestorePersistenceEnabled = true;
   }
@@ -46,6 +47,15 @@ export default class InternalRootContext extends InternalContext {
       .then(() => this._configureFirebase(identifier, opts))
       .then(() => this._configureAuth())
       .then(() => undefined);
+  }
+
+  onAuthUser(user) {
+    let opts = this.opts;
+    let promise;
+    if(opts.restoreUser) {
+      promise = opts.restoreUser(user.model(true), this.model(true));
+    }
+    return resolve(promise);
   }
 
   willDestroy() {

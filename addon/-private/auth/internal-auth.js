@@ -13,15 +13,21 @@ export default class InternalAuth extends Internal {
     this.context = context;
     this.methods = new AuthMethods(context, this);
     this._user = undefined;
+    this._promise = resolve();
   }
 
   configure() {
     this.startObservingAuthState();
     this.onUser(this.auth.currentUser);
+    return this.settle();
   }
 
   createModel() {
     return this.context.factoryFor('zug:auth').create({ _internal: this });
+  }
+
+  settle() {
+    return this._promise;
   }
 
   //
@@ -30,26 +36,35 @@ export default class InternalAuth extends Internal {
     return this._user;
   }
 
+  setUser(user, notify) {
+    this.withPropertyChanges(notify, changed => {
+      this._user = user;
+      changed('user');
+    })
+  }
+
+  scheduleUser(user) {
+    this._promise = this._promise.finally(() => {
+      let internal = new InternalUser(this.context, this, user);
+      return internal.restore().then(() => this.setUser(internal, true));
+    });
+  }
+
   onUser(user) {
     let current = this._user;
-    let next;
 
     if(user) {
       if(current && current.user === user) {
         return;
       }
-      next = new InternalUser(this.context, this, user);
+      this.scheduleUser(user);
     } else {
       if(!current) {
         return;
       }
-      next = null;
     }
 
-    this.withPropertyChanges(true, changed => {
-      this._user = next;
-      changed('user');
-    });
+    this.setUser(null, true);
 
     if(current) {
       current.destroy();
@@ -95,7 +110,7 @@ export default class InternalAuth extends Internal {
   }
 
   withAuthReturningUser(fn) {
-    return this.withAuth(fn).then(() => this.user);
+    return this.withAuth(fn).then(() => this.settle()).then(() => this.user);
   }
 
   //
