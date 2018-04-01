@@ -1,5 +1,4 @@
 import Internal from '../../model/internal';
-import AuthMethods from './internal-method';
 import { resolve } from 'rsvp';
 
 export default class InternalMethod extends Internal {
