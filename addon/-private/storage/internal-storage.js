@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import { resolve } from 'rsvp';
 import { join } from '@ember/runloop';
 import { assert } from '@ember/debug';
+import Reference from './internal-reference';
 
 export default class InternalStorage extends Internal {
 
@@ -32,6 +33,20 @@ export default class InternalStorage extends Internal {
   withStorage(fn) {
     let storage = this.storage;
     return resolve(fn(storage));
+  }
+
+  //
+
+  createReference(ref) {
+    return new Reference(this.context, this, ref);
+  }
+
+  ref(path) {
+    return this.createReference(this.storage.ref(path));
+  }
+
+  refFromURL(url) {
+    return this.createReference(this.storage.refFromURL(url));
   }
 
 }
