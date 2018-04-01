@@ -2,6 +2,10 @@
 
   {{#rows.header}}
     Experimental
+    {{#ui-block/links url='components/ui-route/experimental' as |links|}}
+      {{links.link title='component' url='component.js'}}
+      {{links.link title='template' url='template.hbs'}}
+    {{/ui-block/links}}
   {{/rows.header}}
 
 {{/ui-block/rows}}
