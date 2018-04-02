@@ -1,5 +1,4 @@
 import EmberObject from '@ember/object';
-import Mixin from '@ember/object/mixin';
 import { InternalMixin, prop, propertiesMixin, serialized, modelprop } from '../model/internal';
 
 export const keys = [
@@ -18,11 +17,7 @@ let task = [
 ];
 
 let SnapshotPropertiesMixin = propertiesMixin('snapshot', keys);
-
-let TaskPropertiesMixin = Mixin.create(task.reduce((props, key) => {
-  props[key] = prop();
-  return props;
-}, {}));
+let TaskPropertiesMixin = propertiesMixin(null, task);
 
 export default EmberObject.extend(InternalMixin, SnapshotPropertiesMixin, TaskPropertiesMixin, {
 

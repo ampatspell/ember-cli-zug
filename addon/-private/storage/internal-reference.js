@@ -22,6 +22,7 @@ export default class InternalReference extends Internal {
     this.context = context;
     this.storage = storage;
     this.ref = ref;
+    this.metadata = undefined;
   }
 
   createModel() {

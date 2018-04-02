@@ -6,7 +6,14 @@ import rm from '../util/array-remove';
 
 export const propertiesMixin = (prop, keys) => Mixin.create(keys.reduce((hash, key) => {
   hash[key] = computed(function() {
-    return this._internal[prop][key];
+    let internal = this._internal;
+    let subject;
+    if(prop) {
+      subject = internal[prop];
+    } else {
+      subject = internal;
+    }
+    return subject[key];
   }).readOnly();
   return hash;
 }, {}));
