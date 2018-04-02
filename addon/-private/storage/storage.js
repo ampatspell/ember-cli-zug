@@ -9,8 +9,8 @@ export default EmberObject.extend(InternalMixin, {
   // running tasks
   tasks: tasks(),
 
-  // { type: 'data', data: ..., metadata: { } }
-  // { type: 'string', data: ..., format: 'raw' / 'base64' / 'base64-url' / 'data-url', metadata: {} }
+  // { path: ... }
+  // { url: ... }
   ref: model('ref')
 
 });
