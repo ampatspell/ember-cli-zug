@@ -1,6 +1,7 @@
 import EmberObject, { computed } from '@ember/object';
 import { InternalMixin, prop, modelprop, state, serialized, promise } from '../model/internal';
 
+// TODO: keys comes from metadata-state
 let stateKeys = [
   'isExisting',
   'isLoaded',
