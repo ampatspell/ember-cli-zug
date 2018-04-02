@@ -1,5 +1,4 @@
 import Internal from '../model/internal';
-import firebase from 'firebase';
 import { resolve } from 'rsvp';
 import { assert } from '@ember/debug';
 import Reference from './internal-reference';

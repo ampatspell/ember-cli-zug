@@ -1,6 +1,5 @@
 import Internal from '../model/internal';
 import AuthMethods from './internal-methods';
-import firebase from 'firebase';
 import { resolve } from 'rsvp';
 import { join } from '@ember/runloop';
 import { assert } from '@ember/debug';
