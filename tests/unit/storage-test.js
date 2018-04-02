@@ -5,6 +5,7 @@ import { run } from '@ember/runloop';
 module('storage', {
   beforeEach() {
     this.storage = this.store.get('storage');
+    this.signIn = () => this.store.get('auth.methods.anonymous').signIn();
   }
 });
 
@@ -48,6 +49,8 @@ test('create ref from url', async function(assert) {
 });
 
 test('put string', async function(assert) {
+  await this.signIn();
+
   let ref = this.storage.ref({ path: 'hello' });
 
   // ref.put({ type: 'data', data: blob, metadata: {} });
@@ -71,6 +74,8 @@ test('put string', async function(assert) {
 });
 
 test('put blob', async function(assert) {
+  await this.signIn();
+
   let ref = this.storage.ref({ path: 'hello' });
 
   let task = ref.put({
