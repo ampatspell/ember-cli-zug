@@ -1,6 +1,7 @@
 # TODO
 
-* storage task metadata
+* storage ref metadata
+* ref load `object-not-found` sets `isExisting: false`
 * storage ref identity for loads
 * storage ref.child
 * auth operations should be included in settle (operations.invoke PromiseOperation)
