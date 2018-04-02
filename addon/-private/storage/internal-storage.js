@@ -4,12 +4,14 @@ import { resolve } from 'rsvp';
 import { join } from '@ember/runloop';
 import { assert } from '@ember/debug';
 import Reference from './internal-reference';
+import Tasks from './internal-tasks';
 
 export default class InternalStorage extends Internal {
 
   constructor(context) {
     super();
     this.context = context;
+    this.tasks = new Tasks(context);
     this._storage = null;
   }
 
@@ -54,6 +56,15 @@ export default class InternalStorage extends Internal {
   ref(opts) {
     let ref = this.refFromOptions(opts);
     return this.createReference(ref);
+  }
+
+  registerTask(task) {
+    this.context.operations.invoke(task.operation);
+    this.tasks.register(task);
+  }
+
+  unregisterTask(task) {
+    this.tasks.unregister(task);
   }
 
 }

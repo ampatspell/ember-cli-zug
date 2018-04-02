@@ -3,6 +3,7 @@ import { resolve } from 'rsvp';
 import { join } from '@ember/runloop';
 import firebase from 'firebase';
 import { keys } from './task';
+import { PromiseOperation } from '../model/operation';
 
 const {
   STATE_CHANGED
@@ -18,6 +19,7 @@ export default class InternalTask extends Internal {
     this.task = task;
     this._taskObserver = null;
     this.promise = resolve(task);
+    this.operation = new PromiseOperation(this.promise, { name: 'storage' });
     this.snapshot = task.snapshot;
     this.isCompleted = false;
     this.error = null;
@@ -33,32 +35,37 @@ export default class InternalTask extends Internal {
     return Math.floor(bytesTransferred / totalBytes * 100);
   }
 
+  get isRunning() {
+    return !this.isCompleted;
+  }
+
+  get isError() {
+    return !!this.error;
+  }
+
   onSnapshot(snapshot) {
-    // console.log('onSnapshot', snapshot);
     this.withPropertyChanges(true, changed => {
       this.snapshot = snapshot;
       keys.map(key => changed(key));
       changed('percent');
     });
-    console.log(this.model(true).get('serialized'));
   }
 
   onError(err) {
-    console.log('onError', err);
     this.withPropertyChanges(true, changed => {
       this.error = err;
       changed('error');
+      changed('isError');
     });
     this.taskDidFinish();
   }
 
   onCompleted() {
-    console.log('onCompleted');
     this.withPropertyChanges(true, changed => {
       this.isCompleted = true;
       changed('isCompleted');
+      changed('isRunning');
     });
-    console.log(this.model(true).get('serialized'));
     this.taskDidFinish();
   }
 
@@ -76,11 +83,11 @@ export default class InternalTask extends Internal {
       cancel();
     }
     this._taskObserver = null;
+    this.reference.unregisterTask(this);
   }
 
   taskDidFinish() {
     this.stopObservingTask();
-    // TODO: remove from running tasks
   }
 
   willDestroy() {

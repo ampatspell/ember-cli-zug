@@ -1,6 +1,8 @@
 # TODO
 
-* auth operations should be included in settle
+* storage task metadata
+* storage ref identity for loads
+* auth operations should be included in settle (operations.invoke PromiseOperation)
 * storage reference parent
 * figure out api for storage so that I have a better understanding regarding exports
 * link anonymous to account

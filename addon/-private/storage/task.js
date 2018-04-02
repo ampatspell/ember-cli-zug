@@ -1,5 +1,6 @@
 import EmberObject, { computed } from '@ember/object';
-import { InternalMixin, prop, propertiesMixin, serialized } from '../model/internal';
+import Mixin from '@ember/object/mixin';
+import { InternalMixin, prop, propertiesMixin, serialized, modelprop } from '../model/internal';
 
 export const keys = [
   'downloadURL',
@@ -7,27 +8,28 @@ export const keys = [
   'totalBytes'
 ];
 
-let serializedKeys = [
+let task = [
   'type',
   'percent',
+  'isRunning',
   'isCompleted',
-  'error',
-  ...keys
+  'isError',
+  'error'
 ];
 
-// metadata
+let SnapshotPropertiesMixin = propertiesMixin('snapshot', keys);
 
-let PropertiesMixin = propertiesMixin('snapshot', keys);
+let TaskPropertiesMixin = Mixin.create(task.reduce((props, key) => {
+  props[key] = prop();
+  return props;
+}, {}));
 
-export default EmberObject.extend(InternalMixin, PropertiesMixin, {
+export default EmberObject.extend(InternalMixin, SnapshotPropertiesMixin, TaskPropertiesMixin, {
 
-  type: prop(),
-  percent: prop(),
-  isCompleted: prop(),
-  error: prop(),
+  reference: modelprop(),
 
-  serialized: serialized(serializedKeys),
+  promise: prop(),
 
-  promise: prop('promise')
+  serialized: serialized([ ...task, ...keys ])
 
 });

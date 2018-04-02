@@ -1,9 +1,8 @@
 import EmberObject from '@ember/object';
 import { InternalMixin, internal, prop, modelprop, model, promise, invoke } from '../model/internal';
+import { property } from '../model/model-array-proxy';
 
-const identity = () => internal(function(key, internal) {
-  return internal.identity.models.model(true);
-});
+const identity = property(internal => internal.identity.models);
 
 export default EmberObject.extend(InternalMixin, {
 

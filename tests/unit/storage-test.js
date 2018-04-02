@@ -6,6 +6,18 @@ module('storage', {
   beforeEach() {
     this.storage = this.store.get('storage');
     this.signIn = () => this.store.get('auth.methods.anonymous').signIn();
+
+    this.ref = this.storage.ref({ path: 'hello' });
+
+    this.put = string => this.ref.put({
+      type: 'string',
+      data: string || 'hello world as a raw string',
+      format: 'raw',
+      metadata: {
+        contentType: 'text/plain',
+        customMetadata: { ok: true }
+      }
+    });
   }
 });
 
@@ -53,7 +65,6 @@ test('put string', async function(assert) {
 
   let ref = this.storage.ref({ path: 'hello' });
 
-  // ref.put({ type: 'data', data: blob, metadata: {} });
   let task = ref.put({
     type: 'string',
     data: 'hello world as a raw string',
@@ -96,6 +107,67 @@ test('put blob', async function(assert) {
   await promise;
 });
 
-// register running tasks
-// properties for task
-// metadata model
+test('settle', async function(assert) {
+  await this.signIn();
+  let task = this.put();
+
+  await this.store.settle();
+
+  assert.ok(task.get('isCompleted'));
+  assert.ok(this.storage.get('tasks.length') === 0);
+});
+
+test('running tasks are registered in storage', async function(assert) {
+  await this.signIn();
+  let tasks = this.storage.get('tasks');
+
+  assert.ok(tasks.get('length') === 0);
+
+  let task = this.put();
+
+  assert.ok(tasks.get('length') === 1);
+  assert.ok(tasks.includes(task));
+
+  await task.get('promise');
+
+  assert.ok(tasks.get('length') === 0);
+});
+
+test('task has ref', async function(assert) {
+  await this.signIn();
+  let task = this.put();
+  assert.ok(task.get('reference') === this.ref);
+});
+
+test('task properties', async function(assert) {
+  await this.signIn();
+  let task = this.put();
+
+  assert.deepEqual(task.get('serialized'), {
+    "bytesTransferred": 0,
+    "downloadURL": null,
+    "error": null,
+    "isCompleted": false,
+    "isError": false,
+    "isRunning": true,
+    "percent": 0,
+    "totalBytes": 27,
+    "type": "string"
+  });
+
+  await task.get('promise');
+
+  let downloadURL = task.get('downloadURL');
+  assert.ok(downloadURL.includes('https://firebasestorage.googleapis.com'));
+  assert.deepEqual(task.get('serialized'), {
+    "bytesTransferred": 27,
+    "downloadURL": downloadURL,
+    "error": null,
+    "isCompleted": true,
+    "isError": false,
+    "isRunning": false,
+    "percent": 100,
+    "totalBytes": 27,
+    "type": "string"
+  });
+});

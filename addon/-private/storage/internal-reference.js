@@ -38,13 +38,23 @@ export default class InternalReference extends Internal {
     } else if(type === 'data') {
       task = this.ref.put(data, metadata);
     } else {
-      assert(`opts.type must be string or data`, false);      
+      assert(`opts.type must be string or data`, false);
     }
     return { type, task };
   }
 
+  registerTask(task) {
+    this.storage.registerTask(task);
+  }
+
+  unregisterTask(task) {
+    this.storage.unregisterTask(task);
+  }
+
   createInternalTask(type, task) {
-    return new Task(this.context, this, type, task);
+    let internal = new Task(this.context, this, type, task);
+    this.registerTask(internal);
+    return internal;
   }
 
   put(opts) {
