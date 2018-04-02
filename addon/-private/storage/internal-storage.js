@@ -25,7 +25,7 @@ export default class InternalStorage extends Internal {
     if(!storage) {
       let app = this.context.firebase;
       assert(`context should be ready before accessing storage`, !!app);
-      storage = firebase.storage(app);
+      storage = app.storage();
       this._storage = storage;
     }
     return storage;

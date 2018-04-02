@@ -78,7 +78,7 @@ export default class InternalAuth extends Internal {
     if(!auth) {
       let app = this.context.firebase;
       assert(`context should be ready before accessing auth`, !!app);
-      auth = firebase.auth(app);
+      auth = app.auth();
       this._auth = auth;
     }
     return auth;
