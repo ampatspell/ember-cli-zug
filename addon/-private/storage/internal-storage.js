@@ -56,8 +56,12 @@ export default class InternalStorage extends Internal {
     return this.createReference(ref);
   }
 
+  registerOperation(operation) {
+    this.context.operations.invoke(operation);
+  }
+
   registerTask(task) {
-    this.context.operations.invoke(task.operation);
+    this.registerOperation(task.operation);
     this.tasks.register(task);
   }
 

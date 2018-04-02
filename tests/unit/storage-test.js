@@ -2,6 +2,7 @@ import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import { run } from '@ember/runloop';
 import { resolve } from 'rsvp';
+import { typeOf } from '@ember/utils';
 
 module('storage', {
   beforeEach() {
@@ -228,13 +229,17 @@ test('task upload error', async function(assert) {
 });
 
 test('ref load resolves with ref', async function(assert) {
+  await this.signIn();
   await this._put();
+
   let ref = this.storage.ref({ path: 'hello' });
   let result = await ref.load();
   assert.ok(ref === result);
 });
 
 test('ref load reject', async function(assert) {
+  await this.signIn();
+
   let ref = this.storage.ref({ path: 'missing' });
   try {
     await ref.load();
@@ -246,6 +251,8 @@ test('ref load reject', async function(assert) {
 });
 
 test('ref load optional', async function(assert) {
+  await this.signIn();
+
   let ref = this.storage.ref({ path: 'missing' });
   let result = await ref.load({ optional: true });
   assert.ok(result === ref);
@@ -257,6 +264,13 @@ test('ref has metadata', async function(assert) {
   assert.ok(metadata);
   assert.ok(metadata._internal);
   assert.ok(metadata.get('reference') === ref);
+
+  assert.deepEqual(metadata.get('serialized'), {
+    "error": null,
+    "isError": false,
+    "isExisting": undefined,
+    "isLoaded": false
+  });
 });
 
 test('metadata is destroyed with ref', async function(assert) {
@@ -264,4 +278,106 @@ test('metadata is destroyed with ref', async function(assert) {
   let metadata = ref.get('metadata');
   run(() => ref.destroy());
   assert.ok(metadata.isDestroyed);
+});
+
+test('load metadata', async function(assert) {
+  await this.signIn();
+  await this._put();
+
+  let ref = this.storage.ref({ path: 'hello' });
+  let metadata = ref.get('metadata');
+
+  assert.deepEqual(metadata.get('serialized'), {
+    "error": null,
+    "isError": false,
+    "isExisting": undefined,
+    "isLoaded": false
+  });
+
+  await metadata.load();
+
+  assert.deepEqual(metadata.get('serialized'), {
+    "error": null,
+    "isError": false,
+    "isExisting": true,
+    "isLoaded": true
+  });
+});
+
+test('load optional metadata for missing', async function(assert) {
+  await this.signIn();
+
+  let ref = this.storage.ref({ path: 'missing' });
+  let metadata = ref.get('metadata');
+
+  assert.deepEqual(metadata.get('serialized'), {
+    "error": null,
+    "isError": false,
+    "isExisting": undefined,
+    "isLoaded": false
+  });
+
+  await metadata.load({ optional: true });
+
+  assert.deepEqual(metadata.get('serialized'), {
+    "error": null,
+    "isError": false,
+    "isExisting": false,
+    "isLoaded": true
+  });
+});
+
+test('load metadata for missing', async function(assert) {
+  await this.signIn();
+
+  let ref = this.storage.ref({ path: 'missing' });
+  let metadata = ref.get('metadata');
+
+  assert.deepEqual(metadata.get('serialized'), {
+    "error": null,
+    "isError": false,
+    "isExisting": undefined,
+    "isLoaded": false
+  });
+
+  try {
+    await metadata.load();
+  } catch(err) {
+    assert.equal(err.code, 'storage/object-not-found');
+  }
+
+  let error = metadata.get('error');
+
+  assert.ok(error);
+
+  assert.deepEqual(metadata.get('serialized'), {
+    "error": error,
+    "isError": true,
+    "isExisting": false,
+    "isLoaded": true
+  });
+});
+
+test('metadata load succeeds', async function(assert) {
+  await this.signIn();
+  await this._put();
+
+  let ref = this.storage.ref({ path: 'hello' });
+  let metadata = ref.get('metadata');
+
+  await metadata.load();
+
+  assert.ok(metadata.get('raw'));
+
+  assert.deepEqual(metadata.get('serialized'), {
+    "isLoaded": true,
+    "isExisting": true,
+    "isError": false,
+    "error": null,
+    "name": "hello",
+    "size": 11,
+    "contentType": "text/plain"
+  });
+
+  assert.ok(typeOf(metadata.get('createdAt')) === 'date');
 });

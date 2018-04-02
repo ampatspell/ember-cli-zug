@@ -19,7 +19,7 @@ export default class InternalTask extends Internal {
     this.task = task;
     this._taskObserver = null;
     this.promise = resolve(task);
-    this.operation = new PromiseOperation(this.promise, { name: 'storage' });
+    this.operation = new PromiseOperation(this.promise, { name: 'storage/task' });
     this.snapshot = task.snapshot;
     this.isCompleted = false;
     this.error = null;

@@ -3,7 +3,6 @@ import firebase from 'firebase';
 import { assert } from '@ember/debug';
 import Task from './internal-task';
 import Metadata from './internal-metadata';
-import { resolve, reject } from 'rsvp';
 
 const {
   StringFormat
@@ -74,20 +73,8 @@ export default class InternalReference extends Internal {
     return this.createInternalTask(type, task);
   }
 
-  load(opts={}) {
-    // operation
-    // opts.reload && isLoaded
-    return resolve(this.ref.getMetadata().then(() => {
-      // onLoaded
-      return this;
-    }, err => {
-      if(err.code === 'storage/object-not-found' && opts.optional) {
-        // onMissing
-        return this;
-      }
-      // onError
-      return reject(err);
-    }));
+  load(opts) {
+    return this.metadata.load(opts);
   }
 
   willDestroy() {
