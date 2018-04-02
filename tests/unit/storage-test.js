@@ -227,9 +227,26 @@ test('task upload error', async function(assert) {
   assert.ok(error.code === 'storage/unauthorized');
 });
 
-test('ref load', async function(assert) {
+test('ref load resolves with ref', async function(assert) {
   await this._put();
   let ref = this.storage.ref({ path: 'hello' });
-  let result = await ref.load({ url: true, metadata: true });
+  let result = await ref.load();
   assert.ok(ref === result);
+});
+
+test('ref load reject', async function(assert) {
+  let ref = this.storage.ref({ path: 'missing' });
+  try {
+    await ref.load();
+    assert.ok(false, 'should throw');
+  } catch(err) {
+    assert.ok(true);
+    assert.equal(err.code, 'storage/unauthorized');
+  }
+});
+
+test('ref load optional', async function(assert) {
+  let ref = this.storage.ref({ path: 'missing' });
+  let result = await ref.load({ optional: true });
+  assert.ok(result === ref);
 });

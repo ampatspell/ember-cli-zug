@@ -2,6 +2,7 @@ import Internal from '../model/internal';
 import firebase from 'firebase';
 import { assert } from '@ember/debug';
 import Task from './internal-task';
+import { resolve, reject } from 'rsvp';
 
 const {
   StringFormat
@@ -63,6 +64,18 @@ export default class InternalReference extends Internal {
   }
 
   load(opts={}) {
+    // operation
+    // opts.reload && isLoaded
+    return resolve(this.ref.getMetadata().then(() => {
+      // onLoaded
+      return this;
+    }, err => {
+      if(err.code === 'storage/unauthorized' && opts.optional) {
+        // onError
+        return this;
+      }
+      return reject(err);
+    }));
   }
 
 }
