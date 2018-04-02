@@ -29,7 +29,8 @@
     "test": "ember try:each",
     "coverage": "COVERAGE=true ember test",
     "bump": "npm version patch; git push --follow-tags",
-    "deploy": "ember build -prod && firebase deploy"
+    "deploy": "ember build -prod && firebase deploy",
+    "deploy:storage": "firebase deploy --only storage"
   },
   "dependencies": {
     "broccoli-file-creator": "^1.1.1",
