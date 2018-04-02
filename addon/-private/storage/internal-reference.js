@@ -2,6 +2,7 @@ import Internal from '../model/internal';
 import firebase from 'firebase';
 import { assert } from '@ember/debug';
 import Task from './internal-task';
+import Metadata from './internal-metadata';
 import { resolve, reject } from 'rsvp';
 
 const {
@@ -22,11 +23,20 @@ export default class InternalReference extends Internal {
     this.context = context;
     this.storage = storage;
     this.ref = ref;
-    this.metadata = undefined;
+    this._metadata = undefined;
   }
 
   createModel() {
     return this.context.factoryFor('zug:storage/reference').create({ _internal: this });
+  }
+
+  get metadata() {
+    let metadata = this._metadata;
+    if(!metadata) {
+      metadata = new Metadata(this.context, this)
+      this._metadata = metadata;
+    }
+    return metadata;
   }
 
   createStorageTask(opts) {
@@ -78,6 +88,11 @@ export default class InternalReference extends Internal {
       // onError
       return reject(err);
     }));
+  }
+
+  willDestroy() {
+    this._metadata && this._metadata.destroy();
+    super.willDestroy();
   }
 
 }

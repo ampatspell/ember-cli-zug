@@ -250,3 +250,18 @@ test('ref load optional', async function(assert) {
   let result = await ref.load({ optional: true });
   assert.ok(result === ref);
 });
+
+test('ref has metadata', async function(assert) {
+  let ref = this.storage.ref({ path: 'missing' });
+  let metadata = ref.get('metadata');
+  assert.ok(metadata);
+  assert.ok(metadata._internal);
+  assert.ok(metadata.get('reference') === ref);
+});
+
+test('metadata is destroyed with ref', async function(assert) {
+  let ref = this.storage.ref({ path: 'missing' });
+  let metadata = ref.get('metadata');
+  run(() => ref.destroy());
+  assert.ok(metadata.isDestroyed);
+});
