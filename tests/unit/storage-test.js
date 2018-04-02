@@ -174,3 +174,15 @@ test('task properties', async function(assert) {
     "type": "string"
   });
 });
+
+test('destroy nested context while uploading', async function(assert) {
+  await this.signIn();
+
+  let nested = this.store.nest('nested');
+  let ref = nested.get('storage').ref({ path: 'hello' });
+  let task = ref.put({ type: 'string', data: 'hey', format: 'raw', metadata: { contentType: 'text/plain' } });
+
+  run(() => nested.destroy());
+
+  assert.ok(task.isDestroyed);
+});

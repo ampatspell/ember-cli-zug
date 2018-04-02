@@ -21,4 +21,9 @@ export default class InternalTasks extends Internal {
     this.running.removeObject(task);
   }
 
+  willDestroy() {
+    this.running.forEach(task => task.destroy());
+    super.willDestroy();
+  }
+
 }

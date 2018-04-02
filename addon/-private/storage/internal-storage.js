@@ -66,4 +66,9 @@ export default class InternalStorage extends Internal {
     this.tasks.unregister(task);
   }
 
+  willDestroy() {
+    this.tasks.destroy();
+    super.willDestroy();
+  }
+
 }
