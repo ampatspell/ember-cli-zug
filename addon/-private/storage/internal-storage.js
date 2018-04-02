@@ -1,7 +1,6 @@
 import Internal from '../model/internal';
 import firebase from 'firebase';
 import { resolve } from 'rsvp';
-import { join } from '@ember/runloop';
 import { assert } from '@ember/debug';
 import Reference from './internal-reference';
 import Tasks from './internal-tasks';

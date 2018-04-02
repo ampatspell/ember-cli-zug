@@ -1,5 +1,4 @@
-import EmberObject, { computed } from '@ember/object';
-import Mixin from '@ember/object/mixin';
+import EmberObject from '@ember/object';
 import { InternalMixin, promise, propertiesMixin, serialized } from '../model/internal';
 
 const keys = [

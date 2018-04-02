@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import { InternalMixin, internal, prop, modelprop, model, promise, invoke } from '../model/internal';
+import { InternalMixin, prop, modelprop, model, promise, invoke } from '../model/internal';
 import { property } from '../model/model-array-proxy';
 
 const identity = property(internal => internal.identity.models);

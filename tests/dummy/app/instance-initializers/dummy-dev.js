@@ -1,5 +1,3 @@
-import firebase from 'firebase';
-
 const playground = async store => {
 
   await store.get('auth.methods.anonymous').signIn();

@@ -1,4 +1,4 @@
-import EmberObject, { computed } from '@ember/object';
+import EmberObject from '@ember/object';
 import Mixin from '@ember/object/mixin';
 import { InternalMixin, prop, propertiesMixin, serialized, modelprop } from '../model/internal';
 
