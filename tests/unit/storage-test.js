@@ -26,10 +26,11 @@ test('storage exists', async function(assert) {
   assert.ok(storage);
 });
 
-test('storage is shared between contexts', async function(assert) {
+test('storage is not shared between contexts', async function(assert) {
   let root = this.store.get('storage');
   let nested = this.store.nest('foo').get('storage');
-  assert.ok(root === nested);
+  assert.ok(nested);
+  assert.ok(root !== nested);
 });
 
 test('storage is destroyed on context destroy', async function(assert) {

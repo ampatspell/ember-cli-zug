@@ -11,6 +11,7 @@ import MatchersManager from './matchers-manager';
 import LoadManager from './load-manager';
 import Identity from './identity';
 import Operations from './operations';
+import Storage from '../storage/internal-storage';
 
 export default class InternalContext extends Internal {
 
@@ -35,6 +36,7 @@ export default class InternalContext extends Internal {
     this.loadManager = new LoadManager(this);
     this.operations = new Operations();
     this.identity = new Identity(this);
+    this.storage = new Storage(this);
   }
 
   factoryFor(name) {
@@ -147,6 +149,7 @@ export default class InternalContext extends Internal {
     this.queriesManager.destroy();
     this.matchersManager.destroy();
     this.identity.destroy();
+    this.storage.destroy();
     super.willDestroy();
   }
 
