@@ -42,8 +42,10 @@ test('create ref', async function(assert) {
   let ref = this.storage.ref({ path: 'hello' });
   assert.ok(ref);
   assert.ok(ref._internal);
+  let bucket = ref.get('bucket');
+  assert.ok(bucket.includes('appspot.com'));
   assert.deepEqual(ref.get('serialized'), {
-    "bucket": "ember-cli-zug.appspot.com",
+    "bucket": bucket,
     "fullPath": "hello",
     "name": "hello"
   });
