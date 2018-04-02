@@ -43,29 +43,36 @@ export default class InternalTask extends Internal {
     return !!this.error;
   }
 
+  _onCompleted(changed) {
+    this.isCompleted = true;
+    changed('isCompleted');
+    changed('isRunning');
+  }
+
+  _onError(changed, error) {
+    this.error = error;
+    changed('error');
+    changed('isError');
+    this._onCompleted(changed);
+  }
+
+  _onSnapshot(changed, snapshot) {
+    this.snapshot = snapshot;
+    keys.map(key => changed(key));
+    changed('percent');
+  }
+
   onSnapshot(snapshot) {
-    this.withPropertyChanges(true, changed => {
-      this.snapshot = snapshot;
-      keys.map(key => changed(key));
-      changed('percent');
-    });
+    this.withPropertyChanges(true, changed => this._onSnapshot(changed, snapshot));
   }
 
   onError(err) {
-    this.withPropertyChanges(true, changed => {
-      this.error = err;
-      changed('error');
-      changed('isError');
-    });
+    this.withPropertyChanges(true, changed => this._onError(changed, err));
     this.taskDidFinish();
   }
 
   onCompleted() {
-    this.withPropertyChanges(true, changed => {
-      this.isCompleted = true;
-      changed('isCompleted');
-      changed('isRunning');
-    });
+    this.withPropertyChanges(true, changed => this._onCompleted(changed));
     this.taskDidFinish();
   }
 
@@ -88,7 +95,6 @@ export default class InternalTask extends Internal {
 
   taskDidFinish() {
     this.stopObservingTask();
-    this.destroy();
   }
 
   willDestroy() {

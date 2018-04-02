@@ -9,9 +9,9 @@ module('storage', {
 
     this.ref = this.storage.ref({ path: 'hello' });
 
-    this.put = string => this.ref.put({
+    this.put = () => this.ref.put({
       type: 'string',
-      data: string || 'hello world as a raw string',
+      data: 'hello world as a raw string',
       format: 'raw',
       metadata: {
         contentType: 'text/plain',
@@ -175,15 +175,6 @@ test('task properties', async function(assert) {
   });
 });
 
-test('task is destroyed on completed', async function(assert) {
-  await this.signIn();
-
-  let task = this.put();
-  await task.get('promise');
-  assert.ok(task.get('isCompleted'));
-  assert.ok(task.isDestroyed);
-});
-
 test('destroy nested context while uploading', async function(assert) {
   await this.signIn();
 
@@ -194,4 +185,37 @@ test('destroy nested context while uploading', async function(assert) {
   run(() => nested.destroy());
 
   assert.ok(task.isDestroyed);
+});
+
+test('task upload error', async function(assert) {
+  await this.signIn();
+
+  let ref = this.storage.ref({ path: 'forbidden/hello' });
+
+  let task = ref.put({
+    type: 'string',
+    data: 'hello world as a raw string',
+    format: 'raw',
+    metadata: {
+      contentType: 'text/plain',
+    }
+  });
+
+  let error;
+  await task.get('promise').catch(err => error = err);
+
+  assert.deepEqual(task.get('serialized'), {
+    "bytesTransferred": 0,
+    "downloadURL": null,
+    "error": error,
+    "isCompleted": true,
+    "isError": true,
+    "isRunning": false,
+    "percent": 0,
+    "totalBytes": 27,
+    "type": "string"
+  });
+
+  assert.ok(error);
+  assert.ok(error.code === 'storage/unauthorized');
 });
