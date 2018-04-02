@@ -241,7 +241,7 @@ test('ref load reject', async function(assert) {
     assert.ok(false, 'should throw');
   } catch(err) {
     assert.ok(true);
-    assert.equal(err.code, 'storage/unauthorized');
+    assert.equal(err.code, 'storage/object-not-found');
   }
 });
 
