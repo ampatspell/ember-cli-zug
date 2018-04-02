@@ -70,10 +70,11 @@ export default class InternalReference extends Internal {
       // onLoaded
       return this;
     }, err => {
-      if(err.code === 'storage/unauthorized' && opts.optional) {
-        // onError
+      if(err.code === 'storage/object-not-found' && opts.optional) {
+        // onMissing
         return this;
       }
+      // onError
       return reject(err);
     }));
   }

@@ -11,6 +11,11 @@ service firebase.storage {
       allow read: if true;
     }
 
+    match /missing {
+      allow write: if false;
+      allow read: if true;
+    }
+
     match /experimental/{name} {
       allow write: if isLoggedIn() && isLessThanMB(2);
       allow read: if true;
