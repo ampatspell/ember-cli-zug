@@ -61,6 +61,6 @@ export default EmberObject.extend(InternalMixin, {
 
   load: promise('load'),
 
-  serialized: serialized([ ...stateKeys, 'name', 'size', 'contentType' ])
+  serialized: serialized([ ...stateKeys, 'name', 'size', 'contentType' ], [ 'isExisting' ])
 
 });

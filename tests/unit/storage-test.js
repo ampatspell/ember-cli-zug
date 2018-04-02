@@ -297,10 +297,13 @@ test('load metadata', async function(assert) {
   await metadata.load();
 
   assert.deepEqual(metadata.get('serialized'), {
+    "contentType": "text/plain",
     "error": null,
     "isError": false,
     "isExisting": true,
-    "isLoaded": true
+    "isLoaded": true,
+    "name": "hello",
+    "size": 11
   });
 });
 

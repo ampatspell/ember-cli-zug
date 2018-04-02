@@ -18,8 +18,20 @@ export const propertiesMixin = (prop, keys) => Mixin.create(keys.reduce((hash, k
   return hash;
 }, {}));
 
-export const serialized = keys => computed(...keys, function() {
-  return this.getProperties(...keys);
+export const serialized = (keys, keep) => computed(...keys, function() {
+  let props = this.getProperties(...keys);
+  if(!keep) {
+    return props;
+  }
+  let ret = {};
+  for(let key in props) {
+    let value = props[key];
+    if(value === undefined && !keep.includes(key)) {
+      continue;
+    }
+    ret[key] = value;
+  }
+  return ret;
 }).readOnly();
 
 export const InternalMixin = Mixin.create({
