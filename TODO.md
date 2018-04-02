@@ -2,6 +2,7 @@
 
 * storage task metadata
 * storage ref identity for loads
+* storage ref.child
 * auth operations should be included in settle (operations.invoke PromiseOperation)
 * storage reference parent
 * figure out api for storage so that I have a better understanding regarding exports
