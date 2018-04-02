@@ -88,6 +88,7 @@ export default class InternalTask extends Internal {
 
   taskDidFinish() {
     this.stopObservingTask();
+    this.destroy();
   }
 
   willDestroy() {

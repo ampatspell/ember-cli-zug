@@ -175,6 +175,15 @@ test('task properties', async function(assert) {
   });
 });
 
+test('task is destroyed on completed', async function(assert) {
+  await this.signIn();
+
+  let task = this.put();
+  await task.get('promise');
+  assert.ok(task.get('isCompleted'));
+  assert.ok(task.isDestroyed);
+});
+
 test('destroy nested context while uploading', async function(assert) {
   await this.signIn();
 
