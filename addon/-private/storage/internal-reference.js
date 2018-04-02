@@ -62,4 +62,7 @@ export default class InternalReference extends Internal {
     return this.createInternalTask(type, task);
   }
 
+  load(opts={}) {
+  }
+
 }

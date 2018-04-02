@@ -1,6 +1,7 @@
 import module from '../helpers/module-for-firebase';
 import { test } from '../helpers/qunit';
 import { run } from '@ember/runloop';
+import { resolve } from 'rsvp';
 
 module('storage', {
   beforeEach() {
@@ -18,6 +19,12 @@ module('storage', {
         customMetadata: { ok: true }
       }
     });
+
+    this._put = () => {
+      let storage = this.store.get('app').storage();
+      let ref = storage.ref('hello');
+      return resolve(ref.putString('hello world', 'raw', { contentType: 'text/plain' }));
+    }
   }
 });
 
@@ -218,4 +225,11 @@ test('task upload error', async function(assert) {
 
   assert.ok(error);
   assert.ok(error.code === 'storage/unauthorized');
+});
+
+test('ref load', async function(assert) {
+  await this._put();
+  let ref = this.storage.ref({ path: 'hello' });
+  let result = await ref.load({ url: true, metadata: true });
+  assert.ok(ref === result);
 });

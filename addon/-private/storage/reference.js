@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import { InternalMixin, model, propertiesMixin, serialized } from '../model/internal';
+import { InternalMixin, model, propertiesMixin, serialized, promise } from '../model/internal';
 
 let keys = [
   'bucket',
@@ -15,6 +15,8 @@ export default EmberObject.extend(InternalMixin, PropertiesMixin, {
 
   // { type: 'data', data: ..., metadata: { } }
   // { type: 'string', data: ..., format: 'raw' / 'base64' / 'base64-url' / 'data-url', metadata: {} }
-  put: model('put')
+  put: model('put'),
+
+  load: promise('load')
 
 });
