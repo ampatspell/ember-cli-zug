@@ -43,7 +43,7 @@ test('create ref', async function(assert) {
   assert.ok(ref);
   assert.ok(ref._internal);
   let bucket = ref.get('bucket');
-  assert.ok(bucket.includes('appspot.com'));
+  assert.equal(bucket, this.store.get('app').options.storageBucket);
   assert.deepEqual(ref.get('serialized'), {
     "bucket": bucket,
     "fullPath": "hello",
