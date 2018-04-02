@@ -1,6 +1,6 @@
 # TODO
 
-* storage ref.metadata for bucket test, date test
+* storage ref.metadata for bucket test
 * ref.downloadURL from metadata
 * storage ref.metadata load queue
 * ref.metadata.update
