@@ -8,7 +8,7 @@ a {
 
 button {
   font-family: $font-family;
-  font-size: 13px;
+  font-size: $font-size;
   -webkit-appearance: none;
   border: 1px solid #ddd;
   padding: 6px 12px;
@@ -21,15 +21,14 @@ button {
 
 label {
   display: block;
-  font-size: 11px;
-  line-height: 14px;
+  margin-bottom: 2px;
   font-weight: 400;
 }
 
 input[type='text'],
 input[type='password'] {
   font-family: $font-family;
-  font-size: 13px;
+  font-size: $font-size;
   -webkit-appearance: none;
   width: 100%;
   border: 1px solid #ddd;

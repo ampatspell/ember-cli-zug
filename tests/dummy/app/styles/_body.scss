@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,500,700&subset=latin-ext');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700&subset=latin-ext');
 
-$font-family: 'Source Code Pro', monospace;
-$font-size: 13px;
+$font-family: 'Ubuntu Mono', monospace;
+$font-size: 14px;
 
 body {
   cursor: default;
@@ -9,6 +9,6 @@ body {
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   font-family: $font-family;
-  font-size: 13px;
+  font-size: $font-size;
   margin: 0;
 }
