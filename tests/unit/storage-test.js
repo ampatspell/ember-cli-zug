@@ -270,6 +270,7 @@ test('ref has metadata', async function(assert) {
     "error": null,
     "isError": false,
     "isExisting": undefined,
+    "isLoading": false,
     "isLoaded": false
   });
 });
@@ -292,7 +293,8 @@ test('load metadata', async function(assert) {
     "error": null,
     "isError": false,
     "isExisting": undefined,
-    "isLoaded": false
+    "isLoaded": false,
+    "isLoading": false
   });
 
   await metadata.load();
@@ -303,6 +305,7 @@ test('load metadata', async function(assert) {
     "isError": false,
     "isExisting": true,
     "isLoaded": true,
+    "isLoading": false,
     "name": "hello",
     "size": 11
   });
@@ -318,7 +321,8 @@ test('load optional metadata for missing', async function(assert) {
     "error": null,
     "isError": false,
     "isExisting": undefined,
-    "isLoaded": false
+    "isLoaded": false,
+    "isLoading": false
   });
 
   await metadata.load({ optional: true });
@@ -327,7 +331,8 @@ test('load optional metadata for missing', async function(assert) {
     "error": null,
     "isError": false,
     "isExisting": false,
-    "isLoaded": true
+    "isLoaded": true,
+    "isLoading": false
   });
 });
 
@@ -341,7 +346,8 @@ test('load metadata for missing', async function(assert) {
     "error": null,
     "isError": false,
     "isExisting": undefined,
-    "isLoaded": false
+    "isLoaded": false,
+    "isLoading": false
   });
 
   try {
@@ -358,7 +364,8 @@ test('load metadata for missing', async function(assert) {
     "error": error,
     "isError": true,
     "isExisting": false,
-    "isLoaded": true
+    "isLoaded": true,
+    "isLoading": false
   });
 });
 
@@ -374,6 +381,7 @@ test('metadata load succeeds', async function(assert) {
   assert.ok(metadata.get('raw'));
 
   assert.deepEqual(metadata.get('serialized'), {
+    "isLoading": false,
     "isLoaded": true,
     "isExisting": true,
     "isError": false,
@@ -409,6 +417,7 @@ test('metadata update', async function(assert) {
   await metadata.update({ contentType: 'text/plainest', customMetadata: { hello: 'world' } });
 
   assert.deepEqual(metadata.get('serialized'), {
+    "isLoading": false,
     "contentType": "text/plainest",
     "error": null,
     "isError": false,
@@ -418,7 +427,7 @@ test('metadata update', async function(assert) {
     "size": 11,
     "customMetadata": {
       "hello": "world"
-    },
+    }
   });
 });
 
