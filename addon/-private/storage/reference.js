@@ -18,10 +18,12 @@ export default EmberObject.extend(InternalMixin, RefPropertiesMixin, {
 
   url: metadata('downloadURL'),
 
+  // path
+  child: model('child'),
+
   // { type: 'data', data: ..., metadata: { } }
   // { type: 'string', data: ..., format: 'raw' / 'base64' / 'base64-url' / 'data-url', metadata: {} }
   put: model('put'),
-
   load: promise('load'),
 
   serialized: serialized(ref),

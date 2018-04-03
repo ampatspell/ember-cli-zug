@@ -77,6 +77,11 @@ export default class InternalReference extends Internal {
     return this.metadata.load(opts);
   }
 
+  child(path) {
+    let ref = this.ref.child(path);
+    return this.storage.createReference(ref);
+  }
+
   willDestroy() {
     this._metadata && this._metadata.destroy();
     super.willDestroy();
