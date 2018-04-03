@@ -1,0 +1,61 @@
+{{#ui-block/rows as |rows|}}
+
+  {{#rows.header}}
+    Storage
+    {{#ui-block/links url='components/ui-route/storage' as |links|}}
+      {{links.link title='component' url='component.js'}}
+      {{links.link title='template' url='template.hbs'}}
+    {{/ui-block/links}}
+  {{/rows.header}}
+
+  {{#if store.auth.user}}
+    {{#rows.row}}
+      {{#if store.auth.user.isAnonymous}}
+        Logged in as anonymous
+      {{else}}
+        Logged in as {{store.auth.user.email}}
+      {{/if}}
+    {{/rows.row}}
+  {{else}}
+    {{#rows.row}}
+      {{link-to 'Please sign-in' 'auth'}} (storage.rules requires request.auth)
+    {{/rows.row}}
+  {{/if}}
+
+  {{#rows.row}}
+    {{ui-input/file update=(action 'update')}}
+  {{/rows.row}}
+
+  {{#rows.row}}
+    <button {{action 'upload'}}>Upload</button>
+  {{/rows.row}}
+
+  {{#if task}}
+    {{#rows.row}}
+      {{ui-block/json task.serialized}}
+    {{/rows.row}}
+    {{#if task.isCompleted}}
+      {{#rows.row}}
+        <a href={{task.downloadURL}} target="top">Download URL</a>
+      {{/rows.row}}
+    {{/if}}
+  {{else}}
+    {{#rows.row}}
+      No task
+    {{/rows.row}}
+  {{/if}}
+
+  {{#if ref}}
+    {{#rows.row}}
+      {{ui-block/json ref.serialized}}
+      {{ui-block/json ref.metadata.serialized}}
+    {{/rows.row}}
+  {{else}}
+    {{#rows.row}}
+      No reference
+    {{/rows.row}}
+  {{/if}}
+
+{{/ui-block/rows}}
+
+{{set-global component=this}}

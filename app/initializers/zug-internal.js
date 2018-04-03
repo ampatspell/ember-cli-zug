@@ -1,6 +1,6 @@
 import Stores from 'ember-cli-zug/-private/stores';
 import Context from 'ember-cli-zug/-private/context/context';
-import Identity from 'ember-cli-zug/-private/model/identity';
+import ModelArrayProxy from 'ember-cli-zug/-private/model/model-array-proxy';
 import Query from 'ember-cli-zug/-private/model/query';
 import Matcher from 'ember-cli-zug/-private/model/matcher';
 import Document from 'ember-cli-zug/-private/model/document';
@@ -11,6 +11,10 @@ import AuthUser from 'ember-cli-zug/-private/auth/user';
 import AuthMethods from 'ember-cli-zug/-private/auth/methods';
 import AuthMethodAnonymous from 'ember-cli-zug/-private/auth/methods/anonymous';
 import AuthMethodEmail from 'ember-cli-zug/-private/auth/methods/email';
+import Storage from 'ember-cli-zug/-private/storage/storage';
+import StorageReference from 'ember-cli-zug/-private/storage/reference';
+import StorageTask from 'ember-cli-zug/-private/storage/task';
+import StorageMetadata from 'ember-cli-zug/-private/storage/metadata';
 
 export default {
   name: 'zug:internal',
@@ -24,7 +28,13 @@ export default {
     container.register('zug:auth/methods/anonymous', AuthMethodAnonymous);
     container.register('zug:auth/methods/email', AuthMethodEmail);
 
-    container.register('zug:identity', Identity);
+    container.register('zug:storage', Storage);
+    container.register('zug:storage/tasks', ModelArrayProxy);
+    container.register('zug:storage/reference', StorageReference);
+    container.register('zug:storage/task', StorageTask);
+    container.register('zug:storage/metadata', StorageMetadata);
+
+    container.register('zug:identity', ModelArrayProxy);
     container.register('zug:query', Query);
     container.register('zug:matcher', Matcher);
     container.register('zug:document', Document);

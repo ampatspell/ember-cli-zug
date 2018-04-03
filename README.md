@@ -120,6 +120,7 @@ export default Context.extend({
 
   identity,
   auth,
+  storage,
 
   nest,
   model,
@@ -163,6 +164,95 @@ export default Auth.extend({
   },
 
   signOut
+
+});
+```
+
+## Storage
+
+``` javascript
+export default Storage.extend({
+
+  tasks, // currently running tasks
+  ref    // create a ref for path or url
+
+});
+```
+
+``` javascript
+export default Reference.extend({
+  metadata,
+  url, // => metadata.downloadURLs.lastObject
+  put,
+  load,
+  serialized
+});
+```
+
+``` javascript
+export default Task.extend({
+
+  reference,
+  promise,
+
+  type,
+
+  bytesTransferred,
+  totalBytes,
+  percent,
+
+  downloadURL,
+
+  isRunning,
+  isCompleted,
+  isError,
+  error,
+
+  serialized
+
+});
+```
+
+``` javascript
+export default Metadata.extend({
+
+  reference,
+
+  isExisting,
+  isLoaded,
+  isError,
+  error,
+
+  raw,
+
+  type,
+
+  name,
+  size,
+  contentType,
+  customMetadata,
+  downloadURLs,
+
+  cacheControl,
+  contentDisposition,
+  contentEncoding,
+  contentLanguage,
+
+  bucket,
+  fullPath,
+  generation,
+  md5Hash,
+  metageneration,
+
+  createdAt,
+  updatedAt,
+
+  downloadURL,
+
+  load,
+  update,
+
+  serialized
 
 });
 ```

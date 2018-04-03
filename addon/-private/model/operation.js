@@ -2,6 +2,20 @@ import Destroyable from './destroyable';
 import { resolve, defer } from 'rsvp';
 import FireError from '../util/error';
 
+export class PromiseOperation extends Destroyable {
+
+  constructor(promise, info) {
+    super();
+    this.info = info;
+    this.promise = promise;
+  }
+
+  invoke() {
+    return this.promise;
+  }
+
+}
+
 export class DeferredOperation extends Destroyable {
 
   constructor(deferred, info) {

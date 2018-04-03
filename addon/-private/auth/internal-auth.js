@@ -1,6 +1,5 @@
 import Internal from '../model/internal';
 import AuthMethods from './internal-methods';
-import firebase from 'firebase';
 import { resolve } from 'rsvp';
 import { join } from '@ember/runloop';
 import { assert } from '@ember/debug';
@@ -78,7 +77,7 @@ export default class InternalAuth extends Internal {
     if(!auth) {
       let app = this.context.firebase;
       assert(`context should be ready before accessing auth`, !!app);
-      auth = firebase.auth(app);
+      auth = app.auth();
       this._auth = auth;
     }
     return auth;
