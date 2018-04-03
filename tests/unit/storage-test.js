@@ -431,3 +431,9 @@ test('ref child', async function(assert) {
   let image = images.child('image');
   assert.equal(image.get('fullPath'), 'images/image');
 });
+
+test('ref parent', async function(assert) {
+  let image = this.storage.ref('images/image');
+  let images = image.get('parent');
+  assert.equal(images.get('fullPath'), 'images');
+});

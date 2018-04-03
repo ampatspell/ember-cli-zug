@@ -20,6 +20,7 @@ export default EmberObject.extend(InternalMixin, RefPropertiesMixin, {
 
   // path
   child: model('child'),
+  parent: modelprop(),
 
   // { type: 'data', data: ..., metadata: { } }
   // { type: 'string', data: ..., format: 'raw' / 'base64' / 'base64-url' / 'data-url', metadata: {} }
