@@ -19,7 +19,7 @@
     {{#each query.content as |model|}}
       {{#rows.row}}
         <div>
-          {{model.doc.path}}
+          {{model.doc.path}} {{model.index}}
         </div>
       {{/rows.row}}
     {{else}}
