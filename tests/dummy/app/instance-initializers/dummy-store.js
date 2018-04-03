@@ -15,8 +15,13 @@ const modelNameForDocument = (document, context) => {
   if(collection === 'people') {
     return 'person';
   }
+
   if(collection === 'blogs') {
     return 'blog';
+  }
+
+  if(collection === 'things') {
+    return 'thing';
   }
 
   return 'unknown';
@@ -35,7 +40,8 @@ export default {
     registerContextService(app, {
       app,
       modelNameForDocument,
-      storeNameForIdentifier
+      storeNameForIdentifier,
+      // exportServiceInDevelopment: false
     });
 
   }

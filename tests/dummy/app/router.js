@@ -19,6 +19,7 @@ Router.map(function() {
   this.route('match');
   this.route('auth');
   this.route('storage');
+  this.route('things');
   this.route('experimental');
 });
 

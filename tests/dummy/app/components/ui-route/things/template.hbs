@@ -1,0 +1,39 @@
+{{#ui-block/rows as |rows|}}
+
+  {{#rows.header}}
+    Things
+    {{#ui-block/links url='components/ui-route/things' as |links|}}
+      {{links.link title='component' url='component.js'}}
+      {{links.link title='template' url='template.hbs'}}
+    {{/ui-block/links}}
+  {{/rows.header}}
+
+  {{#if query.isLoading}}
+
+    {{#rows.header}}
+      Loading…
+    {{/rows.header}}
+
+  {{else}}
+
+    {{#each query.content as |model|}}
+      {{#rows.row}}
+        <div>
+          {{model.doc.path}}
+        </div>
+      {{/rows.row}}
+    {{else}}
+      {{#rows.row}}
+        No content
+      {{/rows.row}}
+    {{/each}}
+
+  {{/if}}
+
+  {{#rows.row}}
+    <button {{action 'add' 1000}}>Add 1000 models</button>
+  {{/rows.row}}
+
+{{/ui-block/rows}}
+
+{{set-global component=this}}
