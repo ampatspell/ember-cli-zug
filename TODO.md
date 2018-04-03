@@ -7,8 +7,6 @@
 * transforms for attr
 * tests for query computed
 * model, array fragments
-* firebase session
-* firebase storage
 * fastboot shoebox for models, documents, query states
 * transient computed property should have `{ type: single / array }`
 * match computed property sorting
