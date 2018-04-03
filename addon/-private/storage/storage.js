@@ -9,7 +9,7 @@ export default EmberObject.extend(InternalMixin, {
   // running tasks
   tasks: tasks(),
 
-  // { path: ... }
+  // { path: ... } or string
   // { url: ... }
   ref: model('ref')
 

@@ -3,8 +3,8 @@ import { readOnly } from '@ember/object/computed';
 import { InternalMixin, model, modelprop, propertiesMixin, serialized, promise } from '../model/internal';
 
 let ref = [
-  'bucket',
   'fullPath',
+  'bucket',
   'name'
 ];
 

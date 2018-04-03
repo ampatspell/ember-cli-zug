@@ -1,8 +1,8 @@
 # TODO
 
+* storage ref.child ref.parent
 * storage ref.metadata load queue
 * storage ref identity for loads
-* storage ref.child ref.parent
 * auth operations should be included in settle (operations.invoke PromiseOperation)
 * link anonymous to account
 * login with facebook, google, github

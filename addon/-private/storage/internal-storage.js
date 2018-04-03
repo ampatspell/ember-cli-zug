@@ -42,8 +42,13 @@ export default class InternalStorage extends Internal {
   }
 
   refFromOptions(opts={}) {
+    if(typeof opts === 'string') {
+      opts = { path: opts };
+    }
+
     let { path, url } = opts;
     assert(`path or url is requied`, path || url);
+
     let storage = this.storage;
     if(path) {
       return storage.ref(path);

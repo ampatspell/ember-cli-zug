@@ -420,3 +420,8 @@ test('metadata update', async function(assert) {
     },
   });
 });
+
+test('ref as a string', async function(assert) {
+  let images = this.storage.ref('images/hello');
+  assert.equal(images.get('fullPath'), 'images/hello');
+});
