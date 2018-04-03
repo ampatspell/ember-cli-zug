@@ -7,6 +7,7 @@ import { typeOf } from '@ember/utils';
 module('storage', {
   beforeEach() {
     this.storage = this.store.get('storage');
+    this.identity = this.store._internal.identity.storage;
     this.signIn = () => this.store.get('auth.methods.anonymous').signIn();
 
     this.ref = this.storage.ref({ path: 'hello' });
@@ -430,10 +431,33 @@ test('ref child', async function(assert) {
   let images = this.storage.ref('images');
   let image = images.child('image');
   assert.equal(image.get('fullPath'), 'images/image');
+  assert.ok(this.storage.ref('images/image') === images);
 });
 
 test('ref parent', async function(assert) {
   let image = this.storage.ref('images/image');
   let images = image.get('parent');
   assert.equal(images.get('fullPath'), 'images');
+  assert.ok(this.storage.ref('images') === images);
+});
+
+test('reference is added to identity', async function(assert) {
+  let one = this.storage.ref('images/image');
+  let two = this.storage.ref('images/image');
+  assert.ok(one === two);
+});
+
+test('destroy ref is removed from identity', async function(assert) {
+  let ref = this.storage.ref('images/image');
+  let internal = ref._internal;
+
+  let url = internal.ref.toString();
+
+  assert.ok(this.identity.storage.all.includes(internal));
+  assert.ok(this.identity.storage.ref[url] === internal);
+
+  run(() => ref.destroy());
+
+  assert.ok(!this.identity.storage.all.includes(internal));
+  assert.ok(!this.identity.storage.ref[url]);
 });
