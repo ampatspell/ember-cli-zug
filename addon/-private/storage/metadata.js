@@ -1,13 +1,12 @@
 import EmberObject, { computed } from '@ember/object';
+import Mixin from '@ember/object/mixin';
 import { InternalMixin, prop, modelprop, state, serialized, promise } from '../model/internal';
+import { keys as stateKeys } from './metadata-state';
 
-// TODO: keys comes from metadata-state
-let stateKeys = [
-  'isExisting',
-  'isLoaded',
-  'isError',
-  'error'
-];
+const StateMixin = Mixin.create(stateKeys.reduce((hash, key) => {
+  hash[key] = state();
+  return hash;
+}, {}));
 
 const raw = () => computed('raw', function(key) {
   let raw = this.get('raw');
@@ -30,14 +29,9 @@ const lastInArray = key => computed(key, function() {
   return array && array[array.length - 1];
 }).readOnly();
 
-export default EmberObject.extend(InternalMixin, {
+export default EmberObject.extend(InternalMixin, StateMixin, {
 
   reference:  modelprop(),
-
-  isExisting: state(),
-  isLoaded: state(),
-  isError: state(),
-  error: state(),
 
   raw: prop(),
 
