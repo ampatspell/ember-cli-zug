@@ -69,10 +69,15 @@ export default class InternalMetadata extends Internal {
     return reject(err);
   }
 
-  _load() {
-    let operation = new PromiseOperation(resolve(this.ref.getMetadata()), { name: 'storage/metadata' });
+  _invoke(fn, info) {
+    let promise = resolve(fn(this.ref));
+    let operation = new PromiseOperation(promise, info);
     this.storage.registerOperation(operation);
     return operation.promise;
+  }
+
+  _load() {
+    return this._invoke(ref => ref.getMetadata(), { name: 'storage/metadata/load' });
   }
 
   load(opts={}) {
@@ -86,6 +91,14 @@ export default class InternalMetadata extends Internal {
     }, err => {
       return this.onError(err, opts);
     });
+  }
+
+  _update(metadata) {
+    return this._invoke(ref => ref.updateMetadata(metadata), { name: 'storage/metadata/update' });
+  }
+
+  update(hash) {
+    return this._update(hash).then(metadata => this.onLoaded(metadata));
   }
 
 }

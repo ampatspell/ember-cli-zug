@@ -66,8 +66,12 @@ export default EmberObject.extend(InternalMixin, {
 
   downloadURL: lastInArray('downloadURLs'),
 
+  // { reload }
   load: promise('load'),
 
-  serialized: serialized([ ...stateKeys, 'name', 'size', 'contentType' ], [ 'isExisting' ])
+  // { ... }
+  update: promise('update'),
+
+  serialized: serialized([ ...stateKeys, 'name', 'size', 'contentType', 'customMetadata' ], [ 'isExisting' ])
 
 });

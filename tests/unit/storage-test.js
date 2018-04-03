@@ -397,3 +397,26 @@ test('ref download url', async function(assert) {
 
   assert.ok(ref.get('url').includes('/o/hello'));
 });
+
+test('metadata update', async function(assert) {
+  await this.signIn();
+  await this._put();
+
+  let ref = this.storage.ref({ path: 'hello' });
+  let metadata = ref.get('metadata');
+
+  await metadata.update({ contentType: 'text/plainest', customMetadata: { hello: 'world' } });
+
+  assert.deepEqual(metadata.get('serialized'), {
+    "contentType": "text/plainest",
+    "error": null,
+    "isError": false,
+    "isExisting": true,
+    "isLoaded": true,
+    "name": "hello",
+    "size": 11,
+    "customMetadata": {
+      "hello": "world"
+    },
+  });
+});
