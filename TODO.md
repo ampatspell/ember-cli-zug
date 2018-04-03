@@ -1,12 +1,9 @@
 # TODO
 
-* ref.metadata.update
 * storage ref.metadata load queue
 * storage ref identity for loads
-* storage ref.child
+* storage ref.child ref.parent
 * auth operations should be included in settle (operations.invoke PromiseOperation)
-* storage reference parent
-* figure out api for storage so that I have a better understanding regarding exports
 * link anonymous to account
 * login with facebook, google, github
 * transforms for attr
