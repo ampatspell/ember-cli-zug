@@ -8,6 +8,20 @@
     {{/ui-block/links}}
   {{/rows.header}}
 
+  {{#if store.auth.user}}
+    {{#rows.row}}
+      {{#if store.auth.user.isAnonymous}}
+        Logged in as anonymous
+      {{else}}
+        Logged in as {{store.auth.user.email}}
+      {{/if}}
+    {{/rows.row}}
+  {{else}}
+    {{#rows.row}}
+      {{link-to 'Please sign-in' 'auth'}} (storage.rules requires request.auth)
+    {{/rows.row}}
+  {{/if}}
+
   {{#rows.row}}
     {{ui-input/file update=(action 'update')}}
   {{/rows.row}}
