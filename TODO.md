@@ -1,5 +1,6 @@
 # TODO
 
+* reuse existing observers for documents, don't create unnecessary `basic-document-observer`s
 * storage ref.metadata load queue
 * auth operations should be included in settle (operations.invoke PromiseOperation)
 * link anonymous to account
