@@ -21,9 +21,9 @@ module('storage', {
       }
     });
 
-    this._put = () => {
+    this._put = (path='hello') => {
       let storage = this.store.get('app').storage();
-      let ref = storage.ref('hello');
+      let ref = storage.ref(path);
       return resolve(ref.putString('hello world', 'raw', { contentType: 'text/plain' }));
     }
   }
@@ -383,4 +383,17 @@ test('metadata load succeeds', async function(assert) {
   });
 
   assert.ok(typeOf(metadata.get('createdAt')) === 'date');
+});
+
+test('ref download url', async function(assert) {
+  await this.signIn();
+  await this._put();
+
+  let ref = this.storage.ref({ path: 'hello' });
+
+  assert.equal(ref.get('url'), undefined);
+
+  await ref.load();
+
+  assert.ok(ref.get('url').includes('/o/hello'));
 });

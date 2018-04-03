@@ -25,6 +25,11 @@ const rawDate = key => computed('raw', function() {
   return new Date(value);
 }).readOnly();
 
+const lastInArray = key => computed(key, function() {
+  let array = this.get(key);
+  return array && array[array.length - 1];
+}).readOnly();
+
 export default EmberObject.extend(InternalMixin, {
 
   reference:  modelprop(),
@@ -58,6 +63,8 @@ export default EmberObject.extend(InternalMixin, {
 
   createdAt: rawDate('timeCreated'),
   updatedAt: rawDate('updated'),
+
+  downloadURL: lastInArray('downloadURLs'),
 
   load: promise('load'),
 

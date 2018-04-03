@@ -1,9 +1,7 @@
 # TODO
 
-* storage ref.metadata for bucket test
-* ref.downloadURL from metadata
-* storage ref.metadata load queue
 * ref.metadata.update
+* storage ref.metadata load queue
 * storage ref identity for loads
 * storage ref.child
 * auth operations should be included in settle (operations.invoke PromiseOperation)
