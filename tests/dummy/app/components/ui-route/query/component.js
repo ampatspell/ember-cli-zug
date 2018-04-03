@@ -1,4 +1,7 @@
 import Component from '@ember/component';
+import { query } from 'ember-cli-zug/model/computed';
+
+const passthrough = value => value;
 
 export default Component.extend({
 
