@@ -8,27 +8,4 @@
     {{/ui-block/links}}
   {{/rows.header}}
 
-  {{#rows.row}}
-    {{ui-input/file update=(action 'update')}}
-  {{/rows.row}}
-
-  {{#rows.row}}
-    <button {{action 'upload'}}>Upload</button>
-  {{/rows.row}}
-
-  {{#if task}}
-    {{#rows.row}}
-      {{ui-block/json task.serialized}}
-    {{/rows.row}}
-    {{#if task.isCompleted}}
-      {{#rows.row}}
-        <a href={{task.downloadURL}} target="top">Download URL</a>
-      {{/rows.row}}
-    {{/if}}
-  {{else}}
-    {{#rows.row}}
-      No task
-    {{/rows.row}}
-  {{/if}}
-
 {{/ui-block/rows}}

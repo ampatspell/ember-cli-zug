@@ -8,14 +8,11 @@ let ref = [
   'name'
 ];
 
-let props = [];
-
 let RefPropertiesMixin = propertiesMixin('ref', ref);
-let PropertiesMixin = propertiesMixin(null, props);
 
 let metadata = key => readOnly(`metadata.${key}`);
 
-export default EmberObject.extend(InternalMixin, RefPropertiesMixin, PropertiesMixin, {
+export default EmberObject.extend(InternalMixin, RefPropertiesMixin, {
 
   metadata: modelprop(),
 
@@ -27,6 +24,6 @@ export default EmberObject.extend(InternalMixin, RefPropertiesMixin, PropertiesM
 
   load: promise('load'),
 
-  serialized: serialized([ ...ref, ...props ]),
+  serialized: serialized(ref),
 
 });
