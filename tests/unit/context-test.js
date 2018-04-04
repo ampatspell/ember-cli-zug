@@ -12,7 +12,7 @@ module('context', {
 });
 
 test('has model class for name', function(assert) {
-  assert.ok(!this.store.hasModelClassForName('thing'));
+  assert.ok(!this.store.hasModelClassForName('thingie'));
   assert.ok(this.store.hasModelClassForName('duck'));
   try {
     this.store.hasModelClassForName('');
