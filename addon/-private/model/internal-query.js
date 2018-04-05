@@ -40,7 +40,7 @@ export default class InternalQuery extends Internal {
   }
 
   modelForSnapshot(snapshot) {
-    return this.context.loadedInternalPersistedModelForSnapshot(snapshot).model(true)
+    return this.context.loadedInternalPersistedModelForSnapshot(snapshot).model(true);
   }
 
   get query() {
