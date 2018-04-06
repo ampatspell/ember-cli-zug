@@ -81,6 +81,8 @@ export default class DocumentsManager extends Destroyable {
     let identity = this.context.identity.documents;
     let internal = identity.persistedInternalDocument(path);
     if(internal) {
+      // TODO: remove internal.didLoad here
+      // doc.didLoad should call something in document manager
       internal.didLoad(snapshot);
       return internal;
     } else {
