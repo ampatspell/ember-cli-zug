@@ -56,17 +56,9 @@ export default class InternalQuery extends Internal {
       onLoaded: () => this.onLoaded(),
       onUpdated: () => this.notifyContentDidChange(),
       createModel: snapshot => this.modelForSnapshot(snapshot),
-      updateModel: (model, snapshot) => this.updateModel(model, snapshot),
+      updateModel: (model, snapshot) => this.modelForSnapshot(snapshot),
       destroyModel: () => {}
     };
-  }
-
-  updateModel(model, snapshot) {
-    let path = model._internal.immutablePath;
-    if(path === snapshot.ref.path) {
-      return model;
-    }
-    return this.modelForSnapshot(snapshot);
   }
 
   _createObserver() {

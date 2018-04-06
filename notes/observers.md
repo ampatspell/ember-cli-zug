@@ -17,3 +17,10 @@ Context is expected to be semi-short-lived, so when query is destroyed, it shoul
 At the moment context destroys queries and only then identity -> models -> documents. It should start with identity so that document can add observer only if it is not isDestroying.
 
 Queries are recreated on dependency change. How this affects register-unregister stuff?
+
+## TODO
+
+Clean up document deserialization:
+
+* internal-document didLoad
+* documents-manager loadedInternalDocumentForSnapshot
